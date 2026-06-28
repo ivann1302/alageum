@@ -1,0 +1,377 @@
+---
+const faqs = [
+  {
+    question: "Какое оборудование Alageum Electric можно заказать?",
+    answer:
+      "Основные направления поставки — масляные и сухие трансформаторы, комплектные трансформаторные подстанции и подстанционное оборудование. В проектных запросах учитываем оборудование для сетей 6, 10, 20, 35 и 110 кВ.",
+  },
+  {
+    question: "Можно ли подобрать трансформатор по техническому заданию?",
+    answer:
+      "Да. При подборе важны тип оборудования, мощность, напряжение ВН/НН, исполнение, условия установки и требования объекта. Если есть опросный лист, спецификация или проектная документация, их лучше приложить к запросу.",
+  },
+  {
+    question: "Какие данные нужны для коммерческого предложения?",
+    answer:
+      "Для подготовки КП обычно нужны реквизиты компании, контактное лицо, требуемое оборудование, мощность, напряжение, срок поставки, адрес или регион доставки и файл проекта или спецификации, если он уже есть.",
+  },
+  {
+    question: "Поставляете ли оборудование по России?",
+    answer:
+      "Да, поставка и логистика согласуются под сроки проекта и особенности промышленного или инфраструктурного объекта. Условия доставки зависят от типа оборудования, комплектации, маршрута и требований к разгрузке.",
+  },
+  {
+    question: "Какие документы сопровождают поставку?",
+    answer:
+      "Мы готовим коммерческое предложение, техническую информацию для согласования и комплект сопроводительных документов по оборудованию. Наличие сертификатов, деклараций и паспортов зависит от категории и конкретной поставки.",
+  },
+  {
+    question: "Работаете ли с юридическими лицами по безналичному расчёту?",
+    answer:
+      "Да, сайт ориентирован на B2B-заказчиков: снабжение, проектировщиков, промышленные предприятия, энергетические и инфраструктурные объекты. Условия оплаты и договорные документы уточняются при подготовке предложения.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<section class="faq-section" aria-labelledby="faq-title">
+  <div class="container faq-inner">
+    <div class="faq-head" data-reveal="panel">
+      <span class="faq-kicker">FAQ</span>
+      <h2 id="faq-title" aria-label="Частые вопросы перед заказом">
+        <span>Частые вопросы</span>
+        {" "}
+        <span>перед заказом</span>
+      </h2>
+      <p>
+        Собрали ответы по подбору, документам, доставке и условиям работы с
+        трансформаторным оборудованием Alageum Electric.
+      </p>
+    </div>
+
+    <div class="faq-list" aria-label="Частые вопросы">
+      {
+        faqs.map((item, index) => (
+          <details
+            class="faq-item"
+            open={index === 0}
+            data-reveal="item"
+            style={`--reveal-delay: ${Math.min(index * 55, 220)}ms;`}
+          >
+            <summary>
+              <span class="faq-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <span class="faq-question">{item.question}</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faq-section {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding: clamp(76px, 8vw, 118px) 0 clamp(48px, 5vw, 72px);
+    background: var(--color-bg);
+  }
+
+  .faq-section::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: 3600px;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        -11deg,
+        transparent 0,
+        transparent 92px,
+        rgba(200, 23, 31, 0.075) 92px,
+        rgba(200, 23, 31, 0.075) 94px,
+        transparent 94px,
+        transparent 172px
+      ),
+      repeating-linear-gradient(
+        -11deg,
+        transparent 0,
+        transparent 236px,
+        rgba(15, 23, 42, 0.055) 236px,
+        rgba(15, 23, 42, 0.055) 237px,
+        transparent 237px,
+        transparent 336px
+      );
+  }
+
+  .faq-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(540px, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(32px, 4.5vw, 62px);
+    align-items: start;
+  }
+
+  .faq-head {
+    min-width: 0;
+  }
+
+  .faq-kicker {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: var(--color-industrial-red);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 820;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .faq-head h2 {
+    margin: 0;
+    color: var(--color-heading);
+    font-size: clamp(2rem, 3.35vw, 3.45rem);
+    font-weight: 920;
+    line-height: 0.96;
+    text-transform: uppercase;
+  }
+
+  .faq-head h2 span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .faq-head p {
+    max-width: 500px;
+    margin: 24px 0 0;
+    color: #3b4453;
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.62;
+  }
+
+  @media (min-width: 901px) {
+    .faq-section ~ :global(.site-footer) {
+      margin-top: clamp(28px, 3vw, 40px);
+    }
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .faq-item {
+    --faq-cut: 16px;
+    --faq-border: var(--color-heading);
+    --faq-border-width: 2px;
+    --faq-inner-cut: calc(var(--faq-cut) - var(--faq-border-width));
+
+    position: relative;
+    padding: var(--faq-border-width);
+    overflow: hidden;
+    clip-path: polygon(
+      var(--faq-cut) 0,
+      100% 0,
+      100% calc(100% - var(--faq-cut)),
+      calc(100% - var(--faq-cut)) 100%,
+      0 100%,
+      0 var(--faq-cut)
+    );
+    background: var(--faq-border);
+    color: var(--color-heading);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .faq-item::before {
+    content: "";
+    position: absolute;
+    inset: var(--faq-border-width);
+    z-index: 0;
+    clip-path: polygon(
+      var(--faq-inner-cut) 0,
+      100% 0,
+      100% calc(100% - var(--faq-inner-cut)),
+      calc(100% - var(--faq-inner-cut)) 100%,
+      0 100%,
+      0 var(--faq-inner-cut)
+    );
+    background: #ffffff;
+    pointer-events: none;
+    transition: background-color 180ms ease;
+  }
+
+  .faq-item[open],
+  .faq-item:hover,
+  .faq-item:focus-within {
+    --faq-border: var(--color-industrial-red);
+
+    color: #ffffff;
+  }
+
+  .faq-item[open]::before,
+  .faq-item:hover::before,
+  .faq-item:focus-within::before {
+    background: var(--color-industrial-red);
+  }
+
+  .faq-item summary {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 34px;
+    gap: 18px;
+    align-items: center;
+    min-height: 86px;
+    padding: 22px 24px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-index {
+    color: var(--color-industrial-red);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 840;
+    transition: color 180ms ease;
+  }
+
+  .faq-question {
+    font-size: clamp(1rem, 1.35vw, 1.2rem);
+    font-weight: 860;
+    line-height: 1.24;
+  }
+
+  .faq-toggle {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    opacity: 0.76;
+  }
+
+  .faq-toggle::before,
+  .faq-toggle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 2px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform 180ms ease;
+  }
+
+  .faq-toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq-item[open] .faq-toggle::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .faq-answer {
+    position: relative;
+    z-index: 1;
+    padding: 0 24px 26px 96px;
+  }
+
+  .faq-answer p {
+    max-width: 720px;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.98rem;
+    line-height: 1.62;
+    transition: color 180ms ease;
+  }
+
+  .faq-item[open] .faq-index,
+  .faq-item:hover .faq-index,
+  .faq-item:focus-within .faq-index,
+  .faq-item[open] .faq-answer p,
+  .faq-item:hover .faq-answer p,
+  .faq-item:focus-within .faq-answer p {
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  @media (max-width: 900px) {
+    .faq-inner {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .faq-section {
+      padding: 64px 0 78px;
+    }
+
+    .faq-head h2 {
+      font-size: clamp(1.85rem, 8vw, 2.65rem);
+    }
+
+    .faq-item {
+      --faq-cut: 14px;
+    }
+
+    .faq-item summary {
+      grid-template-columns: 1fr 34px;
+      gap: 14px;
+      min-height: 0;
+      padding: 20px;
+    }
+
+    .faq-index {
+      grid-column: 1 / -1;
+    }
+
+    .faq-answer {
+      padding: 0 20px 24px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .faq-head h2 {
+      font-size: clamp(1.52rem, 7.5vw, 1.64rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item,
+    .faq-item::before,
+    .faq-index,
+    .faq-toggle::before,
+    .faq-toggle::after,
+    .faq-answer p {
+      transition: none;
+    }
+  }
+</style>

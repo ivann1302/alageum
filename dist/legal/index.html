@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Alageum</title><meta name="description" content="Пустая белая страница Alageum."><link rel="stylesheet" href="/_astro/BaseLayout.8gGD54s1.css"></head><body><header class="site-header" data-site-header data-astro-cid-nen7h5rs><div class="container header-inner" data-astro-cid-nen7h5rs><a class="brand" href="/" aria-label="Alageum, на главную" data-astro-cid-nen7h5rs><img class="brand-logo" src="/images/alageum-logo.png" alt="Alageum Electric" data-astro-cid-nen7h5rs></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-nav-toggle data-astro-cid-nen7h5rs><span class="sr-only" data-astro-cid-nen7h5rs>Открыть меню</span><span class="nav-toggle-line" aria-hidden="true" data-astro-cid-nen7h5rs></span><span class="nav-toggle-line" aria-hidden="true" data-astro-cid-nen7h5rs></span><span class="nav-toggle-line" aria-hidden="true" data-astro-cid-nen7h5rs></span></button><nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav data-astro-cid-nen7h5rs><a class="nav-link" href="/catalog/" data-astro-cid-nen7h5rs>Каталог</a><a class="nav-link" href="/#about" data-astro-cid-nen7h5rs>О компании</a><a class="nav-link" href="/#delivery" data-astro-cid-nen7h5rs>Поставка</a><a class="nav-link" href="/#warranty" data-astro-cid-nen7h5rs>Гарантия</a><a class="nav-link" href="/contacts/" data-astro-cid-nen7h5rs>Контакты</a></nav><div class="header-actions" data-astro-cid-nen7h5rs><a class="phone-link" href="tel:+74957499103" data-astro-cid-nen7h5rs>+7 (495) 74-99-103</a><a class="quote-link" href="/contacts/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs>Запросить КП</span></a></div></div></header><script type="module">var e=document.querySelector(`[data-site-header]`),t=document.querySelector(`[data-nav-toggle]`),n=document.querySelector(`[data-site-nav]`),r=()=>{e?.classList.toggle(`is-scrolled`,window.scrollY>12)},i=()=>{if(!e)return;let n=window.innerWidth;e.classList.toggle(`is-compact`,n<=1040),e.classList.toggle(`is-phone`,n<=640),e.classList.toggle(`is-tiny`,n<=420),t instanceof HTMLElement&&(n<=1040?(t.style.display=`inline-flex`,t.style.position=`fixed`,t.style.top=n<=640?`14px`:`20px`,t.style.right=`12px`,t.style.width=`44px`,t.style.height=`44px`,t.style.border=`1px solid #cbd5e1`,t.style.borderRadius=`8px`,t.style.background=`#ffffff`,t.style.color=`#0f172a`,t.style.flexDirection=`column`,t.style.alignItems=`center`,t.style.justifyContent=`center`,t.style.zIndex=`80`):t.removeAttribute(`style`)),n>1040&&a()},a=()=>{t?.setAttribute(`aria-expanded`,`false`),e?.classList.remove(`is-menu-open`)};r(),i(),window.addEventListener(`scroll`,r,{passive:!0}),window.addEventListener(`resize`,i),t?.addEventListener(`click`,()=>{let n=t.getAttribute(`aria-expanded`)===`true`;t.setAttribute(`aria-expanded`,String(!n)),e?.classList.toggle(`is-menu-open`,!n)}),n?.addEventListener(`click`,e=>{e.target instanceof HTMLAnchorElement&&a()}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&a()});</script><script>
+      (() => {
+        const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
+
+        if (revealItems.length === 0) {
+          return;
+        }
+
+        const canReveal =
+          "IntersectionObserver" in window &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!canReveal) {
+          revealItems.forEach((item) => item.classList.add("is-revealed"));
+          return;
+        }
+
+        document.documentElement.classList.add("reveal-motion");
+
+        const observer = new IntersectionObserver(
+          (entries, currentObserver) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              entry.target.classList.add("is-revealed");
+              currentObserver.unobserve(entry.target);
+            });
+          },
+          {
+            rootMargin: "0px 0px -12% 0px",
+            threshold: 0.14,
+          },
+        );
+
+        revealItems.forEach((item) => {
+          const rect = item.getBoundingClientRect();
+          const isInInitialViewport = rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
+
+          if (isInInitialViewport) {
+            item.classList.add("is-revealed");
+            return;
+          }
+
+          observer.observe(item);
+        });
+      })();
+    </script><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="container footer-inner" data-astro-cid-jo6i4kqk><div class="footer-brand" data-astro-cid-jo6i4kqk><span class="footer-kicker" data-astro-cid-jo6i4kqk>Alageum Electric</span><p data-astro-cid-jo6i4kqk>Трансформаторное и подстанционное оборудование Alageum Electric для энергетики, промышленности и инфраструктуры.</p></div><nav class="footer-nav" aria-label="Навигация в футере" data-astro-cid-jo6i4kqk><span class="footer-label" data-astro-cid-jo6i4kqk>Разделы</span><a href="/catalog/" data-astro-cid-jo6i4kqk>Каталог</a><a href="/#about" data-astro-cid-jo6i4kqk>О компании</a><a href="/#delivery" data-astro-cid-jo6i4kqk>Поставка</a><a href="/#warranty" data-astro-cid-jo6i4kqk>Гарантия</a><a href="/contacts/" data-astro-cid-jo6i4kqk>Контакты</a></nav><div class="footer-contact" data-astro-cid-jo6i4kqk><span class="footer-label" data-astro-cid-jo6i4kqk>Связаться</span><a class="footer-phone" href="tel:+74957499103" data-astro-cid-jo6i4kqk>+7 (495) 74-99-103</a><a href="mailto:info@alageum.pro" data-astro-cid-jo6i4kqk>info@alageum.pro</a><a class="footer-cta" href="/contacts/" data-astro-cid-jo6i4kqk>Запросить КП</a></div></div><div class="container footer-bottom" data-astro-cid-jo6i4kqk><span data-astro-cid-jo6i4kqk>© 2026 ООО «ТД Алагеум Электрик Рус»</span><div class="footer-legal" data-astro-cid-jo6i4kqk><a href="/legal/" data-astro-cid-jo6i4kqk>Юридическая информация</a><a href="/legal/" data-astro-cid-jo6i4kqk>Политика конфиденциальности</a></div></div><div class="footer-mark" aria-hidden="true" data-astro-cid-jo6i4kqk><img src="/images/alageum-logo.png" alt="" data-astro-cid-jo6i4kqk><canvas class="footer-mark-lightning" data-footer-lightning data-astro-cid-jo6i4kqk></canvas></div></footer><script type="module" src="/_astro/Footer.astro_astro_type_script_index_0_lang.CDNW69Fj.js"></script></body></html>

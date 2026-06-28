@@ -1,0 +1,17 @@
+:root {
+  --color-bg: #fafaf8;
+  --color-text: #111827;
+  --color-muted: #64748b;
+  --color-heading: #0f172a;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-industrial-red: #c8171f;
+  --color-accent: #f59e0b;
+  --color-border: #dbe3ee;
+  --color-focus: #38bdf8;
+  --font-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --container-width: 1180px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
