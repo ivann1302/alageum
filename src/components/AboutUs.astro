@@ -4,7 +4,7 @@
 <section class="about-section" id="about" aria-labelledby="about-title">
   <div class="container about-inner">
     <div class="about-panel" aria-label="Ключевые факты о поставках" data-reveal="panel" data-reveal-from="left">
-      <div class="panel-mark" aria-hidden="true">6-110 кВ</div>
+      <div class="panel-mark" aria-hidden="true"><span data-count-up>6</span>-<span data-count-up>110</span> кВ</div>
       <ul class="about-facts">
         <li>
           <strong>Прямое взаимодействие</strong>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="about-copy" data-reveal="panel" data-reveal-from="right" style="--reveal-delay: 90ms;">
-      <h2 id="about-title">Торговый дом <span>Alageum Electric</span> в России</h2>
+      <h2 class="section-title" id="about-title">Торговый дом <span>Alageum Electric</span> в России</h2>
       <p>
         ООО «ТД Алагеум Электрик Рус» поставляет трансформаторное и подстанционное
         оборудование предприятий Alageum Electric для промышленных, энергетических и
@@ -33,152 +33,21 @@
 </section>
 
 <style>
-  .about-section {
-    position: relative;
-    overflow: clip;
-    padding: clamp(82px, 10vw, 136px) 0 0;
-    background: transparent;
-  }
-
-  .about-inner {
-    display: grid;
-    grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.05fr);
-    gap: clamp(44px, 8vw, 112px);
-    align-items: center;
-  }
-
-  .about-copy {
-    min-width: 0;
-    max-width: 780px;
-  }
-
-  .about-copy h2 {
-    margin: 0;
-    color: var(--color-heading);
-    font-size: clamp(2.2rem, 4.2vw, 4.35rem);
-    font-weight: 920;
-    line-height: 0.94;
-    text-transform: uppercase;
-  }
-
-  .about-copy h2 span {
-    color: var(--color-industrial-red);
-  }
-
-  .about-copy p {
-    max-width: 620px;
-    margin: 28px 0 0;
-    color: #3b4453;
-    font-size: clamp(1.04rem, 1.45vw, 1.18rem);
-    line-height: 1.68;
-  }
-
-  .about-panel {
-    --about-panel-fill: transparent;
-    --about-panel-text: var(--color-heading);
-    --about-panel-muted: var(--color-muted);
-    --about-panel-mark: var(--color-industrial-red);
-
-    position: relative;
-    isolation: isolate;
-    min-width: 0;
-    padding: 28px;
-    background: var(--color-bg);
-    clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
-    transition: transform 180ms ease;
-  }
-
-  .about-panel::before {
-    content: "";
-    position: absolute;
-    inset: 2px;
-    z-index: -1;
-    background: var(--about-panel-fill);
-    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-    transition: background 180ms ease;
-  }
-
-  .about-panel:hover,
-  .about-panel:focus-within {
-    --about-panel-fill: var(--color-industrial-red);
-    --about-panel-text: #ffffff;
-    --about-panel-muted: rgba(255, 255, 255, 0.78);
-    --about-panel-mark: #ffffff;
-
-    transform: translateY(-2px);
-  }
-
-  .panel-mark {
-    color: var(--about-panel-mark);
-    font-family: var(--font-mono);
-    font-size: clamp(1.8rem, 4vw, 3.6rem);
-    font-weight: 860;
-    line-height: 1;
-    transition: color 180ms ease;
-  }
-
-  .about-facts {
-    display: grid;
-    gap: 18px;
-    margin: 28px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .about-facts li {
-    padding-top: 18px;
-    border-top: 1px solid color-mix(in srgb, var(--about-panel-text) 14%, transparent);
-    transition: border-color 180ms ease;
-  }
-
-  .about-facts strong,
-  .about-facts span {
-    display: block;
-  }
-
-  .about-facts strong {
-    color: var(--about-panel-text);
-    font-size: 1rem;
-    font-weight: 840;
-    transition: color 180ms ease;
-  }
-
-  .about-facts span {
-    margin-top: 6px;
-    color: var(--about-panel-muted);
-    font-size: 0.94rem;
-    line-height: 1.48;
-    transition: color 180ms ease;
-  }
-
+.about-section { overflow: clip; padding-top: var(--space-section); }
+  .about-inner { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 7vw, 96px); align-items: start; }
+  .about-copy { min-width: 0; }
+  .about-copy h2 { margin: 0; }
+  .about-copy h2 span { color: var(--color-industrial-red); }
+  .about-copy p { max-width: 600px; margin: 24px 0 0; color: var(--color-muted); line-height: 1.7; }
+  .about-panel { min-width: 0; }
+  .panel-mark { color: var(--color-industrial-red); font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 900; line-height: 1; }
+  .about-facts { display: grid; margin: 28px 0 0; padding: 0; list-style: none; }
+  .about-facts li { padding: 20px 0; border-top: 1px solid var(--color-border); }
+  .about-facts strong, .about-facts span { display: block; }
+  .about-facts strong { font-size: 0.95rem; font-weight: 750; }
+  .about-facts span { margin-top: 6px; color: var(--color-muted); font-size: 0.9rem; line-height: 1.6; }
   @media (max-width: 900px) {
-    .about-section {
-      padding: 72px 0 0;
-    }
-
-    .about-inner {
-      grid-template-columns: 1fr;
-      gap: 38px;
-    }
-
-    .about-panel {
-      max-width: 560px;
-    }
-  }
-
-  @media (max-width: 620px) {
-    .about-section {
-      padding-top: 48px;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .about-copy h2 {
-      font-size: clamp(1.9rem, 9.2vw, 2.75rem);
-    }
-
-    .about-panel {
-      padding: 22px;
-    }
+    .about-inner { grid-template-columns: 1fr; gap: 36px; }
+    .about-copy { grid-row: 1; }
   }
 </style>

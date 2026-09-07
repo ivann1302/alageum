@@ -3,212 +3,71 @@ const reasons = [
   {
     title: "Официальные поставки",
     text: "Работаем с оборудованием предприятий Alageum Electric и сопровождаем запрос до отгрузки.",
-    tag: "заводы",
   },
   {
     title: "Подбор под проект",
     text: "Учитываем тип оборудования, мощность, напряжение, исполнение и условия установки.",
-    tag: "ТЗ",
   },
   {
     title: "Документы и КП",
     text: "Готовим коммерческое предложение и техническую информацию для согласования.",
-    tag: "КП",
   },
   {
     title: "Логистика по России",
     text: "Согласуем поставку под сроки проекта и особенности промышленного объекта.",
-    tag: "РФ",
   },
 ];
 ---
 
-<section class="why-section" aria-labelledby="why-title">
-  <div class="container why-inner">
-    <div class="why-head" data-reveal="panel">
-      <h2 id="why-title">Поставка без лишних рисков</h2>
-      <p>
-        Помогаем пройти путь от проектного запроса до коммерческого предложения,
-        документов и отгрузки.
-      </p>
-    </div>
-
-    <div class="why-list" aria-label="Преимущества работы с Alageum">
-      {
-        reasons.map((reason, index) => (
-          <article
-            class="why-row"
-            data-reveal="item"
-            style={`--reveal-delay: ${index * 70}ms;`}
-          >
-            <div class="why-content">
-              <h3>{reason.title}</h3>
-              <p>{reason.text}</p>
-            </div>
-            <span class="why-tag">{reason.tag}</span>
-          </article>
-        ))
-      }
+<section class="why-section" id="advantages" aria-labelledby="why-title">
+  <div class="why-visual" data-reveal="panel" data-reveal-from="left">
+    <img src="/images/advantages-power-line.webp" width="1448" height="1086" alt="Опора линии электропередачи в поле" loading="lazy" decoding="async" />
+  </div>
+  <div class="why-body" data-reveal="panel" data-reveal-from="right">
+    <h2 id="why-title">Поставка без лишних рисков</h2>
+    <p class="why-lead">Помогаем пройти путь от проектного запроса до коммерческого предложения, документов и отгрузки.</p>
+    <div class="why-list" aria-label="Преимущества работы с торговым домом">
+      {reasons.map((reason) => (
+        <article class="why-item">
+          <h3>{reason.title}</h3>
+          <p>{reason.text}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
   .why-section {
-    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
     overflow: clip;
-    padding: clamp(78px, 9vw, 128px) 0;
-    background: var(--color-bg);
-  }
-
-  .why-inner {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1fr);
-    gap: clamp(42px, 7vw, 96px);
-    align-items: stretch;
-  }
-
-  .why-head {
-    --why-head-cut: clamp(24px, 3.2vw, 46px);
-
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100%;
-    padding: clamp(34px, 4.5vw, 58px) clamp(26px, 4vw, 48px);
-    background: var(--color-industrial-red);
-    clip-path: polygon(
-      var(--why-head-cut) 0,
-      100% 0,
-      100% calc(100% - var(--why-head-cut)),
-      calc(100% - var(--why-head-cut)) 100%,
-      0 100%,
-      0 var(--why-head-cut)
-    );
-  }
-
-  .why-head h2 {
-    margin: 0;
-    color: #ffffff;
-    font-size: clamp(1.95rem, 3.35vw, 3.45rem);
-    font-weight: 920;
-    line-height: 0.96;
-    text-transform: uppercase;
-  }
-
-  .why-head p {
-    max-width: 500px;
-    margin: 24px 0 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(1rem, 1.35vw, 1.14rem);
-    line-height: 1.62;
-  }
-
-  .why-list {
-    border-top: 1px solid rgba(15, 23, 42, 0.18);
-  }
-
-  .why-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 22px;
-    align-items: center;
-    min-height: 116px;
-    padding: 24px 0;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.18);
-    color: var(--color-heading);
-    transition:
-      background 180ms ease,
-      color 180ms ease,
-      padding 180ms ease;
-  }
-
-  .why-row:hover,
-  .why-row:focus-within {
-    padding-right: 20px;
-    padding-left: 20px;
-    background: var(--color-industrial-red);
+    width: 100%;
+    margin: clamp(64px, 7vw, 104px) 0;
+    background: #e30620;
     color: #ffffff;
   }
 
-  .why-tag {
-    font-family: var(--font-mono);
-    font-weight: 820;
-  }
-
-  .why-content h3 {
-    margin: 0;
-    font-size: clamp(1.08rem, 1.6vw, 1.32rem);
-    font-weight: 860;
-  }
-
-  .why-content p {
-    max-width: 560px;
-    margin: 8px 0 0;
-    color: var(--color-muted);
-    font-size: 0.96rem;
-    line-height: 1.52;
-    transition: color 180ms ease;
-  }
-
-  .why-tag {
-    min-width: 64px;
-    padding: 7px 10px;
-    border: 1px solid currentColor;
-    color: rgba(15, 23, 42, 0.62);
-    font-size: 0.76rem;
-    text-align: center;
-    text-transform: uppercase;
-    transition: color 180ms ease;
-  }
-
-  .why-row:hover .why-content p,
-  .why-row:focus-within .why-content p,
-  .why-row:hover .why-tag,
-  .why-row:focus-within .why-tag {
-    color: rgba(255, 255, 255, 0.82);
-  }
+  .why-visual { position: relative; min-height: 540px; background: #d9d9d9; }
+  .why-visual img { display: block; width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: 52% center; }
+  .why-body { align-self: center; min-width: 0; padding: clamp(36px, 5vw, 76px); }
+  .why-body h2 { max-width: 600px; margin: 0; font-size: clamp(2rem, 3.2vw, 3.6rem); font-weight: 950; line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; }
+  .why-lead { max-width: 470px; margin: 22px 0 30px; font-size: 0.95rem; line-height: 1.6; }
+  .why-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; border-top: 1px solid rgba(255, 255, 255, 0.4); }
+  .why-item { padding: 22px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); }
+  .why-item h3 { margin: 0; font-size: 0.95rem; font-weight: 850; text-transform: uppercase; }
+  .why-item p { margin: 10px 0 0; font-size: 0.85rem; line-height: 1.6; }
 
   @media (max-width: 900px) {
-    .why-inner {
-      grid-template-columns: 1fr;
-      gap: 38px;
-    }
-
-    .why-head {
-      min-height: clamp(280px, 42vw, 420px);
-    }
+    .why-section { grid-template-columns: 1fr; }
+    .why-visual { min-height: 340px; }
+    .why-visual { aspect-ratio: 4 / 3; }
   }
-
-  @media (max-width: 560px) {
-    .why-section {
-      padding: 70px 0;
-    }
-
-    .why-head {
-      --why-head-cut: 28px;
-
-      min-height: 300px;
-      padding: 34px 24px;
-    }
-
-    .why-row {
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      min-height: 0;
-      padding: 22px 0;
-    }
-
-    .why-row:hover,
-    .why-row:focus-within {
-      padding-right: 14px;
-      padding-left: 14px;
-    }
-
-    .why-tag {
-      min-width: 54px;
-    }
+  @media (max-width: 640px) {
+    .why-section { margin: 48px 0; }
+    .why-body { padding: 32px 24px; }
+    .why-body h2 { font-size: clamp(1.75rem, 7.5vw, 2.6rem); }
+    .why-list { grid-template-columns: 1fr; }
+    .why-visual { min-height: 280px; }
   }
 </style>

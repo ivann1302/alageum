@@ -7,11 +7,13 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  headerOverlay?: boolean;
 }
 
 const {
   title = "Alageum",
   description = "Пустая белая страница Alageum.",
+  headerOverlay = false,
 } = Astro.props;
 ---
 
@@ -24,8 +26,11 @@ const {
     <meta name="description" content={description} />
   </head>
   <body>
-    <Header />
+    <Header overlay={headerOverlay} />
     <slot />
+    <script>
+      import "../scripts/count-up";
+    </script>
     <script is:inline>
       (() => {
         const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));

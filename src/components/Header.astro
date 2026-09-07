@@ -1,4 +1,10 @@
 ---
+interface Props {
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+
 const navItems = [
   { label: "Каталог", href: "/catalog/" },
   { label: "О компании", href: "/#about" },
@@ -8,10 +14,17 @@ const navItems = [
 ];
 ---
 
-<header class="site-header" data-site-header>
+<header class:list={["site-header", { "is-overlay": overlay }]} data-site-header>
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="Alageum, на главную">
-      <img class="brand-logo" src="/images/alageum-logo.png" alt="Alageum Electric" />
+    <a class="brand" href="/" aria-label="ТД А-Транс, на главную">
+      <svg class="brand-logo" viewBox="0 0 360 374" role="img" aria-label="Торговый дом А-Транс">
+        <defs>
+          <filter id="header-logo-dark" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="1 -1 0 0 0.03  0 0 0 0 0.03  0 0 0 0 0.03  0 0 0 1 0" />
+          </filter>
+        </defs>
+        <image href="/images/footer-logo-atrans.png" width="360" height="447" filter="url(#header-logo-dark)" />
+      </svg>
     </a>
 
     <button
@@ -34,7 +47,7 @@ const navItems = [
 
       <div class="header-actions">
         <a class="phone-link" href="tel:+74957499103">+7 (495) 74-99-103</a>
-        <a class="quote-link" href="/contacts/">
+        <a class="button button-dark" href="/contacts/">
           <span>Запросить КП</span>
         </a>
       </div>
@@ -172,6 +185,15 @@ const navItems = [
     background: transparent;
   }
 
+  .site-header.is-overlay {
+    position: fixed;
+    inset: 0 0 auto;
+  }
+
+  .site-header.is-overlay:not(.is-scrolled):not(.is-menu-open)::before {
+    opacity: 0;
+  }
+
   .site-header::before {
     content: "";
     position: absolute;
@@ -185,7 +207,9 @@ const navItems = [
     -webkit-clip-path: var(--header-clip);
     clip-path: var(--header-clip);
     pointer-events: none;
+    opacity: 1;
     transition:
+      opacity 240ms ease,
       background 180ms ease,
       bottom 180ms ease,
       box-shadow 180ms ease,
@@ -276,8 +300,9 @@ const navItems = [
   }
 
   .brand-logo {
+    overflow: hidden;
     flex: 0 0 auto;
-    width: 174px;
+    width: 48px;
     height: auto;
     display: block;
   }
@@ -356,67 +381,6 @@ const navItems = [
     color: var(--color-primary);
   }
 
-  .quote-link {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    border: 1px solid var(--color-industrial-red);
-    border-radius: 0;
-    padding: 10px 20px;
-    background: var(--color-industrial-red);
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    color: #ffffff;
-    font-size: 0.94rem;
-    font-weight: 840;
-    white-space: nowrap;
-    overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
-    transition:
-      background 180ms ease,
-      color 180ms ease,
-      transform 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .quote-link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(110deg, transparent 0 34%, rgba(200, 23, 31, 0.18) 42%, transparent 52% 100%);
-    transform: translateX(-130%);
-    opacity: 0;
-  }
-
-  .quote-link::after {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border-top: 1px solid rgba(200, 23, 31, 0.34);
-    border-right: 1px solid rgba(200, 23, 31, 0.34);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - 12px) 100%, calc(100% - 12px) 12px, 0 12px);
-    opacity: 0.78;
-    pointer-events: none;
-  }
-
-  .quote-link span {
-    position: relative;
-    z-index: 2;
-  }
-
-  .quote-link:hover {
-    border-color: var(--color-heading);
-    background: var(--color-heading);
-    color: #ffffff;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 12px 28px rgba(15, 23, 42, 0.18);
-    transform: translateY(-1px);
-  }
-
-  .quote-link:hover::before {
-    animation: cta-pulse 620ms ease;
-  }
-
   .nav-toggle {
     display: none;
     position: relative;
@@ -427,7 +391,6 @@ const navItems = [
     background: #ffffff;
     color: var(--color-heading);
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
   }
 
   .nav-toggle-line {
@@ -450,22 +413,6 @@ const navItems = [
 
   .site-header.is-menu-open .nav-toggle span:nth-child(4) {
     transform: translateY(-10px) rotate(-45deg);
-  }
-
-  @keyframes cta-pulse {
-    0% {
-      opacity: 0;
-      transform: translateX(-120%);
-    }
-
-    30% {
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 0;
-      transform: translateX(120%);
-    }
   }
 
   .site-header.is-compact .header-inner {
@@ -542,45 +489,6 @@ const navItems = [
     padding: 12px 16px 12px 22px;
   }
 
-  .site-header.is-compact .nav-link::before {
-    left: 0;
-    right: auto;
-    top: 12px;
-    bottom: 12px;
-    width: 2px;
-    height: auto;
-    transform: scaleY(0);
-    transform-origin: top;
-    background: var(--color-industrial-red);
-  }
-
-  .site-header.is-compact .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 7px;
-    top: 50%;
-    bottom: auto;
-    width: 6px;
-    height: 6px;
-    border: 1px solid var(--color-industrial-red);
-    background: #ffffff;
-    opacity: 0;
-    transform: translate(-8px, -50%) rotate(45deg) scale(0.68);
-    transition: opacity 160ms ease, transform 160ms ease;
-  }
-
-  .site-header.is-compact .nav-link:hover::before,
-  .site-header.is-compact .nav-link:focus-visible::before {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-
-  .site-header.is-compact .nav-link:hover::after,
-  .site-header.is-compact .nav-link:focus-visible::after {
-    opacity: 1;
-    transform: translate(0, -50%) rotate(45deg) scale(1);
-  }
-
   .site-header.is-compact .header-actions {
     align-items: stretch;
     flex-direction: column;
@@ -609,7 +517,7 @@ const navItems = [
   }
 
   .site-header.is-phone .brand-logo {
-    width: 148px;
+    width: 44px;
   }
 
   .site-header.is-phone .header-menu {
@@ -620,12 +528,12 @@ const navItems = [
     top: 64px;
   }
 
-  .site-header.is-phone .quote-link {
+  .site-header.is-phone .button {
     width: 100%;
   }
 
   .site-header.is-tiny .brand-logo {
-    width: 132px;
+    width: 44px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -637,9 +545,6 @@ const navItems = [
     .nav-link,
     .nav-link::before,
     .nav-link::after,
-    .quote-link,
-    .quote-link::before,
-    .quote-link::after,
     .site-nav,
     .site-header.is-compact .header-menu,
     .nav-toggle-line {
