@@ -40,11 +40,17 @@ const catalogItems = [
         </p>
       </div>
 
-      <a class="catalog-link button" href={withBasePath("catalog/")}>Перейти в каталог</a>
     </div>
   </div>
 
-  <div class="container catalog-grid" aria-label="Основные разделы каталога">
+  <div class="container catalog-controls">
+    <span class="catalog-swipe-hint" aria-hidden="true">
+      <span class="catalog-swipe-track"><span class="catalog-swipe-dot"></span></span>
+      Листайте
+    </span>
+  </div>
+
+  <div class="container catalog-grid" id="catalog-slides" tabindex="0" aria-label="Основные разделы каталога. Листайте вбок или используйте клавиши со стрелками">
     {
       catalogItems.map((item, index) => (
         <a
@@ -77,7 +83,42 @@ const catalogItems = [
       ))
     }
   </div>
+
+  <div class="container catalog-teaser-footer">
+    <a class="catalog-link button" href={withBasePath("catalog/")}>Перейти в каталог</a>
+  </div>
 </section>
+
+<script>
+  const catalog = document.querySelector<HTMLElement>(".catalog-teaser");
+  const grid = catalog?.querySelector<HTMLElement>(".catalog-grid");
+  const hint = catalog?.querySelector<HTMLElement>(".catalog-swipe-hint");
+
+  if (grid && hint) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".catalog-card"));
+    const mobile = window.matchMedia("(max-width: 640px)");
+    const updateHint = () => {
+      grid.tabIndex = mobile.matches ? 0 : -1;
+      if (mobile.matches && grid.scrollLeft > 4) hint.classList.add("is-dismissed");
+    };
+    grid.addEventListener("scroll", updateHint, { passive: true });
+    window.addEventListener("resize", updateHint, { passive: true });
+    grid.addEventListener("keydown", (event) => {
+      if (!mobile.matches || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+      event.preventDefault();
+      const step = cards[1].offsetLeft - cards[0].offsetLeft;
+      grid.scrollBy({ left: event.key === "ArrowRight" ? step : -step });
+    });
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        hint.classList.add("is-visible");
+        observer.disconnect();
+      }
+    });
+    observer.observe(hint);
+    updateHint();
+  }
+</script>
 
 <style>
 .catalog-teaser { overflow: clip; }
@@ -85,9 +126,20 @@ const catalogItems = [
   .catalog-teaser-copy { max-width: 700px; }
   .catalog-teaser h2 { margin: 0; }
   .catalog-teaser p { max-width: 560px; margin: 22px 0 0; color: var(--color-muted); line-height: 1.7; }
-  .catalog-link { flex-shrink: 0; }
+  .catalog-teaser-footer { display: flex; justify-content: center; margin-top: 32px; }
   .catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
   .catalog-card { display: block; min-width: 0; }
+  .catalog-controls { display: none; }
+  .catalog-swipe-hint { display: inline-flex; align-items: center; gap: 10px; color: var(--color-muted); font-size: 0.8rem; }
+  .catalog-swipe-hint.is-dismissed { visibility: hidden; }
+  .catalog-swipe-track { position: relative; width: 36px; height: 2px; background: var(--color-border); }
+  .catalog-swipe-dot { position: absolute; top: -3px; left: 28px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); }
+  .catalog-swipe-hint.is-visible .catalog-swipe-dot { animation: catalog-swipe 1.6s ease-in-out 2; }
+  .catalog-swipe-hint.is-dismissed .catalog-swipe-dot { animation: none; }
+  @keyframes catalog-swipe {
+    0%, 15%, 100% { transform: translateX(0); }
+    65%, 80% { transform: translateX(-28px); }
+  }
   .catalog-card-frame { display: block; }
   .catalog-card-media { display: block; height: clamp(220px, 23vw, 300px); background: var(--color-surface); overflow: hidden; }
   .catalog-card img { display: block; width: 100%; height: 100%; padding: 20px; object-fit: contain; }
@@ -102,21 +154,29 @@ const catalogItems = [
   }
   @media (max-width: 640px) {
     .catalog-grid {
-      width: 100%;
       grid-template-columns: none;
       grid-auto-flow: column;
-      grid-auto-columns: 86%;
+      grid-auto-columns: 100%;
       gap: 16px;
       overflow-x: auto;
-      overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: 12px;
-      padding: 4px 12px 20px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-primary) var(--color-border);
+      scroll-behavior: smooth;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
     }
+    .catalog-grid::-webkit-scrollbar { display: none; }
     .catalog-card { scroll-snap-align: start; scroll-snap-stop: always; }
+    .catalog-controls {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .catalog-card-body { min-height: 200px; }
     .catalog-card-media { height: clamp(220px, 65vw, 280px); }
   }
-  @media (prefers-reduced-motion: reduce) { .catalog-card-title { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .catalog-card-title { transition: none; }
+    .catalog-grid { scroll-behavior: auto; }
+    .catalog-swipe-hint.is-visible .catalog-swipe-dot { animation: none; }
+  }
 </style>

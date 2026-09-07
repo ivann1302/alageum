@@ -1,0 +1,77 @@
+---
+import { withBasePath } from "../lib/paths";
+
+const rows = ["alageum", "atrans"];
+const copies = Array.from({ length: 6 });
+---
+
+<section class="partners" aria-labelledby="partners-title">
+  <div class="container partners-heading">
+    <h2 class="section-title" id="partners-title">Наши партнеры</h2>
+  </div>
+  <ul class="sr-only">
+    <li>Alageum Electric</li>
+    <li>Торговый Дом А-Транс</li>
+  </ul>
+  <svg class="partners-filters" width="0" height="0" aria-hidden="true">
+    <defs>
+      <filter id="partners-logo-dark" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="1 -1 0 0 0.03  0 0 0 0 0.03  0 0 0 0 0.03  0 0 0 1 0" />
+      </filter>
+    </defs>
+  </svg>
+  <div class="partners-lanes" aria-hidden="true">
+    {rows.map((row) => (
+      <div class={`partners-lane partners-lane-${row}`}>
+        <div class="partners-track">
+          {[0, 1].map(() => (
+            <div class="partners-group">
+              {copies.map(() => (
+                <div class="partners-logo">
+                  {row === "alageum" ? (
+                    <svg class="partners-alageum" viewBox="254 164 1739 396">
+                      <image href={withBasePath("images/alageum-logo.png")} width="2172" height="724" />
+                    </svg>
+                  ) : (
+                    <svg class="partners-atrans" viewBox="0 0 360 447">
+                      <image href={withBasePath("images/footer-logo-atrans.png")} width="360" height="447" filter="url(#partners-logo-dark)" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .partners { margin-top: var(--space-section); padding-block: 48px; overflow: clip; background: transparent; }
+  .partners-heading { margin-bottom: 32px; }
+  .partners-heading h2 { margin: 0; }
+  .partners-filters { position: absolute; }
+  .partners-lanes { display: grid; gap: 20px; }
+  .partners-lane { overflow: hidden; }
+  .partners-track { display: flex; width: max-content; animation: partners-scroll 42s linear infinite; }
+  .partners-lane-alageum .partners-track { animation-direction: reverse; }
+  .partners-group { display: flex; justify-content: space-around; flex-shrink: 0; width: max(100vw, 1440px); }
+  .partners-logo { display: flex; align-items: center; justify-content: center; width: 220px; height: 120px; flex-shrink: 0; }
+  .partners-alageum { display: block; width: 200px; height: auto; }
+  .partners-atrans { display: block; width: 80px; height: auto; }
+  .partners-lanes:hover .partners-track { animation-play-state: paused; }
+  @keyframes partners-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (max-width: 640px) {
+    .partners { padding-block: 32px; }
+    .partners-heading { margin-bottom: 20px; }
+    .partners-lanes { gap: 12px; }
+    .partners-group { width: max(100vw, 1080px); }
+    .partners-logo { width: 160px; height: 104px; }
+    .partners-alageum { width: 150px; }
+    .partners-atrans { width: 68px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .partners-track { animation: none; }
+  }
+</style>

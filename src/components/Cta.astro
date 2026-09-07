@@ -17,7 +17,7 @@ import { withBasePath } from "../lib/paths";
       <a class="button button-outline" href={withBasePath("catalog/")}>Перейти в каталог</a>
     </div>
   </div>
-  <div class="cta-visual">
+  <div class="cta-visual" data-parallax>
     <img src={withBasePath("images/cta-substation.webp")} alt="Оборудование электрической подстанции" width="1254" height="1254" loading="lazy" decoding="async" />
   </div>
 </section>
@@ -33,7 +33,7 @@ import { withBasePath } from "../lib/paths";
   .cta-actions .button-outline { background: transparent; color: #fff; }
   .cta-actions .button:hover { background: var(--color-heading); border-color: var(--color-heading); color: #fff; }
   .cta-visual { position: relative; min-width: 0; }
-  .cta-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .cta-visual img { position: absolute; inset: calc(-1 * var(--parallax-space, 0px)) 0 auto; width: 100%; height: calc(100% + 2 * var(--parallax-space, 0px)); object-fit: cover; object-position: center; }
   @media (max-width: 640px) {
     .cta-section { grid-template-columns: minmax(0, 1fr); }
     .cta-content { padding: 32px 16px; }

@@ -4,19 +4,26 @@ import Hero from "../components/Hero.astro";
 import AboutUs from "../components/AboutUs.astro";
 import WhyAlageum from "../components/WhyAlageum.astro";
 import CatalogTeaser from "../components/CatalogTeaser.astro";
+import Partners from "../components/Partners.astro";
+import SupplyProcess from "../components/SupplyProcess.astro";
 import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
 ---
 
 <BaseLayout
   headerOverlay
-  title="ТД А-Транс — трансформаторное и подстанционное оборудование"
+  title="Торговый Дом А-Транс — трансформаторное и подстанционное оборудование"
   description="Поставка трансформаторов и подстанционного оборудования Alageum Electric для промышленных объектов. Подбор под проект, коммерческое предложение и доставка по России."
 >
   <Hero />
   <AboutUs />
   <WhyAlageum />
   <CatalogTeaser />
+  <Partners />
+  <SupplyProcess />
   <Cta />
   <Faq />
+  <script>
+    import "../scripts/parallax";
+  </script>
 </BaseLayout>

@@ -22,7 +22,7 @@ const reasons = [
 ---
 
 <section class="why-section" id="advantages" aria-labelledby="why-title">
-  <div class="why-visual" data-reveal="panel" data-reveal-from="left">
+  <div class="why-visual" data-parallax>
     <img src={withBasePath("images/advantages-power-line.webp")} width="1448" height="1086" alt="Опора линии электропередачи в поле" loading="lazy" decoding="async" />
   </div>
   <div class="why-body" data-reveal="panel" data-reveal-from="right">
@@ -51,7 +51,7 @@ const reasons = [
   }
 
   .why-visual { position: relative; min-height: 540px; background: #d9d9d9; }
-  .why-visual img { display: block; width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: 52% center; }
+  .why-visual img { display: block; width: 100%; height: calc(100% + 2 * var(--parallax-space, 0px)); position: absolute; inset: calc(-1 * var(--parallax-space, 0px)) 0 auto; object-fit: cover; object-position: 52% center; }
   .why-body { align-self: center; min-width: 0; padding: clamp(36px, 5vw, 76px); }
   .why-body h2 { max-width: 600px; margin: 0; font-size: clamp(2rem, 3.2vw, 3.6rem); font-weight: 950; line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; }
   .why-lead { max-width: 470px; margin: 22px 0 30px; font-size: 0.95rem; line-height: 1.6; }

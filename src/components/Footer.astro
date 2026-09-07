@@ -19,8 +19,8 @@ const legalLinks = [
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="footer-logo" href={withBasePath()} aria-label="ТД А-Транс, на главную">
-      <img src={withBasePath("images/footer-logo-atrans.png")} alt="Торговый дом А-Транс" width="360" height="447" loading="lazy" decoding="async" />
+    <a class="footer-logo" href={withBasePath()} aria-label="Торговый Дом А-Транс, на главную">
+      <img src={withBasePath("images/footer-logo-atrans.png")} alt="Торговый Дом А-Транс" width="360" height="447" loading="lazy" decoding="async" />
     </a>
 
     <p class="footer-description">
@@ -40,12 +40,12 @@ const legalLinks = [
   </div>
 
   <div class="container footer-bottom">
-    <span>© {currentYear} ООО «ТД Алагеум Электрик Рус»</span>
+    <span>© {currentYear} ООО «Торговый Дом А-Транс»</span>
     <div class="footer-legal">
       {legalLinks.map((item) => <a href={item.href}>{item.label}</a>)}
     </div>
   </div>
-  <div class="footer-mark" aria-hidden="true">Торговый дом А-Транс</div>
+  <div class="footer-mark" aria-hidden="true">Торговый Дом А-Транс</div>
 </footer>
 
 <style>

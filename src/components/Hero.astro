@@ -10,12 +10,12 @@ const stats = [
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-transformer" aria-hidden="true">
+  <div class="hero-transformer" data-parallax aria-hidden="true">
     <img src={withBasePath("images/hero-substation-background-v2.webp")} width="1774" height="887" fetchpriority="high" alt="" loading="eager" decoding="async" />
   </div>
   <div class="container hero-inner">
     <div class="hero-copy">
-      <p class="hero-brand"><span>ТД</span> А-Транс</p>
+      <p class="hero-brand"><span>Торговый Дом</span> А-Транс</p>
       <h1 id="hero-title"><span>Трансформируем</span><span class="hero-title-outline">энергию</span></h1>
       <p class="hero-lead">Трансформаторное и подстанционное оборудование для промышленных объектов</p>
       <div class="hero-actions" aria-label="Основные действия">
@@ -140,10 +140,10 @@ const stats = [
 
   .hero-transformer img {
     position: absolute;
-    inset: 0;
+    inset: calc(-1 * var(--parallax-space, 0px)) 0 auto;
     display: block;
     width: 100%;
-    height: 100%;
+    height: calc(100% + 2 * var(--parallax-space, 0px));
     max-width: none;
     object-fit: cover;
     object-position: right center;
@@ -193,27 +193,31 @@ const stats = [
   }
 
   @media (max-width: 640px) {
-    .hero { padding-top: 72px; background: var(--color-bg); }
+    .hero {
+      --hero-mobile-height: min(var(--hero-viewport, 100svh), 100svh);
+      padding-top: 72px;
+      background: var(--color-bg);
+    }
     .hero-inner { width: 100%; min-height: 0; padding-block: 0; }
     .hero-copy {
       display: flex;
       flex-direction: column;
       align-items: center;
       align-self: center;
-      width: calc(100% - 24px);
-      min-height: calc(var(--hero-viewport, 100svh) - 72px);
+      width: calc(100% - 48px);
+      min-height: calc(var(--hero-mobile-height) - 72px);
       padding-block: 28px calc(48px + env(safe-area-inset-bottom, 0px));
       margin-inline: auto;
       text-align: center;
     }
     .hero-brand { margin-bottom: 22px; font-size: 0.9rem; }
     .hero h1 { width: 100%; font-size: 6.9vw; letter-spacing: -0.055em; text-align: center; }
-    .hero h1 .hero-title-outline { font-size: 13vw; -webkit-text-stroke-width: 1.2px; }
+    .hero h1 .hero-title-outline { font-size: 13vw; letter-spacing: 0.02em; -webkit-text-stroke-width: 1.2px; }
     .hero-lead { max-width: 280px; margin: 26px auto 0; font-size: 0.95rem; text-wrap: balance; }
     .hero-actions { width: 100%; justify-content: center; margin-top: auto; padding-top: 32px; }
     .hero-button { width: 100%; padding-inline: 18px; }
     .hero-transformer img { object-position: 60% top; }
-    .hero-transformer { bottom: auto; height: var(--hero-viewport, 100svh); }
+    .hero-transformer { bottom: auto; height: var(--hero-mobile-height); }
     .hero::after { background: none; }
     .hero-facts { margin-top: 0; padding: 32px 12px 0; }
     .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }

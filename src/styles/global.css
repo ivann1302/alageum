@@ -141,3 +141,10 @@ html.reveal-motion [data-reveal].is-revealed {
 }
 
 @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
+
+[data-parallax] { overflow: hidden; }
+[data-parallax] > img { transform: translate3d(0, var(--parallax-y, 0px), 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] > img { transform: none; }
+}
