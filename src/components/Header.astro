@@ -90,10 +90,6 @@ const navItems = [
         toggle.style.right = "12px";
         toggle.style.width = "44px";
         toggle.style.height = "44px";
-        toggle.style.border = "1px solid #cbd5e1";
-        toggle.style.borderRadius = "8px";
-        toggle.style.background = "#ffffff";
-        toggle.style.color = "#0f172a";
         toggle.style.flexDirection = "column";
         toggle.style.alignItems = "center";
         toggle.style.justifyContent = "center";
@@ -388,8 +384,8 @@ const navItems = [
     position: relative;
     width: 44px;
     height: 44px;
-    border: 1px solid #cbd5e1;
-    border-radius: var(--radius-md);
+    border: 1px solid var(--color-heading);
+    border-radius: 0;
     background: #ffffff;
     color: var(--color-heading);
     cursor: pointer;
@@ -397,12 +393,17 @@ const navItems = [
 
   .nav-toggle-line {
     display: block;
-    width: 18px;
-    height: 2px;
-    margin: 4px auto;
-    border-radius: 999px;
+    width: 22px;
+    height: 3px;
+    margin: 3.5px auto;
+    border-radius: 0;
     background: currentColor;
     transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .site-header.is-menu-open .nav-toggle {
+    background: var(--color-heading);
+    color: #ffffff;
   }
 
   .site-header.is-menu-open .nav-toggle span:nth-child(2) {

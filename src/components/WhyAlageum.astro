@@ -54,11 +54,11 @@ const reasons = [
   .why-visual img { display: block; width: 100%; height: calc(100% + 2 * var(--parallax-space, 0px)); position: absolute; inset: calc(-1 * var(--parallax-space, 0px)) 0 auto; object-fit: cover; object-position: 52% center; }
   .why-body { align-self: center; min-width: 0; padding: clamp(36px, 5vw, 76px); }
   .why-body h2 { max-width: 600px; margin: 0; font-size: clamp(2rem, 3.2vw, 3.6rem); font-weight: 950; line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; }
-  .why-lead { max-width: 470px; margin: 22px 0 30px; font-size: 0.95rem; line-height: 1.6; }
+  .why-lead { color: var(--color-muted-inverse); max-width: 470px; margin: 22px 0 30px; font-size: 0.95rem; line-height: 1.6; }
   .why-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; border-top: 1px solid rgba(255, 255, 255, 0.4); }
   .why-item { padding: 22px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.4); }
   .why-item h3 { margin: 0; font-size: 0.95rem; font-weight: 850; text-transform: uppercase; }
-  .why-item p { margin: 10px 0 0; font-size: 0.85rem; line-height: 1.6; }
+  .why-item p { color: var(--color-muted-inverse); margin: 10px 0 0; font-size: 0.85rem; line-height: 1.6; }
 
   @media (max-width: 900px) {
     .why-section { grid-template-columns: 1fr; }
