@@ -49,8 +49,8 @@ if (backgrounds.length) {
     frame = 0;
     snapToPosition = true;
     const mobile = window.innerWidth <= 640;
-    distance = mobile ? 49.725 : 77.35;
-    speed = mobile ? 0.1326 : 0.1547;
+    distance = mobile ? 34.8075 : 77.35;
+    speed = mobile ? 0.09282 : 0.1547;
     for (const layer of layers) {
       if (reducedMotion.matches) {
         layer.current = 0;
