@@ -1,4 +1,5 @@
 ---
+import { withBasePath } from "../lib/paths";
 ---
 
 <section class="cta-section" aria-labelledby="cta-title">
@@ -12,12 +13,12 @@
     </div>
 
     <div class="cta-actions" aria-label="Действия" data-reveal="item" style="--reveal-delay: 90ms;">
-      <a class="button" href="/contacts/">Запросить КП</a>
-      <a class="button button-outline" href="/catalog/">Перейти в каталог</a>
+      <a class="button" href={withBasePath("contacts/")}>Запросить КП</a>
+      <a class="button button-outline" href={withBasePath("catalog/")}>Перейти в каталог</a>
     </div>
   </div>
   <div class="cta-visual">
-    <img src="/images/cta-substation.webp" alt="Оборудование электрической подстанции" width="1254" height="1254" loading="lazy" decoding="async" />
+    <img src={withBasePath("images/cta-substation.webp")} alt="Оборудование электрической подстанции" width="1254" height="1254" loading="lazy" decoding="async" />
   </div>
 </section>
 

@@ -1,24 +1,26 @@
 ---
+import { withBasePath } from "../lib/paths";
+
 const currentYear = new Date().getFullYear();
 
 const footerNav = [
-  { label: "Каталог", href: "/catalog/" },
-  { label: "О компании", href: "/#about" },
-  { label: "Поставка", href: "/#delivery" },
-  { label: "Гарантия", href: "/#warranty" },
-  { label: "Контакты", href: "/contacts/" },
+  { label: "Каталог", href: withBasePath("catalog/") },
+  { label: "О компании", href: withBasePath("#about") },
+  { label: "Поставка", href: withBasePath("#delivery") },
+  { label: "Гарантия", href: withBasePath("#warranty") },
+  { label: "Контакты", href: withBasePath("contacts/") },
 ];
 
 const legalLinks = [
-  { label: "Юридическая информация", href: "/legal/" },
-  { label: "Политика конфиденциальности", href: "/legal/" },
+  { label: "Юридическая информация", href: withBasePath("legal/") },
+  { label: "Политика конфиденциальности", href: withBasePath("legal/") },
 ];
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="footer-logo" href="/" aria-label="ТД А-Транс, на главную">
-      <img src="/images/footer-logo-atrans.png" alt="Торговый дом А-Транс" width="360" height="447" loading="lazy" decoding="async" />
+    <a class="footer-logo" href={withBasePath()} aria-label="ТД А-Транс, на главную">
+      <img src={withBasePath("images/footer-logo-atrans.png")} alt="Торговый дом А-Транс" width="360" height="447" loading="lazy" decoding="async" />
     </a>
 
     <p class="footer-description">
@@ -33,7 +35,7 @@ const legalLinks = [
     <div class="footer-contact">
       <a class="footer-phone" href="tel:+74957499103">+7 (495) 74-99-103</a>
       <a href="mailto:info@alageum.pro">info@alageum.pro</a>
-      <a class="footer-cta" href="/contacts/">Запросить КП</a>
+      <a class="footer-cta" href={withBasePath("contacts/")}>Запросить КП</a>
     </div>
   </div>
 

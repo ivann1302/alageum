@@ -1,4 +1,6 @@
 ---
+import { withBasePath } from "../lib/paths";
+
 interface Props {
   overlay?: boolean;
 }
@@ -6,24 +8,24 @@ interface Props {
 const { overlay = false } = Astro.props;
 
 const navItems = [
-  { label: "Каталог", href: "/catalog/" },
-  { label: "О компании", href: "/#about" },
-  { label: "Поставка", href: "/#delivery" },
-  { label: "Гарантия", href: "/#warranty" },
-  { label: "Контакты", href: "/contacts/" },
+  { label: "Каталог", href: withBasePath("catalog/") },
+  { label: "О компании", href: withBasePath("#about") },
+  { label: "Поставка", href: withBasePath("#delivery") },
+  { label: "Гарантия", href: withBasePath("#warranty") },
+  { label: "Контакты", href: withBasePath("contacts/") },
 ];
 ---
 
 <header class:list={["site-header", { "is-overlay": overlay }]} data-site-header>
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="ТД А-Транс, на главную">
+    <a class="brand" href={withBasePath()} aria-label="ТД А-Транс, на главную">
       <svg class="brand-logo" viewBox="0 0 360 374" role="img" aria-label="Торговый дом А-Транс">
         <defs>
           <filter id="header-logo-dark" color-interpolation-filters="sRGB">
             <feColorMatrix type="matrix" values="1 -1 0 0 0.03  0 0 0 0 0.03  0 0 0 0 0.03  0 0 0 1 0" />
           </filter>
         </defs>
-        <image href="/images/footer-logo-atrans.png" width="360" height="447" filter="url(#header-logo-dark)" />
+        <image href={withBasePath("images/footer-logo-atrans.png")} width="360" height="447" filter="url(#header-logo-dark)" />
       </svg>
     </a>
 
@@ -47,7 +49,7 @@ const navItems = [
 
       <div class="header-actions">
         <a class="phone-link" href="tel:+74957499103">+7 (495) 74-99-103</a>
-        <a class="button button-dark" href="/contacts/">
+        <a class="button button-dark" href={withBasePath("contacts/")}>
           <span>Запросить КП</span>
         </a>
       </div>

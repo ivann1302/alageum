@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://www.alageum.pro",
+  site: "https://ivann1302.github.io",
+  base: "/alageum",
 });

@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBasePath } from "../../lib/paths";
 
 const catalogItems = [
   {
     title: "Масляные трансформаторы",
     range: "25-2500 кВА",
     voltage: "6/10 кВ",
-    image: "/images/catalog-power-transformers.webp",
+    image: withBasePath("images/catalog-power-transformers.webp"),
     imageAlt: "Масляный силовой трансформатор Alageum Electric",
     lead: "Распределительные трансформаторы для сетей и промышленных объектов.",
     series: "ТМ, ТМГ, ТМГС, ТМГФ, ТМЭГ, ТМЗ, ОМ/ОМП",
@@ -15,7 +16,7 @@ const catalogItems = [
     title: "Сухие трансформаторы",
     range: "по ТЗ",
     voltage: "6-10 кВ",
-    image: "/images/catalog-distribution-transformers.webp",
+    image: withBasePath("images/catalog-distribution-transformers.webp"),
     imageAlt: "Сухой трансформатор Alageum Electric",
     lead: "Решения для внутренних помещений и объектов с повышенными требованиями к безопасности.",
     series: "ТСЛ(З), ТС(З)",
@@ -24,7 +25,7 @@ const catalogItems = [
     title: "Комплектные подстанции",
     range: "под проект",
     voltage: "6-35 кВ",
-    image: "/images/catalog-substations.webp",
+    image: withBasePath("images/catalog-substations.webp"),
     imageAlt: "Комплектная трансформаторная подстанция",
     lead: "КТП для приема, преобразования и распределения электроэнергии на объекте.",
     series: "КТП, БКТП, 2КТП",
@@ -33,7 +34,7 @@ const catalogItems = [
     title: "Трансформаторы тока",
     range: "по запросу",
     voltage: "6-35 кВ",
-    image: "/images/catalog-distribution-transformers.webp",
+    image: withBasePath("images/catalog-distribution-transformers.webp"),
     imageAlt: "Измерительное трансформаторное оборудование",
     lead: "Измерительные трансформаторы для подстанционных и распределительных проектов.",
     series: "ТОЛ, ТПЛ",
@@ -42,7 +43,7 @@ const catalogItems = [
     title: "Трансформаторы напряжения",
     range: "по запросу",
     voltage: "6-35 кВ",
-    image: "/images/catalog-power-transformers.webp",
+    image: withBasePath("images/catalog-power-transformers.webp"),
     imageAlt: "Подстанционное трансформаторное оборудование",
     lead: "Оборудование для измерения и контроля напряжения в электрических сетях.",
     series: "НАМИ, НТМИ",
@@ -51,7 +52,7 @@ const catalogItems = [
     title: "Подстанционное оборудование",
     range: "по проекту",
     voltage: "0,4-110 кВ",
-    image: "/images/catalog-substations.webp",
+    image: withBasePath("images/catalog-substations.webp"),
     imageAlt: "Подстанционное электротехническое оборудование",
     lead: "Высоковольтное и низковольтное оборудование под состав проектной поставки.",
     series: "РУВН, РУНН, разъединители, реакторы",
@@ -64,7 +65,7 @@ const catalogSchema = {
   name: "Каталог оборудования Alageum Electric",
   description:
     "Каталог трансформаторов, комплектных подстанций и подстанционного оборудования Alageum Electric для сетей 6-110 кВ.",
-  url: "https://www.alageum.pro/catalog/",
+  url: new URL(withBasePath("catalog/"), Astro.site),
   mainEntity: {
     "@type": "ItemList",
     itemListElement: catalogItems.map((item, index) => ({

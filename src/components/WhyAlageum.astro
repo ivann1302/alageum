@@ -1,4 +1,6 @@
 ---
+import { withBasePath } from "../lib/paths";
+
 const reasons = [
   {
     title: "Официальные поставки",
@@ -21,7 +23,7 @@ const reasons = [
 
 <section class="why-section" id="advantages" aria-labelledby="why-title">
   <div class="why-visual" data-reveal="panel" data-reveal-from="left">
-    <img src="/images/advantages-power-line.webp" width="1448" height="1086" alt="Опора линии электропередачи в поле" loading="lazy" decoding="async" />
+    <img src={withBasePath("images/advantages-power-line.webp")} width="1448" height="1086" alt="Опора линии электропередачи в поле" loading="lazy" decoding="async" />
   </div>
   <div class="why-body" data-reveal="panel" data-reveal-from="right">
     <h2 id="why-title">Поставка без лишних рисков</h2>

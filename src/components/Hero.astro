@@ -1,4 +1,6 @@
 ---
+import { withBasePath } from "../lib/paths";
+
 const stats = [
   { value: "30+", label: "предприятий в структуре" },
   { value: "12", label: "действующих заводов" },
@@ -9,7 +11,7 @@ const stats = [
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-transformer" aria-hidden="true">
-    <img src="/images/hero-substation-background-v2.webp" width="1774" height="887" fetchpriority="high" alt="" loading="eager" decoding="async" />
+    <img src={withBasePath("images/hero-substation-background-v2.webp")} width="1774" height="887" fetchpriority="high" alt="" loading="eager" decoding="async" />
   </div>
   <div class="container hero-inner">
     <div class="hero-copy">
@@ -17,7 +19,7 @@ const stats = [
       <h1 id="hero-title"><span>Трансформируем</span><span class="hero-title-outline">энергию</span></h1>
       <p class="hero-lead">Трансформаторное и подстанционное оборудование для промышленных объектов</p>
       <div class="hero-actions" aria-label="Основные действия">
-        <a class="hero-button hero-button-primary" href="/contacts/">Получить консультацию</a>
+        <a class="hero-button hero-button-primary" href={withBasePath("contacts/")}>Получить консультацию</a>
       </div>
     </div>
     <div class="hero-facts">

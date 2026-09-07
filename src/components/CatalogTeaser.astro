@@ -1,10 +1,12 @@
 ---
+import { withBasePath } from "../lib/paths";
+
 const catalogItems = [
   {
     title: "Силовые трансформаторы",
     description: "Оборудование для промышленных и энергетических объектов.",
     voltage: "35-110 кВ",
-    image: "/images/catalog-power-transformers.webp",
+    image: withBasePath("images/catalog-power-transformers.webp"),
     imageAlt: "Силовой трансформатор Alageum Electric",
     position: "center 58%",
   },
@@ -12,7 +14,7 @@ const catalogItems = [
     title: "Распределительные трансформаторы",
     description: "Решения для распределительных сетей и локальных объектов.",
     voltage: "6/10 кВ",
-    image: "/images/catalog-distribution-transformers.webp",
+    image: withBasePath("images/catalog-distribution-transformers.webp"),
     imageAlt: "Распределительный сухой трансформатор",
     position: "center center",
   },
@@ -20,7 +22,7 @@ const catalogItems = [
     title: "КТП и подстанции",
     description: "Комплектные решения под задачи объекта и условия установки.",
     voltage: "проект",
-    image: "/images/catalog-substations.webp",
+    image: withBasePath("images/catalog-substations.webp"),
     imageAlt: "Комплектная трансформаторная подстанция",
     position: "center center",
   },
@@ -38,7 +40,7 @@ const catalogItems = [
         </p>
       </div>
 
-      <a class="catalog-link button" href="/catalog/">Перейти в каталог</a>
+      <a class="catalog-link button" href={withBasePath("catalog/")}>Перейти в каталог</a>
     </div>
   </div>
 
@@ -47,7 +49,7 @@ const catalogItems = [
       catalogItems.map((item, index) => (
         <a
           class="catalog-card"
-          href="/catalog/"
+          href={withBasePath("catalog/")}
           aria-label={`Перейти в каталог: ${item.title}`}
           data-reveal="card"
           style={`--reveal-delay: ${index * 80}ms;`}
