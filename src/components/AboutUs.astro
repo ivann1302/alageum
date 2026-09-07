@@ -3,7 +3,7 @@
 
 <section class="about-section" id="about" aria-labelledby="about-title">
   <div class="container about-inner">
-    <div class="about-panel" aria-label="Ключевые факты о поставках" data-reveal="panel">
+    <div class="about-panel" aria-label="Ключевые факты о поставках" data-reveal="panel" data-reveal-from="left">
       <div class="panel-mark" aria-hidden="true">6-110 кВ</div>
       <ul class="about-facts">
         <li>
@@ -21,8 +21,7 @@
       </ul>
     </div>
 
-    <div class="about-copy" data-reveal="panel" style="--reveal-delay: 90ms;">
-      <span class="about-kicker">О компании</span>
+    <div class="about-copy" data-reveal="panel" data-reveal-from="right" style="--reveal-delay: 90ms;">
       <h2 id="about-title">Торговый дом <span>Alageum Electric</span> в России</h2>
       <p>
         ООО «ТД Алагеум Электрик Рус» поставляет трансформаторное и подстанционное
@@ -51,17 +50,6 @@
   .about-copy {
     min-width: 0;
     max-width: 780px;
-  }
-
-  .about-kicker {
-    display: inline-flex;
-    margin-bottom: 22px;
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 820;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
 
   .about-copy h2 {
@@ -175,6 +163,12 @@
 
     .about-panel {
       max-width: 560px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .about-section {
+      padding-top: 48px;
     }
   }
 

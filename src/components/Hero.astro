@@ -32,16 +32,44 @@
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-visual-panel">
         <div class="hero-visual-frame"></div>
-        <img
-          src="/images/transformer_hero_transparent_cropped.png"
-          alt=""
-          loading="eager"
-          decoding="async"
-        />
+        <div class="hero-transformer" data-hero-transformer>
+          <img
+            src="/images/transformer_hero_transparent_cropped.png"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const hero = document.querySelector(".hero");
+  const transformer = document.querySelector("[data-hero-transformer]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (hero instanceof HTMLElement && transformer instanceof HTMLElement) {
+    let frame = 0;
+
+    const updatePosition = () => {
+      frame = 0;
+      const progress = Math.min(1, Math.max(0, window.scrollY / hero.offsetHeight));
+      const distance = reducedMotion.matches ? 0 : progress * Math.min(64, window.innerWidth * 0.08);
+      transformer.style.setProperty("--transformer-scroll-x", `${distance}px`);
+    };
+
+    const scheduleUpdate = () => {
+      if (!frame) frame = requestAnimationFrame(updatePosition);
+    };
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    reducedMotion.addEventListener("change", scheduleUpdate);
+    updatePosition();
+  }
+</script>
 
 <style>
   .hero {
@@ -391,6 +419,14 @@
     animation-duration: 1320ms;
   }
 
+  .hero-transformer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    transform: translateX(var(--transformer-scroll-x, 0px));
+    transition: transform 240ms ease-out;
+  }
+
   .hero-visual-panel img {
     position: absolute;
     right: 0;
@@ -399,15 +435,12 @@
     width: min(730px, 100%);
     max-width: none;
     height: auto;
-    filter: drop-shadow(0 28px 46px rgba(15, 23, 42, 0.34));
     transform-origin: 56% 58%;
-    transition:
-      filter 240ms ease,
-      transform 280ms cubic-bezier(0.2, 0.65, 0.2, 1);
+    animation: hero-transformer-enter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) 150ms both;
+    transition: transform 280ms cubic-bezier(0.2, 0.65, 0.2, 1);
   }
 
   .hero-visual-panel:hover img {
-    filter: drop-shadow(0 34px 56px rgba(15, 23, 42, 0.4));
     transform: translate(-1.8%, -1.8%) scale(1.04);
   }
 
@@ -446,7 +479,7 @@
 
   @media (max-width: 620px) {
     .hero {
-      padding: 38px 0 64px;
+      padding: 18px 0 0;
     }
 
     .hero h1 {
@@ -506,6 +539,15 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-transformer {
+      transform: none;
+      transition: none;
+    }
+
+    .hero-visual-panel img {
+      animation: none;
+    }
+
     .hero-copy-intro {
       display: none;
     }
@@ -535,6 +577,18 @@
         40% 50%,
         56% 50%,
         0 50%;
+    }
+  }
+
+  @keyframes hero-transformer-enter {
+    from {
+      translate: 110% 0;
+      opacity: 0;
+    }
+
+    to {
+      translate: 0 0;
+      opacity: 1;
     }
   }
 

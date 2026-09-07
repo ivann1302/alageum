@@ -1,7 +1,6 @@
 ---
 const catalogItems = [
   {
-    index: "01",
     title: "Силовые трансформаторы",
     description: "Оборудование для промышленных и энергетических объектов.",
     voltage: "35-110 кВ",
@@ -10,7 +9,6 @@ const catalogItems = [
     position: "center 58%",
   },
   {
-    index: "02",
     title: "Распределительные трансформаторы",
     description: "Решения для распределительных сетей и локальных объектов.",
     voltage: "6/10 кВ",
@@ -19,7 +17,6 @@ const catalogItems = [
     position: "center center",
   },
   {
-    index: "03",
     title: "КТП и подстанции",
     description: "Комплектные решения под задачи объекта и условия установки.",
     voltage: "проект",
@@ -34,7 +31,6 @@ const catalogItems = [
   <div class="container catalog-teaser-inner">
     <div class="catalog-teaser-head" data-reveal="panel">
       <div class="catalog-teaser-copy">
-        <span class="catalog-kicker">Каталог</span>
         <h2 id="catalog-teaser-title">Каталог оборудования</h2>
         <p>
           Основные направления поставки для промышленных, энергетических и
@@ -48,13 +44,13 @@ const catalogItems = [
 
   <div class="catalog-grid" aria-label="Основные разделы каталога">
     {
-      catalogItems.map((item) => (
+      catalogItems.map((item, index) => (
         <a
           class="catalog-card"
           href="/catalog/"
           aria-label={`Перейти в каталог: ${item.title}`}
           data-reveal="card"
-          style={`--reveal-delay: ${(Number(item.index) - 1) * 80}ms;`}
+          style={`--reveal-delay: ${index * 80}ms;`}
         >
           <span class="catalog-card-frame">
             <span class="catalog-card-media">
@@ -69,7 +65,6 @@ const catalogItems = [
 
             <span class="catalog-card-body">
               <span class="catalog-card-meta">
-                <span>{item.index}</span>
                 <span>{item.voltage}</span>
               </span>
               <span class="catalog-card-title">{item.title}</span>
@@ -106,17 +101,6 @@ const catalogItems = [
   .catalog-teaser-copy {
     max-width: 780px;
     min-width: 0;
-  }
-
-  .catalog-kicker {
-    display: inline-flex;
-    margin-bottom: 18px;
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 820;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
 
   .catalog-teaser h2 {

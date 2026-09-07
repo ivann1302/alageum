@@ -4,7 +4,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 const catalogItems = [
   {
     title: "Масляные трансформаторы",
-    code: "01",
     range: "25-2500 кВА",
     voltage: "6/10 кВ",
     image: "/images/catalog-power-transformers.webp",
@@ -14,7 +13,6 @@ const catalogItems = [
   },
   {
     title: "Сухие трансформаторы",
-    code: "02",
     range: "по ТЗ",
     voltage: "6-10 кВ",
     image: "/images/catalog-distribution-transformers.webp",
@@ -24,7 +22,6 @@ const catalogItems = [
   },
   {
     title: "Комплектные подстанции",
-    code: "03",
     range: "под проект",
     voltage: "6-35 кВ",
     image: "/images/catalog-substations.webp",
@@ -34,7 +31,6 @@ const catalogItems = [
   },
   {
     title: "Трансформаторы тока",
-    code: "04",
     range: "по запросу",
     voltage: "6-35 кВ",
     image: "/images/catalog-distribution-transformers.webp",
@@ -44,7 +40,6 @@ const catalogItems = [
   },
   {
     title: "Трансформаторы напряжения",
-    code: "05",
     range: "по запросу",
     voltage: "6-35 кВ",
     image: "/images/catalog-power-transformers.webp",
@@ -54,7 +49,6 @@ const catalogItems = [
   },
   {
     title: "Подстанционное оборудование",
-    code: "06",
     range: "по проекту",
     voltage: "0,4-110 кВ",
     image: "/images/catalog-substations.webp",
@@ -89,7 +83,6 @@ const catalogSchema = {
   <main class="catalog-page">
     <section class="catalog-section" aria-labelledby="catalog-title">
       <div class="catalog-heading">
-        <p class="catalog-code">Alageum · каталог</p>
         <h1 id="catalog-title">Каталог оборудования</h1>
       </div>
 
@@ -103,7 +96,6 @@ const catalogSchema = {
         />
 
         <figcaption class="catalog-caption">
-          <span data-catalog-code>{catalogItems[0].code}</span>
           <strong data-catalog-title>{catalogItems[0].title}</strong>
           <em data-catalog-meta>{catalogItems[0].range} · {catalogItems[0].voltage}</em>
         </figcaption>
@@ -128,7 +120,6 @@ const catalogSchema = {
               data-catalog-tab
               data-index={String(index)}
             >
-              <span>{item.code}</span>
               <strong>{item.title}</strong>
             </button>
           ))
@@ -149,7 +140,6 @@ const catalogSchema = {
       const dataElement = document.getElementById("catalog-data");
       const tabs = Array.from(document.querySelectorAll("[data-catalog-tab]"));
       const image = document.querySelector("[data-catalog-image]");
-      const code = document.querySelector("[data-catalog-code]");
       const title = document.querySelector("[data-catalog-title]");
       const meta = document.querySelector("[data-catalog-meta]");
       const description = document.querySelector("[data-catalog-description]");
@@ -159,7 +149,6 @@ const catalogSchema = {
       if (
         !dataElement ||
         !(image instanceof HTMLImageElement) ||
-        !(code instanceof HTMLElement) ||
         !(title instanceof HTMLElement) ||
         !(meta instanceof HTMLElement) ||
         !(description instanceof HTMLElement) ||
@@ -189,7 +178,6 @@ const catalogSchema = {
 
         image.src = item.image;
         image.alt = item.imageAlt;
-        code.textContent = item.code;
         title.textContent = item.title;
         meta.textContent = `${item.range} · ${item.voltage}`;
         description.textContent = item.lead;
@@ -262,19 +250,9 @@ const catalogSchema = {
     max-width: 640px;
   }
 
-  .catalog-code {
-    margin: 0;
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 860;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
   .catalog-heading h1 {
     max-width: 620px;
-    margin: 12px 0 0;
+    margin: 0;
     color: var(--color-heading);
     font-size: clamp(2.1rem, 3.25vw, 3.72rem);
     font-weight: 950;
@@ -302,7 +280,7 @@ const catalogSchema = {
     position: relative;
     isolation: isolate;
     display: grid;
-    grid-template-columns: 46px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 16px;
     width: 100%;
@@ -360,21 +338,6 @@ const catalogSchema = {
   .catalog-tab:focus-visible::before,
   .catalog-tab.is-active::before {
     background: var(--color-industrial-red);
-  }
-
-  .catalog-tab span {
-    color: rgba(15, 23, 42, 0.38);
-    font-family: var(--font-mono);
-    font-size: 1.18rem;
-    font-weight: 900;
-    line-height: 1;
-    transition: color 220ms ease;
-  }
-
-  .catalog-tab:hover span,
-  .catalog-tab:focus-visible span,
-  .catalog-tab.is-active span {
-    color: rgba(255, 255, 255, 0.84);
   }
 
   .catalog-tab strong {
@@ -455,14 +418,6 @@ const catalogSchema = {
     border-top: 1px solid rgba(15, 23, 42, 0.16);
     background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.94) 26%);
     color: var(--color-heading);
-  }
-
-  .catalog-caption span {
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 1.36rem;
-    font-weight: 900;
-    line-height: 1;
   }
 
   .catalog-caption strong {
@@ -617,7 +572,6 @@ const catalogSchema = {
     }
 
     .catalog-tab {
-      grid-template-columns: 42px minmax(0, 1fr);
       min-height: 78px;
       padding: 18px 20px;
     }
@@ -638,7 +592,6 @@ const catalogSchema = {
   @media (prefers-reduced-motion: reduce) {
     .catalog-tab,
     .catalog-tab::before,
-    .catalog-tab span,
     .catalog-media.is-swapping img {
       animation: none;
       transition: none;

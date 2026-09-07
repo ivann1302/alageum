@@ -49,7 +49,6 @@ const faqSchema = {
 <section class="faq-section" aria-labelledby="faq-title">
   <div class="container faq-inner">
     <div class="faq-head" data-reveal="panel">
-      <span class="faq-kicker">FAQ</span>
       <h2 id="faq-title" aria-label="Частые вопросы перед заказом">
         <span>Частые вопросы</span>
         {" "}
@@ -71,7 +70,6 @@ const faqSchema = {
             style={`--reveal-delay: ${Math.min(index * 55, 220)}ms;`}
           >
             <summary>
-              <span class="faq-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <span class="faq-question">{item.question}</span>
               <span class="faq-toggle" aria-hidden="true"></span>
             </summary>
@@ -135,17 +133,6 @@ const faqSchema = {
 
   .faq-head {
     min-width: 0;
-  }
-
-  .faq-kicker {
-    display: inline-flex;
-    margin-bottom: 18px;
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 820;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
 
   .faq-head h2 {
@@ -241,7 +228,7 @@ const faqSchema = {
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 54px minmax(0, 1fr) 34px;
+    grid-template-columns: minmax(0, 1fr) 34px;
     gap: 18px;
     align-items: center;
     min-height: 86px;
@@ -252,14 +239,6 @@ const faqSchema = {
 
   .faq-item summary::-webkit-details-marker {
     display: none;
-  }
-
-  .faq-index {
-    color: var(--color-industrial-red);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 840;
-    transition: color 180ms ease;
   }
 
   .faq-question {
@@ -301,7 +280,7 @@ const faqSchema = {
   .faq-answer {
     position: relative;
     z-index: 1;
-    padding: 0 24px 26px 96px;
+    padding: 0 24px 26px;
   }
 
   .faq-answer p {
@@ -313,9 +292,6 @@ const faqSchema = {
     transition: color 180ms ease;
   }
 
-  .faq-item[open] .faq-index,
-  .faq-item:hover .faq-index,
-  .faq-item:focus-within .faq-index,
   .faq-item[open] .faq-answer p,
   .faq-item:hover .faq-answer p,
   .faq-item:focus-within .faq-answer p {
@@ -349,10 +325,6 @@ const faqSchema = {
       padding: 20px;
     }
 
-    .faq-index {
-      grid-column: 1 / -1;
-    }
-
     .faq-answer {
       padding: 0 20px 24px;
     }
@@ -367,7 +339,6 @@ const faqSchema = {
   @media (prefers-reduced-motion: reduce) {
     .faq-item,
     .faq-item::before,
-    .faq-index,
     .faq-toggle::before,
     .faq-toggle::after,
     .faq-answer p {

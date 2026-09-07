@@ -1,25 +1,21 @@
 ---
 const reasons = [
   {
-    index: "01",
     title: "Официальные поставки",
     text: "Работаем с оборудованием предприятий Alageum Electric и сопровождаем запрос до отгрузки.",
     tag: "заводы",
   },
   {
-    index: "02",
     title: "Подбор под проект",
     text: "Учитываем тип оборудования, мощность, напряжение, исполнение и условия установки.",
     tag: "ТЗ",
   },
   {
-    index: "03",
     title: "Документы и КП",
     text: "Готовим коммерческое предложение и техническую информацию для согласования.",
     tag: "КП",
   },
   {
-    index: "04",
     title: "Логистика по России",
     text: "Согласуем поставку под сроки проекта и особенности промышленного объекта.",
     tag: "РФ",
@@ -30,7 +26,6 @@ const reasons = [
 <section class="why-section" aria-labelledby="why-title">
   <div class="container why-inner">
     <div class="why-head" data-reveal="panel">
-      <span class="why-kicker">Почему Alageum</span>
       <h2 id="why-title">Поставка без лишних рисков</h2>
       <p>
         Помогаем пройти путь от проектного запроса до коммерческого предложения,
@@ -46,7 +41,6 @@ const reasons = [
             data-reveal="item"
             style={`--reveal-delay: ${index * 70}ms;`}
           >
-            <span class="why-index" aria-hidden="true">{reason.index}</span>
             <div class="why-content">
               <h3>{reason.title}</h3>
               <p>{reason.text}</p>
@@ -95,17 +89,6 @@ const reasons = [
     );
   }
 
-  .why-kicker {
-    display: inline-flex;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.78);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 820;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
   .why-head h2 {
     margin: 0;
     color: #ffffff;
@@ -129,7 +112,7 @@ const reasons = [
 
   .why-row {
     display: grid;
-    grid-template-columns: 54px minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 22px;
     align-items: center;
     min-height: 116px;
@@ -150,16 +133,9 @@ const reasons = [
     color: #ffffff;
   }
 
-  .why-index,
   .why-tag {
     font-family: var(--font-mono);
     font-weight: 820;
-  }
-
-  .why-index {
-    color: var(--color-industrial-red);
-    font-size: 0.85rem;
-    transition: color 180ms ease;
   }
 
   .why-content h3 {
@@ -188,8 +164,6 @@ const reasons = [
     transition: color 180ms ease;
   }
 
-  .why-row:hover .why-index,
-  .why-row:focus-within .why-index,
   .why-row:hover .why-content p,
   .why-row:focus-within .why-content p,
   .why-row:hover .why-tag,
@@ -231,10 +205,6 @@ const reasons = [
     .why-row:focus-within {
       padding-right: 14px;
       padding-left: 14px;
-    }
-
-    .why-index {
-      grid-column: 1 / -1;
     }
 
     .why-tag {

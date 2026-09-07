@@ -70,6 +70,18 @@ html.reveal-motion [data-reveal="item"] {
   --reveal-y: 12px;
 }
 
+@media (min-width: 1041px) {
+  html.reveal-motion [data-reveal-from="left"] {
+    --reveal-x: -80px;
+    --reveal-y: 0px;
+  }
+
+  html.reveal-motion [data-reveal-from="right"] {
+    --reveal-x: 80px;
+    --reveal-y: 0px;
+  }
+}
+
 html.reveal-motion [data-reveal].is-revealed {
   opacity: 1;
   translate: 0 0;

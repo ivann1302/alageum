@@ -18,7 +18,7 @@ const navItems = [
       class="nav-toggle"
       type="button"
       aria-expanded="false"
-      aria-controls="site-navigation"
+      aria-controls="header-menu"
       data-nav-toggle
     >
       <span class="sr-only">Открыть меню</span>
@@ -27,15 +27,17 @@ const navItems = [
       <span class="nav-toggle-line" aria-hidden="true"></span>
     </button>
 
-    <nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav>
-      {navItems.map((item) => <a class="nav-link" href={item.href}>{item.label}</a>)}
-    </nav>
+    <div class="header-menu" id="header-menu" data-header-menu>
+      <nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav>
+        {navItems.map((item) => <a class="nav-link" href={item.href}>{item.label}</a>)}
+      </nav>
 
-    <div class="header-actions">
-      <a class="phone-link" href="tel:+74957499103">+7 (495) 74-99-103</a>
-      <a class="quote-link" href="/contacts/">
-        <span>Запросить КП</span>
-      </a>
+      <div class="header-actions">
+        <a class="phone-link" href="tel:+74957499103">+7 (495) 74-99-103</a>
+        <a class="quote-link" href="/contacts/">
+          <span>Запросить КП</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -44,10 +46,14 @@ const navItems = [
 <script>
   const header = document.querySelector("[data-site-header]");
   const toggle = document.querySelector("[data-nav-toggle]");
-  const nav = document.querySelector("[data-site-nav]");
+  const menu = document.querySelector("[data-header-menu]");
+  const toggleLabel = toggle?.querySelector(".sr-only");
 
   const setScrolledState = () => {
-    header?.classList.toggle("is-scrolled", window.scrollY > 12);
+    if (!header) return;
+
+    const isScrolled = header.classList.contains("is-scrolled");
+    header.classList.toggle("is-scrolled", window.scrollY > (isScrolled ? 4 : 12));
   };
 
   const setViewportState = () => {
@@ -85,11 +91,22 @@ const navItems = [
     if (width > 1040) {
       closeMenu();
     }
+
+    if (menu instanceof HTMLElement) {
+      menu.inert = width <= 1040 && !header.classList.contains("is-menu-open");
+    }
   };
 
   const closeMenu = () => {
     toggle?.setAttribute("aria-expanded", "false");
     header?.classList.remove("is-menu-open");
+    if (toggleLabel) toggleLabel.textContent = "Открыть меню";
+    if (menu instanceof HTMLElement) {
+      if (menu.contains(document.activeElement) && toggle instanceof HTMLElement) {
+        toggle.focus();
+      }
+      menu.inert = window.innerWidth <= 1040;
+    }
   };
 
   setScrolledState();
@@ -99,12 +116,24 @@ const navItems = [
 
   toggle?.addEventListener("click", () => {
     const isOpen = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!isOpen));
-    header?.classList.toggle("is-menu-open", !isOpen);
+    if (isOpen) {
+      closeMenu();
+      return;
+    }
+    toggle.setAttribute("aria-expanded", "true");
+    header?.classList.add("is-menu-open");
+    if (toggleLabel) toggleLabel.textContent = "Закрыть меню";
+    if (menu instanceof HTMLElement) menu.inert = false;
   });
 
-  nav?.addEventListener("click", (event) => {
+  menu?.addEventListener("click", (event) => {
     if (event.target instanceof HTMLAnchorElement) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Node && !header?.contains(event.target)) {
       closeMenu();
     }
   });
@@ -120,14 +149,25 @@ const navItems = [
   .site-header {
     --header-bg: rgba(255, 255, 255, 0.94);
     --header-border-color: rgba(219, 227, 238, 0.72);
-    --header-clip: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    --header-clip: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      calc(100% - 34px) 100%,
+      calc(100% - 54px) 100%,
+      54px 100%,
+      34px 100%,
+      0 100%
+    );
     --header-edge-opacity: 0;
+    --header-collapse: 0px;
 
     position: sticky;
     top: 0;
     z-index: 50;
     isolation: isolate;
     overflow: visible;
+    min-height: 84px;
     border-bottom: 0;
     background: transparent;
   }
@@ -136,6 +176,7 @@ const navItems = [
     content: "";
     position: absolute;
     inset: 0;
+    bottom: var(--header-collapse);
     z-index: 0;
     background: var(--header-bg);
     box-shadow: inset 0 -1px var(--header-border-color);
@@ -146,6 +187,7 @@ const navItems = [
     pointer-events: none;
     transition:
       background 180ms ease,
+      bottom 180ms ease,
       box-shadow 180ms ease,
       -webkit-clip-path 220ms ease,
       clip-path 220ms ease;
@@ -156,7 +198,7 @@ const navItems = [
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -2px;
+    bottom: calc(var(--header-collapse) - 2px);
     z-index: 2;
     height: 17px;
     background: var(--color-industrial-red);
@@ -190,10 +232,11 @@ const navItems = [
       34.5px 1.5px,
       0 1.5px
     );
-    transition: opacity 180ms ease;
+    transition: opacity 180ms ease, bottom 180ms ease;
   }
 
   .site-header.is-scrolled {
+    --header-collapse: 16px;
     --header-bg: rgba(255, 255, 255, 0.98);
     --header-border-color: transparent;
     --header-edge-opacity: 1;
@@ -237,6 +280,10 @@ const navItems = [
     width: 174px;
     height: auto;
     display: block;
+  }
+
+  .header-menu {
+    display: contents;
   }
 
   .site-nav {
@@ -394,7 +441,7 @@ const navItems = [
   }
 
   .site-header.is-menu-open .nav-toggle span:nth-child(2) {
-    transform: translateY(6px) rotate(45deg);
+    transform: translateY(10px) rotate(45deg);
   }
 
   .site-header.is-menu-open .nav-toggle span:nth-child(3) {
@@ -402,7 +449,7 @@ const navItems = [
   }
 
   .site-header.is-menu-open .nav-toggle span:nth-child(4) {
-    transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-10px) rotate(-45deg);
   }
 
   @keyframes cta-pulse {
@@ -451,32 +498,43 @@ const navItems = [
     z-index: 80;
   }
 
-  .site-header.is-compact .site-nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: stretch;
-    display: grid;
-    gap: 0;
-    padding-bottom: 0;
-    max-height: 0;
-    overflow: hidden;
-    border: 0 solid var(--color-border);
-    border-radius: var(--radius-md);
+  .site-header.is-compact .header-menu {
+    position: fixed;
+    top: 84px;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: min(420px, 100%);
+    padding: 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: #ffffff;
-    opacity: 0;
-    transform: translateY(-8px);
+    box-shadow: 12px 16px 32px rgba(15, 23, 42, 0.12);
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-110%);
     transition:
-      max-height 220ms ease,
-      border-width 220ms ease,
-      opacity 180ms ease,
-      transform 180ms ease;
+      transform 360ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      visibility 0s linear 360ms;
   }
 
-  .site-header.is-compact.is-menu-open .site-nav {
-    max-height: 320px;
-    border-width: 1px;
-    opacity: 1;
-    transform: translateY(0);
+  .site-header.is-compact.is-scrolled .header-menu {
+    top: 68px;
+  }
+
+  .site-header.is-compact.is-menu-open .header-menu {
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition-delay: 0s;
+  }
+
+  .site-header.is-compact .site-nav {
+    display: grid;
+    gap: 4px;
+    width: 100%;
   }
 
   .site-header.is-compact .nav-link {
@@ -524,10 +582,18 @@ const navItems = [
   }
 
   .site-header.is-compact .header-actions {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
     padding-bottom: 14px;
+  }
+
+  .site-header.is-phone {
+    min-height: 72px;
+  }
+
+  .site-header.is-phone.is-scrolled {
+    --header-collapse: 8px;
   }
 
   .site-header.is-phone .header-inner {
@@ -546,16 +612,12 @@ const navItems = [
     width: 148px;
   }
 
-  .site-header.is-phone .header-actions {
-    display: none;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
-    padding-bottom: 14px;
+  .site-header.is-phone .header-menu {
+    top: 72px;
   }
 
-  .site-header.is-phone.is-menu-open .header-actions {
-    display: flex;
+  .site-header.is-phone.is-scrolled .header-menu {
+    top: 64px;
   }
 
   .site-header.is-phone .quote-link {
@@ -579,6 +641,7 @@ const navItems = [
     .quote-link::before,
     .quote-link::after,
     .site-nav,
+    .site-header.is-compact .header-menu,
     .nav-toggle-line {
       animation: none;
       transition: none;
