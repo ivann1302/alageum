@@ -33,16 +33,6 @@ const stats = [
         <a class="hero-button hero-button-primary" href={withBasePath("contacts/")}>Получить консультацию</a>
       </div>
     </div>
-    <div class="hero-facts">
-      <dl class="hero-stats">
-        {stats.map((stat) => (
-          <div class="hero-stat">
-            <dt>{stat.label}</dt>
-            <dd><span class="sr-only">{stat.value}</span><span data-count-up aria-hidden="true">{stat.value}</span></dd>
-          </div>
-        ))}
-      </dl>
-    </div>
   </div>
 </section>
 
@@ -163,48 +153,6 @@ const stats = [
     filter: contrast(1.18) brightness(0.96);
   }
 
-  .hero-facts { margin-top: 64px; }
-
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(20px, 5vw, 80px);
-    max-width: 1050px;
-    margin: 0;
-  }
-
-  .hero-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
-  }
-
-  .hero-stat dd {
-    order: -1;
-    margin: 0;
-    color: #e30620;
-    font-size: clamp(2.5rem, 4.2vw, 4.3rem);
-    font-weight: 950;
-    line-height: 1;
-    letter-spacing: -0.04em;
-  }
-
-  .hero-stat dt {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 40px;
-    padding: 6px 12px;
-    background: #e30620;
-    color: #ffffff;
-    font-size: 0.72rem;
-    font-weight: 650;
-    line-height: 1.15;
-  }
-
   @media (max-width: 640px) {
     .hero {
       --hero-mobile-height: min(var(--hero-viewport, 100svh), 100svh);
@@ -232,9 +180,6 @@ const stats = [
     .hero-transformer img { object-position: 60% top; }
     .hero-transformer { bottom: auto; height: var(--hero-mobile-height); }
     .hero::after { background: none; }
-    .hero-facts { margin-top: 0; padding: 32px 12px 0; }
-    .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
-    .hero-stat dd { font-size: 2.6rem; }
   }
 
   @media (max-width: 640px) and (max-height: 600px) {
