@@ -26,8 +26,8 @@ test("the built site exposes company and privacy information from every page", a
   assert.match(legalPage, /id="privacy"/);
   assert.match(legalPage, /техническ(?:ие|их) данн(?:ые|ых)/i);
 
-  assert.match(homePage, /href="\/legal\/"[^>]*>Юридическая информация<\/a>/);
-  assert.match(homePage, /href="\/legal\/#privacy"[^>]*>Конфиденциальность<\/a>/);
+  assert.match(homePage, /href="\/alageum\/legal\/"[^>]*>Юридическая информация<\/a>/);
+  assert.match(homePage, /href="\/alageum\/legal\/#privacy"[^>]*>Конфиденциальность<\/a>/);
   assert.match(contactsPage, /href="mailto:info@tdatrans\.ru"/);
   assert.doesNotMatch(`${legalPage}${homePage}${contactsPage}`, /info@alageum\.pro/);
 });

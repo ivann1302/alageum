@@ -24,13 +24,15 @@ test("published pages expose canonical and social sharing metadata", async () =>
 
   assert.match(homePage, /<link rel="canonical" href="https:\/\/tdatrans\.ru\/">/);
   assert.match(productPage, /<link rel="canonical" href="https:\/\/tdatrans\.ru\/tmg\/">/);
+  assert.match(homePage, /href="\/alageum\/_astro\/[^" ]+\.css"/);
+  assert.match(homePage, /src="\/alageum\/images\/hero-substation-background-v2\.webp"/);
   assert.match(homePage, /<meta property="og:site_name" content="Торговый Дом А-Транс">/);
   assert.match(homePage, /<meta property="og:title" content="Торговый Дом А-Транс — трансформаторное и подстанционное оборудование">/);
   assert.match(homePage, /<meta property="og:url" content="https:\/\/tdatrans\.ru\/">/);
   assert.match(homePage, /<meta property="og:image" content="https:\/\/tdatrans\.ru\/images\/social-preview\.png">/);
   assert.match(homePage, /<meta name="twitter:card" content="summary_large_image">/);
-  assert.match(homePage, /<link rel="icon"[^>]*href="\/favicon\.png">/);
-  assert.match(homePage, /<link rel="apple-touch-icon"[^>]*href="\/apple-touch-icon\.png">/);
+  assert.match(homePage, /<link rel="icon"[^>]*href="\/alageum\/favicon\.png">/);
+  assert.match(homePage, /<link rel="apple-touch-icon"[^>]*href="\/alageum\/apple-touch-icon\.png">/);
 });
 
 test("sharing and browser icons have the declared dimensions", async () => {

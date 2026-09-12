@@ -17,8 +17,12 @@ const {
   headerOverlay = false,
 } = Astro.props;
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const socialImageUrl = new URL(withBasePath("images/social-preview.png"), Astro.site);
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonicalPath = basePath && Astro.url.pathname.startsWith(`${basePath}/`)
+  ? Astro.url.pathname.slice(basePath.length)
+  : Astro.url.pathname;
+const canonicalUrl = new URL(canonicalPath || "/", Astro.site);
+const socialImageUrl = new URL("/images/social-preview.png", Astro.site);
 ---
 
 <!doctype html>
