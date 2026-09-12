@@ -11,6 +11,11 @@ const faqs = [
       "Да. При подборе важны тип оборудования, мощность, напряжение ВН/НН, исполнение, условия установки и требования объекта. Если есть опросный лист, спецификация или проектная документация, их лучше приложить к запросу.",
   },
   {
+    question: "Какая гарантия действует на оборудование?",
+    answer:
+      "Стандартная гарантия — 3,5 года. По запросу предоставляется расширенная гарантия до 5 лет.",
+  },
+  {
     question: "Какие данные нужны для коммерческого предложения?",
     answer:
       "Для подготовки КП обычно нужны реквизиты компании, контактное лицо, требуемое оборудование, мощность, напряжение, срок поставки, адрес или регион доставки и файл проекта или спецификации, если он уже есть.",
@@ -55,7 +60,7 @@ const faqSchema = {
         <span>перед заказом</span>
       </h2>
       <p>
-        Собрали ответы по подбору, документам, доставке и условиям работы с
+        Собрали ответы по подбору, гарантии, документам, доставке и условиям работы с
         трансформаторным оборудованием Alageum Electric.
       </p>
     </div>
@@ -65,6 +70,7 @@ const faqSchema = {
         faqs.map((item, index) => (
           <details
             class="faq-item"
+            name="faq"
             open={index === 0}
             data-reveal="item"
             style={`--reveal-delay: ${Math.min(index * 55, 220)}ms;`}
@@ -74,7 +80,9 @@ const faqSchema = {
               <span class="faq-toggle" aria-hidden="true"></span>
             </summary>
             <div class="faq-answer">
-              <p>{item.answer}</p>
+              <div class="faq-answer-content">
+                <p>{item.answer}</p>
+              </div>
             </div>
           </details>
         ))
@@ -82,6 +90,74 @@ const faqSchema = {
     </div>
   </div>
 </section>
+
+<script>
+  const faqItems = Array.from(document.querySelectorAll<HTMLDetailsElement>(".faq-item"));
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let isAnimating = false;
+
+  const animateFaq = async (details: HTMLDetailsElement, opening: boolean) => {
+    const answer = details.querySelector<HTMLElement>(".faq-answer");
+    if (!answer || reducedMotion.matches || typeof answer.animate !== "function") {
+      details.open = opening;
+      return;
+    }
+
+    if (opening) details.open = true;
+    const height = answer.scrollHeight;
+    const animation = answer.animate(
+      opening
+        ? [
+            { height: "0", opacity: 0, transform: "translateY(-6px)" },
+            { height: `${height}px`, opacity: 1, transform: "translateY(0)" },
+          ]
+        : [
+            { height: `${height}px`, opacity: 1, transform: "translateY(0)" },
+            { height: "0", opacity: 0, transform: "translateY(-6px)" },
+          ],
+      {
+        duration: 360,
+        easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+        fill: "both",
+      },
+    );
+
+    try {
+      await animation.finished;
+    } catch {
+      // A cancelled animation is already in its final state.
+    }
+    animation.cancel();
+    if (!opening) details.open = false;
+  };
+
+  faqItems.forEach((details) => {
+    const summary = details.querySelector("summary");
+    summary?.addEventListener("click", async (event) => {
+      event.preventDefault();
+      if (isAnimating) return;
+      isAnimating = true;
+
+      if (details.open) {
+        await animateFaq(details, false);
+      } else {
+        const current = faqItems.find((item) => item !== details && item.open);
+        if (current) {
+          current.removeAttribute("name");
+          try {
+            await Promise.all([animateFaq(current, false), animateFaq(details, true)]);
+          } finally {
+            current.setAttribute("name", "faq");
+          }
+        } else {
+          await animateFaq(details, true);
+        }
+      }
+
+      isAnimating = false;
+    });
+  });
+</script>
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
@@ -95,15 +171,16 @@ const faqSchema = {
   .faq-item { border-bottom: 1px solid var(--color-border); }
   .faq-item summary { display: grid; grid-template-columns: minmax(0, 1fr) 24px; gap: 20px; align-items: center; padding: 24px 0; cursor: pointer; list-style: none; }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-question { font-size: 1rem; font-weight: 750; line-height: 1.4; transition: color 180ms ease; }
+  .faq-question { font-size: 1rem; font-weight: 750; line-height: 1.4; transition: color 280ms ease; }
   .faq-item[open] .faq-question, .faq-item summary:hover .faq-question { color: var(--color-industrial-red); }
   .faq-toggle { position: relative; width: 24px; height: 24px; }
   .faq-toggle::before, .faq-toggle::after { content: ""; position: absolute; top: 11px; left: 5px; width: 14px; height: 2px; background: currentColor; }
-  .faq-toggle::after { transform: rotate(90deg); transition: transform 180ms ease; }
+  .faq-toggle::after { transform: rotate(90deg); transition: transform 300ms cubic-bezier(0.65, 0, 0.35, 1); }
   .faq-item[open] .faq-toggle::after { transform: rotate(0); }
-  .faq-answer { padding: 0 44px 24px 0; }
+  .faq-answer { overflow: hidden; }
+  .faq-answer-content { padding: 0 44px 24px 0; }
   .faq-answer p { margin: 0; color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; }
   @media (max-width: 900px) { .faq-inner { grid-template-columns: 1fr; gap: 32px; } }
-  @media (max-width: 640px) { .faq-answer { padding-right: 0; } }
+  @media (max-width: 640px) { .faq-answer-content { padding-right: 0; } }
   @media (prefers-reduced-motion: reduce) { .faq-question, .faq-toggle::after { transition: none; } }
 </style>

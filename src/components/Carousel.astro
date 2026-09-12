@@ -1,0 +1,81 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  previousLabel: string;
+  nextLabel: string;
+  showSwipeHint?: boolean;
+}
+
+const {
+  id,
+  label,
+  previousLabel,
+  nextLabel,
+  showSwipeHint = false,
+} = Astro.props;
+---
+
+<div class="carousel" data-circular-carousel>
+  {
+    showSwipeHint && (
+      <div class="container carousel-controls">
+        <span class="carousel-swipe-hint" aria-hidden="true" data-carousel-hint>
+          <span class="carousel-swipe-track"><span class="carousel-swipe-dot"></span></span>
+          Листайте
+        </span>
+      </div>
+    )
+  }
+
+  <div class="container carousel-frame">
+    <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label={previousLabel} aria-controls={id} data-carousel-prev></button>
+
+    <div class="carousel-track" id={id} tabindex="0" aria-label={label} data-carousel-viewport>
+      <slot />
+    </div>
+
+    <button class="carousel-arrow carousel-arrow-next" type="button" aria-label={nextLabel} aria-controls={id} data-carousel-next></button>
+  </div>
+</div>
+
+<style>
+  .carousel-frame { position: relative; --carousel-gap: 28px; --carousel-media-height: clamp(220px, 23vw, 300px); }
+  .carousel-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--carousel-gap) * 2)) / 3); gap: var(--carousel-gap); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track > :global([data-carousel-item]) { min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+  .carousel-controls { display: none; }
+  .carousel-arrow { position: absolute; z-index: 2; top: calc(var(--carousel-media-height) / 2); display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 0; border-radius: 0; color: #ffffff; background: var(--color-industrial-red); cursor: pointer; transform: translateY(-50%); transition: background-color 180ms ease; }
+  .carousel-arrow::before { content: ""; width: 13px; height: 13px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; }
+  .carousel-arrow-prev { left: 8px; }
+  .carousel-arrow-prev::before { margin-left: 5px; transform: rotate(-135deg); }
+  .carousel-arrow-next { right: 8px; }
+  .carousel-arrow-next::before { margin-right: 5px; transform: rotate(45deg); }
+  .carousel-arrow:hover { background: #bd0016; }
+  .carousel-swipe-hint { display: inline-flex; align-items: center; gap: 10px; color: var(--color-muted); font-size: 0.8rem; }
+  .carousel-swipe-hint.is-dismissed { visibility: hidden; }
+  .carousel-swipe-track { position: relative; width: 36px; height: 2px; background: var(--color-border); }
+  .carousel-swipe-dot { position: absolute; top: -3px; left: 28px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); }
+  .carousel-swipe-hint.is-visible .carousel-swipe-dot { animation: carousel-swipe 1.6s ease-in-out 2; }
+  .carousel-swipe-hint.is-dismissed .carousel-swipe-dot { animation: none; }
+  @keyframes carousel-swipe {
+    0%, 15%, 100% { transform: translateX(0); }
+    65%, 80% { transform: translateX(-28px); }
+  }
+  @media (max-width: 900px) {
+    .carousel-frame { --carousel-gap: 20px; }
+  }
+  @media (max-width: 640px) {
+    .carousel-frame { --carousel-gap: 16px; --carousel-media-height: clamp(220px, 65vw, 280px); }
+    .carousel-track { grid-auto-columns: 100%; }
+    .carousel-controls { display: flex; align-items: center; margin-bottom: 16px; }
+    .carousel-arrow { width: 44px; height: 44px; }
+    .carousel-arrow-prev { left: 4px; }
+    .carousel-arrow-next { right: 4px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track { scroll-behavior: auto; }
+    .carousel-arrow { transition: none; }
+    .carousel-swipe-hint.is-visible .carousel-swipe-dot { animation: none; }
+  }
+</style>

@@ -1,0 +1,76 @@
+{
+  "importedAt": "2026-09-11",
+  "scope": "Основные серии без отдельных карточек всех мощностей",
+  "items": [
+    {
+      "id": "tm",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-tm/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/57c/s4qiebnyhuooacvf305m56v8rgikdiwq.jpg",
+      "productSource": "https://trans-mtk.com/catalog/transformatory-tm/tm-800/",
+      "file": "public/images/catalog/tm.webp"
+    },
+    {
+      "id": "tmg",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-tmg/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/1f3/jcc48nkdu4v3e9207j8ikv1p0m3vock1.jpg",
+      "productSource": "https://trans-mtk.com/catalog/transformatory-tmg/tmg-400-6-10-0-4-elektroshchit-g-chekhov/",
+      "file": "public/images/catalog/tmg.webp"
+    },
+    {
+      "id": "tmz",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-tmz/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/9b9/zlu97zkht6iutrlxinyseug2qot2iwzn.jpg",
+      "productSource": "https://trans-mtk.com/catalog/transformatory-tmz/ktz-tmz-250-10-0-4-u-un-0/",
+      "file": "public/images/catalog/tmz.webp"
+    },
+    {
+      "id": "tmn",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-tmn/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/48e/o4xdgl0yvth7kr9ykdzs0o6yroz2b1j8.png",
+      "productSource": "https://trans-mtk.com/catalog/transformatory-tmn/tmn-2500-kva-35-20-11-kv-s-panelnymi-radiatorami/",
+      "file": "public/images/catalog/tmn.webp"
+    },
+    {
+      "id": "high-voltage",
+      "seriesSource": "https://trans-mtk.com/catalog/vysokovoltnye-transformatory/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/494/ew7lzirbe1salq3gie96u6kjwt84jatc.jpg",
+      "productSource": "https://trans-mtk.com/catalog/vysokovoltnye-transformatory/tds-10000-kva-6-3-6-3-kv/",
+      "file": "public/images/catalog/high-voltage.webp"
+    },
+    {
+      "id": "tsl",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-sukhie-tsl/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/fb9/tor0c4s54eo1xqyfysu643pzorgsytcx.jpg",
+      "productSource": "https://trans-mtk.com/catalog/transformatory-sukhie-tsl/metz-tsl-25-6-10-0-4/",
+      "file": "public/images/catalog/tsl.webp"
+    },
+    {
+      "id": "ktp",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatornye-podstantsii/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/05d/u00pmn6c4fzfwxkxekwzmwgn5haic6d7.jpg",
+      "productSource": "https://trans-mtk.com/catalog/kioskovyy-ktp/ktp-100/",
+      "file": "public/images/catalog/ktp.webp"
+    },
+    {
+      "id": "rm6",
+      "seriesSource": "https://trans-mtk.com/catalog/komplektnye-raspredelitelnye-ustroystva-s-elegazovoy-izolyatsiey/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/b06/9woe0h7ccxdecwpy6riqy2qmzltb4nqc.webp",
+      "productSource": "https://trans-mtk.com/catalog/komplektnye-raspredelitelnye-ustroystva-s-elegazovoy-izolyatsiey/monobloki-rm6-rme-630a-na-4-funktsii-bez-izmeneniy/",
+      "file": "public/images/catalog/rm6.webp"
+    },
+    {
+      "id": "clamps",
+      "seriesSource": "https://trans-mtk.com/catalog/zazhimy-dlya-tmg/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/c48/n0k2dgfj12rk4wz7q43y2tretqa0f2tp.jpg",
+      "productSource": "https://trans-mtk.com/catalog/zazhimy-dlya-tmg/",
+      "file": "public/images/catalog/clamps.webp"
+    },
+    {
+      "id": "tszl",
+      "seriesSource": "https://trans-mtk.com/catalog/transformatory-sukhie-tszl/",
+      "imageSource": "https://trans-mtk.com/upload/iblock/04a/pfhijssmw7lctymcoiwyx0j383jqzuxi.png",
+      "productSource": "https://trans-mtk.com/catalog/sukhie-transformatory/?PAGEN_1=2",
+      "file": "public/images/catalog/tszl.webp"
+    }
+  ]
+}

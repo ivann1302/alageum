@@ -1,215 +1,161 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { withBasePath } from "../../lib/paths";
-
-const catalogItems = [
-  {
-    title: "Масляные трансформаторы",
-    range: "25-2500 кВА",
-    voltage: "6/10 кВ",
-    image: withBasePath("images/catalog-power-transformers.webp"),
-    imageAlt: "Масляный силовой трансформатор Alageum Electric",
-    lead: "Распределительные трансформаторы для сетей и промышленных объектов.",
-    series: "ТМ, ТМГ, ТМГС, ТМГФ, ТМЭГ, ТМЗ, ОМ/ОМП",
-  },
-  {
-    title: "Сухие трансформаторы",
-    range: "по ТЗ",
-    voltage: "6-10 кВ",
-    image: withBasePath("images/catalog-distribution-transformers.webp"),
-    imageAlt: "Сухой трансформатор Alageum Electric",
-    lead: "Решения для внутренних помещений и объектов с повышенными требованиями к безопасности.",
-    series: "ТСЛ(З), ТС(З)",
-  },
-  {
-    title: "Комплектные подстанции",
-    range: "под проект",
-    voltage: "6-35 кВ",
-    image: withBasePath("images/catalog-substations.webp"),
-    imageAlt: "Комплектная трансформаторная подстанция",
-    lead: "КТП для приема, преобразования и распределения электроэнергии на объекте.",
-    series: "КТП, БКТП, 2КТП",
-  },
-  {
-    title: "Трансформаторы тока",
-    range: "по запросу",
-    voltage: "6-35 кВ",
-    image: withBasePath("images/catalog-distribution-transformers.webp"),
-    imageAlt: "Измерительное трансформаторное оборудование",
-    lead: "Измерительные трансформаторы для подстанционных и распределительных проектов.",
-    series: "ТОЛ, ТПЛ",
-  },
-  {
-    title: "Трансформаторы напряжения",
-    range: "по запросу",
-    voltage: "6-35 кВ",
-    image: withBasePath("images/catalog-power-transformers.webp"),
-    imageAlt: "Подстанционное трансформаторное оборудование",
-    lead: "Оборудование для измерения и контроля напряжения в электрических сетях.",
-    series: "НАМИ, НТМИ",
-  },
-  {
-    title: "Подстанционное оборудование",
-    range: "по проекту",
-    voltage: "0,4-110 кВ",
-    image: withBasePath("images/catalog-substations.webp"),
-    imageAlt: "Подстанционное электротехническое оборудование",
-    lead: "Высоковольтное и низковольтное оборудование под состав проектной поставки.",
-    series: "РУВН, РУНН, разъединители, реакторы",
-  },
-];
+import { catalogGroups, catalogSeries } from "../../data/catalog";
+import { managerMaxUrl } from "../../data/contact";
 
 const catalogSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "Каталог оборудования — Торговый Дом А-Транс",
-  description:
-    "Каталог трансформаторов, комплектных подстанций и подстанционного оборудования Alageum Electric для сетей 6-110 кВ.",
+  description: "Основные серии трансформаторов, комплектных подстанций, распределительных устройств и комплектующих.",
   url: new URL(withBasePath("catalog/"), Astro.site),
   mainEntity: {
     "@type": "ItemList",
-    itemListElement: catalogItems.map((item, index) => ({
+    itemListElement: catalogSeries.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: item.title,
+      name: `${item.title} — ${item.subtitle}`,
+      url: new URL(withBasePath(`${item.id}/`), Astro.site),
     })),
   },
 };
 ---
 
 <BaseLayout
-  title="Каталог оборудования Alageum Electric | Торговый Дом А-Транс"
-  description="Каталог трансформаторов, комплектных трансформаторных подстанций и подстанционного оборудования Alageum Electric для сетей 6-110 кВ."
+  title="Каталог трансформаторов и подстанций | Торговый Дом А-Транс"
+  description="Трансформаторы ТМГ, ТМ, ТМЗ, ТМН, ТДН, ТСЛ и ТСЗЛ, подстанции КТП, устройства RM6/RME и контактные зажимы. Описания и характеристики основных серий."
 >
   <main class="catalog-page">
-    <section class="container catalog-section" aria-labelledby="catalog-title">
+    <section class="container catalog-section" aria-labelledby="catalog-title" data-catalog>
       <div class="catalog-heading">
         <h1 class="page-title" id="catalog-title">Каталог оборудования</h1>
+        <p>Основные серии для распределительных сетей, промышленных и инфраструктурных объектов.</p>
       </div>
 
-      <figure class="catalog-media" aria-live="polite">
-        <img
-          src={catalogItems[0].image}
-          alt={catalogItems[0].imageAlt}
-          loading="eager"
-          decoding="async"
-          data-catalog-image
-        />
+      <nav class="catalog-nav" aria-label="Серии оборудования">
+        {catalogGroups.map((group) => (
+          <div class="catalog-group">
+            <h2>{group}</h2>
+            <ul>
+              {catalogSeries.filter((item) => item.group === group).map((item) => (
+                <li><a class="catalog-link" href={`#${item.id}`} data-series-link={item.id}>{item.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
 
-        <figcaption class="catalog-caption">
-          <strong data-catalog-title>{catalogItems[0].title}</strong>
-          <em data-catalog-meta>{catalogItems[0].range} · {catalogItems[0].voltage}</em>
-        </figcaption>
-
-        <p class="catalog-description" data-catalog-description>
-          {catalogItems[0].lead}
-        </p>
-
-        <p class="catalog-series" data-catalog-series>
-          <span>Серии</span>
-          {catalogItems[0].series}
-        </p>
-      </figure>
-
-      <div class="catalog-tabs" role="list" aria-label="Категории продукции">
-        {
-          catalogItems.map((item, index) => (
-            <button
-              class={`catalog-tab${index === 0 ? " is-active" : ""}`}
-              type="button"
-              aria-pressed={index === 0 ? "true" : "false"}
-              data-catalog-tab
-              data-index={String(index)}
-            >
-              <strong>{item.title}</strong>
-            </button>
-          ))
-        }
+      <div class="catalog-details">
+        {catalogSeries.map((item, index) => (
+          <article class="catalog-product" id={item.id} aria-labelledby={`${item.id}-title`} data-series>
+            <figure class="catalog-media">
+              <img src={withBasePath(item.image)} alt={item.subtitle} width="960" height="960" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              <figcaption>Пример исполнения серии</figcaption>
+            </figure>
+            <div class="catalog-product-copy">
+              <h2 id={`${item.id}-title`} tabindex="-1">{item.title}</h2>
+              <p class="catalog-subtitle">{item.subtitle}</p>
+              <p class="catalog-description">{item.description}</p>
+              <dl class="catalog-specs">
+                {item.specs.map((spec) => <div><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}
+              </dl>
+              <ul class="catalog-features">{item.features.map((feature) => <li>{feature}</li>)}</ul>
+              <p class="catalog-note">Параметры зависят от исполнения. Мощность, напряжение и комплектацию уточняем по вашему проекту.</p>
+              <div class="catalog-actions">
+                <a class="button" href={withBasePath(`${item.id}/`)}>Подробнее</a>
+                <a class="button button-outline" href={managerMaxUrl} target="_blank" rel="noopener noreferrer">Запросить подбор</a>
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   </main>
 
-  <script
-    is:inline
-    type="application/json"
-    id="catalog-data"
-    set:html={JSON.stringify(catalogItems)}
-  />
-
-  <script is:inline>
-    (() => {
-      const dataElement = document.getElementById("catalog-data");
-      const tabs = Array.from(document.querySelectorAll("[data-catalog-tab]"));
-      const image = document.querySelector("[data-catalog-image]");
-      const title = document.querySelector("[data-catalog-title]");
-      const meta = document.querySelector("[data-catalog-meta]");
-      const description = document.querySelector("[data-catalog-description]");
-      const series = document.querySelector("[data-catalog-series]");
-
-      if (
-        !dataElement ||
-        !(image instanceof HTMLImageElement) ||
-        !(title instanceof HTMLElement) ||
-        !(meta instanceof HTMLElement) ||
-        !(description instanceof HTMLElement) ||
-        !(series instanceof HTMLElement)
-      ) {
-        return;
-      }
-
-      const items = JSON.parse(dataElement.textContent || "[]");
-
-      const activate = (index) => {
-        const item = items[index];
-
-        if (!item) {
-          return;
-        }
-
-        tabs.forEach((tab, tabIndex) => {
-          const isActive = tabIndex === index;
-          tab.classList.toggle("is-active", isActive);
-          tab.setAttribute("aria-pressed", String(isActive));
+  <script>
+    const catalog = document.querySelector<HTMLElement>("[data-catalog]");
+    if (catalog) {
+      const products = Array.from(catalog.querySelectorAll<HTMLElement>("[data-series]"));
+      const links = Array.from(catalog.querySelectorAll<HTMLAnchorElement>("[data-series-link]"));
+      const activate = () => {
+        const id = window.location.hash.slice(1);
+        const active = products.find((product) => product.id === id) ?? products[0];
+        products.forEach((product) => { product.hidden = product !== active; });
+        links.forEach((link) => {
+          if (link.dataset.seriesLink === active?.id) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
         });
-
-        image.src = item.image;
-        image.alt = item.imageAlt;
-        title.textContent = item.title;
-        meta.textContent = `${item.range} · ${item.voltage}`;
-        description.textContent = item.lead;
-        series.innerHTML = `<span>Серии</span>${item.series}`;
       };
-
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          activate(Number(tab.getAttribute("data-index")));
+      links.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+          event.preventDefault();
+          if (window.location.hash !== link.hash) history.pushState(null, "", link.hash);
+          activate();
+          const active = products.find((product) => !product.hidden);
+          active?.querySelector<HTMLElement>("h2")?.focus({ preventScroll: true });
+          if (window.matchMedia("(max-width: 900px)").matches) {
+            active?.scrollIntoView({ block: "start" });
+          }
         });
       });
-    })();
+      window.addEventListener("hashchange", activate);
+      window.addEventListener("popstate", activate);
+      activate();
+    }
   </script>
-
   <script is:inline type="application/ld+json" set:html={JSON.stringify(catalogSchema)} />
 </BaseLayout>
 
 <style>
-.catalog-page { padding: var(--space-section) 0 0; }
-  .catalog-section { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); grid-template-areas: "heading heading" "media tabs"; gap: 40px; align-items: start; }
+  .catalog-page { padding: var(--space-section) 0 0; }
+  .catalog-section { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); grid-template-areas: "heading heading" "details nav"; gap: 40px; align-items: start; }
   .catalog-heading { grid-area: heading; }
   .catalog-heading h1 { margin: 0; }
-  .catalog-media { grid-area: media; display: flex; flex-direction: column; margin: 0; padding: 28px; background: var(--color-surface); min-width: 0; }
-  .catalog-media img { display: block; width: 100%; height: clamp(260px, 28vw, 400px); object-fit: contain; margin-bottom: 28px; }
-  .catalog-caption { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 12px; padding-top: 24px; border-top: 1px solid var(--color-border); }
-  .catalog-caption strong { max-width: 360px; font-size: 1.15rem; line-height: 1.3; }
-  .catalog-caption em { color: var(--color-muted); font-size: 0.85rem; font-style: normal; }
-  .catalog-description { margin: 18px 0 0; color: var(--color-muted); line-height: 1.6; }
-  .catalog-series { margin: 16px 0 0; font-size: 0.9rem; line-height: 1.6; }
-  .catalog-series :global(span) { margin-right: 8px; color: var(--color-muted); }
-  .catalog-tabs { grid-area: tabs; display: grid; border-top: 1px solid var(--color-border); }
-  .catalog-tab { padding: 24px 20px; width: 100%; border: 0; border-bottom: 1px solid var(--color-border); background: transparent; color: var(--color-heading); font: inherit; text-align: left; cursor: pointer; transition: color 180ms ease, background-color 180ms ease; }
-  .catalog-tab strong { font-size: 1rem; font-weight: 750; line-height: 1.4; }
-  .catalog-tab:hover { color: var(--color-industrial-red); background: var(--color-surface); }
-  .catalog-tab.is-active { background: var(--color-industrial-red); color: #ffffff; }
-  @media (max-width: 900px) { .catalog-section { grid-template-columns: 1fr; grid-template-areas: "heading" "tabs" "media"; gap: 28px; } }
-  @media (max-width: 640px) { .catalog-media { padding: 20px; } .catalog-media img { height: 240px; } .catalog-tab { padding: 18px 16px; } }
-  @media (prefers-reduced-motion: reduce) { .catalog-tab { transition: none; } }
+  .catalog-heading p { max-width: 620px; margin: 20px 0 0; color: var(--color-muted); line-height: 1.6; }
+  .catalog-nav { grid-area: nav; }
+  .catalog-group + .catalog-group { margin-top: 24px; }
+  .catalog-group h2 { margin: 0 0 8px; color: var(--color-muted); font-size: 0.85rem; font-weight: 650; line-height: 1.5; }
+  .catalog-group ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); }
+  .catalog-link { display: block; padding: 15px 20px; border-bottom: 1px solid var(--color-border); font-weight: 750; line-height: 1.4; transition: color 180ms ease, background-color 180ms ease; }
+  .catalog-link:hover { color: var(--color-industrial-red); background: var(--color-surface); }
+  .catalog-link[aria-current] { color: #ffffff; background: var(--color-industrial-red); }
+  .catalog-details { grid-area: details; min-width: 0; display: grid; gap: 48px; }
+  .catalog-product { scroll-margin-top: 100px; }
+  .catalog-product[hidden] { display: none; }
+  .catalog-media { margin: 0; padding: 28px; background: var(--color-surface); }
+  .catalog-media img { display: block; width: 100%; height: clamp(260px, 28vw, 400px); object-fit: contain; }
+  .catalog-media figcaption { margin-top: 16px; color: var(--color-muted); font-size: 0.75rem; text-align: center; }
+  .catalog-product-copy { padding-top: 28px; }
+  .catalog-product h2 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.15; }
+  .catalog-subtitle { margin: 12px 0 0; font-weight: 650; line-height: 1.5; }
+  .catalog-description { margin: 20px 0 24px; color: var(--color-muted); line-height: 1.65; }
+  .catalog-specs { margin: 0; border-top: 1px solid var(--color-border); }
+  .catalog-specs div { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; line-height: 1.5; }
+  .catalog-specs dt { color: var(--color-muted); }
+  .catalog-specs dd { margin: 0; font-weight: 650; }
+  .catalog-features { margin: 24px 0; padding-left: 20px; line-height: 1.6; }
+  .catalog-features li + li { margin-top: 6px; }
+  .catalog-features li::marker { color: var(--color-industrial-red); }
+  .catalog-note { margin: 0 0 24px; font-size: 0.85rem; color: var(--color-muted); line-height: 1.6; }
+  .catalog-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (min-width: 901px) { .catalog-nav { position: sticky; top: 100px; } }
+  @media (max-width: 900px) {
+    .catalog-section { grid-template-columns: 1fr; grid-template-areas: "heading" "nav" "details"; gap: 28px; }
+    .catalog-nav { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+    .catalog-group + .catalog-group { margin-top: 0; }
+    .catalog-group ul { display: flex; flex-wrap: wrap; border: 0; gap: 8px; }
+    .catalog-link { padding: 10px 14px; border: 1px solid var(--color-border); }
+  }
+  @media (max-width: 640px) {
+    .catalog-media { padding: 20px; }
+    .catalog-media img { height: 260px; }
+    .catalog-group h2 { font-size: 0.8rem; }
+    .catalog-link { font-size: 0.9rem; }
+    .catalog-product-copy { padding-top: 24px; }
+    .catalog-actions { display: grid; }
+    .catalog-actions .button { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .catalog-link { transition: none; } }
 </style>

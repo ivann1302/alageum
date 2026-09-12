@@ -1,5 +1,6 @@
 ---
 import { withBasePath } from "../lib/paths";
+import { managerMaxUrl } from "../data/contact";
 
 const stats = [
   { value: "30+", label: "предприятий в структуре" },
@@ -13,7 +14,7 @@ const stats = [
   <svg class="hero-outline-filter" width="0" height="0" aria-hidden="true" focusable="false">
     <defs>
       <!-- Outline the filled glyph silhouette, including overlapping font contours. -->
-      <filter id="hero-mobile-outline" x="-5%" y="-20%" width="110%" height="140%" color-interpolation-filters="sRGB">
+      <filter id="hero-text-outline" x="-5%" y="-20%" width="110%" height="140%" color-interpolation-filters="sRGB">
         <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="expanded" />
         <feComposite in="expanded" in2="SourceAlpha" operator="out" result="outline" />
         <feFlood flood-color="#090909" />
@@ -28,9 +29,12 @@ const stats = [
     <div class="hero-copy">
       <p class="hero-brand"><span>Торговый Дом</span> А-Транс</p>
       <h1 id="hero-title"><span>Трансформируем</span><span class="hero-title-outline">энергию</span></h1>
-      <p class="hero-lead">Трансформаторное и подстанционное оборудование для промышленных объектов</p>
+      <p class="hero-lead">
+        <span class="hero-lead-line">Трансформаторное и подстанционное</span>
+        <span class="hero-lead-line">оборудование для промышленных объектов</span>
+      </p>
       <div class="hero-actions" aria-label="Основные действия">
-        <a class="hero-button hero-button-primary" href={withBasePath("contacts/")}>Получить консультацию</a>
+        <a class="hero-button hero-button-primary" href={managerMaxUrl} target="_blank" rel="noopener noreferrer">Получить консультацию</a>
       </div>
     </div>
   </div>
@@ -100,18 +104,22 @@ const stats = [
 
   .hero h1 .hero-title-outline {
     margin-top: 6px;
-    color: transparent;
-    -webkit-text-stroke: 2px #090909;
+    color: #090909;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    filter: url(#hero-text-outline);
   }
 
   .hero-lead {
     color: rgb(9 9 9 / 90%);
-    max-width: 340px;
+    max-width: 420px;
     margin: 42px 0 0;
     font-size: 1.05rem;
     font-weight: 750;
     line-height: 1.4;
   }
+
+  .hero-lead-line { display: block; white-space: nowrap; }
 
   .hero-actions {
     display: flex;
@@ -173,8 +181,9 @@ const stats = [
     }
     .hero-brand { margin-bottom: 22px; font-size: 0.9rem; }
     .hero h1 { width: 100%; font-size: 6.9vw; letter-spacing: -0.055em; text-align: center; }
-    .hero h1 .hero-title-outline { font-size: 13vw; letter-spacing: 0.02em; color: #090909; -webkit-text-stroke: 0; filter: url(#hero-mobile-outline); }
+    .hero h1 .hero-title-outline { font-size: 13vw; font-weight: 950; }
     .hero-lead { max-width: 280px; margin: 18px auto 0; font-size: 0.95rem; text-wrap: balance; }
+    .hero-lead-line { display: inline; white-space: normal; }
     .hero-actions { width: 100%; justify-content: center; margin-top: auto; padding-top: 32px; }
     .hero-button { width: 100%; padding-inline: 18px; }
     .hero-transformer img { object-position: 60% top; }

@@ -1,13 +1,28 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  companyEmail,
+  companyEmailHref,
+  managerMaxUrl,
+  managerPhone,
+  managerPhoneHref,
+  officeAddress,
+  officeMapCenter,
+} from "../../data/contact";
 
-const phone = "+7 (495) 74-99-103";
-const phoneHref = "tel:+74957499103";
-const email = "info@alageum.pro";
-const emailHref = `mailto:${email}`;
-const address = "Москва, ул. Генерала Белова, д. 26";
-const mapQuery = encodeURIComponent(address);
-const mapSrc = `https://yandex.ru/map-widget/v1/?text=${mapQuery}&z=16`;
+const phone = managerPhone;
+const phoneHref = managerPhoneHref;
+const email = companyEmail;
+const emailHref = companyEmailHref;
+const address = officeAddress;
+const mapQuery = "Ленинская Слобода 26";
+const mapParams = new URLSearchParams({
+  ll: officeMapCenter,
+  mode: "search",
+  text: mapQuery,
+  z: "17",
+});
+const mapSrc = `https://yandex.ru/map-widget/v1/?${mapParams}`;
 ---
 
 <BaseLayout
@@ -26,7 +41,7 @@ const mapSrc = `https://yandex.ru/map-widget/v1/?text=${mapQuery}&z=16`;
 
           <div class="contacts-actions" aria-label="Быстрые действия">
             <a class="button" href={phoneHref}><span>Позвонить</span></a>
-            <a class="button button-outline" href={emailHref}><span>Написать на email</span></a>
+            <a class="button button-outline" href={managerMaxUrl} target="_blank" rel="noopener noreferrer"><span>Написать в MAX</span></a>
           </div>
         </div>
 

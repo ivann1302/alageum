@@ -1,5 +1,227 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  companyEmail,
+  companyEmailHref,
+  managerPhone,
+  managerPhoneHref,
+  officeAddress,
+} from "../../data/contact";
 ---
 
-<BaseLayout />
+<BaseLayout
+  title="Юридическая информация | Торговый Дом А-Транс"
+  description="Сведения о владельце сайта ООО «Торговый Дом А-Транс», контакты и информация об обработке технических данных."
+>
+  <main class="legal-page">
+    <section class="legal-hero" aria-labelledby="legal-title">
+      <div class="container legal-hero-inner">
+        <h1 class="page-title" id="legal-title">Юридическая информация</h1>
+        <p>
+          Сведения о владельце сайта, правила использования опубликованной информации
+          и пояснения о технических данных.
+        </p>
+      </div>
+    </section>
+
+    <section class="legal-section" aria-labelledby="owner-title">
+      <div class="container legal-grid">
+        <div class="legal-heading">
+          <h2 id="owner-title">Владелец сайта</h2>
+        </div>
+
+        <dl class="legal-details">
+          <div>
+            <dt>Наименование</dt>
+            <dd>ООО «Торговый Дом А-Транс»</dd>
+          </div>
+          <div>
+            <dt>Место нахождения</dt>
+            <dd>г. Москва</dd>
+          </div>
+          <div>
+            <dt>Адрес офиса</dt>
+            <dd><address>{officeAddress}</address></dd>
+          </div>
+          <div>
+            <dt>Телефон</dt>
+            <dd><a href={managerPhoneHref}>{managerPhone}</a></dd>
+          </div>
+          <div>
+            <dt>Электронная почта</dt>
+            <dd><a href={companyEmailHref}>{companyEmail}</a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="legal-section" aria-labelledby="site-information-title">
+      <div class="container legal-grid">
+        <div class="legal-heading">
+          <h2 id="site-information-title">Информация на сайте</h2>
+        </div>
+
+        <div class="legal-copy">
+          <p>
+            Сведения о продукции, её характеристиках, наличии, сроках и условиях поставки
+            носят справочный характер. Окончательные параметры заказа фиксируются в
+            коммерческом предложении и договоре.
+          </p>
+          <p>
+            Материалы сайта сами по себе не являются публичной офертой. Для получения
+            актуальных условий обратитесь к представителю компании по указанным контактам.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="legal-section" id="privacy" aria-labelledby="privacy-title">
+      <div class="container legal-grid">
+        <div class="legal-heading">
+          <h2 id="privacy-title">Конфиденциальность</h2>
+        </div>
+
+        <div class="legal-copy">
+          <p>
+            На сайте нет форм обратной связи, регистрации, подписки и онлайн-оплаты.
+            Посетитель не передаёт через страницы сайта имя, телефон или электронную почту.
+          </p>
+          <p>
+            При обычном открытии страниц сервер и провайдер хостинга могут автоматически
+            получать технические данные, необходимые для работы и защиты сайта: IP-адрес,
+            тип браузера, адрес запрошенной страницы, дату и время обращения.
+          </p>
+          <p>
+            На странице контактов встроена Яндекс Карта. При её загрузке браузер обращается
+            к сервису Яндекса, который обрабатывает технические данные по собственным
+            правилам. Переход в MAX также открывает внешний сервис.
+          </p>
+          <p>
+            Вопросы об использовании технических данных можно направить на
+            <a href={companyEmailHref}>{companyEmail}</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    padding-top: var(--space-section);
+  }
+
+  .legal-hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: clamp(32px, 7vw, 96px);
+    align-items: end;
+  }
+
+  .legal-hero h1 {
+    max-width: 760px;
+    margin: 0;
+  }
+
+  .legal-hero p {
+    max-width: 520px;
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .legal-section {
+    padding-top: clamp(56px, 7vw, 88px);
+    scroll-margin-top: 112px;
+  }
+
+  .legal-grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(32px, 7vw, 96px);
+    padding-top: 28px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .legal-heading h2 {
+    margin: 0;
+    color: var(--color-heading);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.2;
+  }
+
+  .legal-details {
+    margin: 0;
+  }
+
+  .legal-details > div {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.65fr) minmax(0, 1.35fr);
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .legal-details > div:first-child {
+    padding-top: 0;
+  }
+
+  .legal-details dt {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .legal-details dd {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-heading);
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .legal-details address {
+    font-style: normal;
+  }
+
+  .legal-details a:hover,
+  .legal-copy a:hover {
+    color: var(--color-industrial-red);
+  }
+
+  .legal-copy {
+    max-width: 720px;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+
+  .legal-copy p {
+    margin: 0;
+  }
+
+  .legal-copy p + p {
+    margin-top: 20px;
+  }
+
+  .legal-copy a {
+    color: var(--color-heading);
+    font-weight: 700;
+  }
+
+  @media (max-width: 760px) {
+    .legal-hero-inner,
+    .legal-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .legal-hero p {
+      max-width: 620px;
+    }
+
+    .legal-details > div {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>

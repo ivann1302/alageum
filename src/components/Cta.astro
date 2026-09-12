@@ -1,5 +1,6 @@
 ---
 import { withBasePath } from "../lib/paths";
+import { managerMaxUrl } from "../data/contact";
 ---
 
 <section class="cta-section" aria-labelledby="cta-title">
@@ -13,7 +14,7 @@ import { withBasePath } from "../lib/paths";
     </div>
 
     <div class="cta-actions" aria-label="Действия" data-reveal="item" style="--reveal-delay: 90ms;">
-      <a class="button" href={withBasePath("contacts/")}>Запросить КП</a>
+      <a class="button" href={managerMaxUrl} target="_blank" rel="noopener noreferrer">Запросить КП</a>
       <a class="button button-outline" href={withBasePath("catalog/")}>Перейти в каталог</a>
     </div>
   </div>

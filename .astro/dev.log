@@ -2,47 +2,9 @@
 {"message":"Generated 0ms","label":"types","level":"info"}
 {"message":"connected.","label":"vite","level":"info"}
 {"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
-{"message":" astro  v7.0.3 ready in 1217 ms\n┃ Local    http://localhost:4321/\n┃ Network  http://192.168.0.106:4321/\n           http://172.18.0.1:4321/","label":"SKIP_FORMAT","level":"info"}
-{"message":"watching for file changes...","label":null,"level":"info"}
-{"message":"[200] HEAD / 46ms","label":null,"level":"info"}
-{"message":"[200] / 46ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 34ms","label":null,"level":"info"}
-{"message":"[200] HEAD /catalog/ 34ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 6ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 4ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 10ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 22ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 9ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 3ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 19ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 3ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 21ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 3ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 20ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 6ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 7ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 2ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 6ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 4ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 10ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 26ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 5ms","label":null,"level":"info"}
-{"message":"[console.error] Astro Error while running audit's match function: TypeError: Failed to fetch","label":"vite","level":"error"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 6ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] HEAD /catalog/ 20ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 3ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 7ms","label":null,"level":"info"}
-{"message":"[200] /catalog/ 8ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 6ms","label":null,"level":"info"}
-{"message":"/src/pages/catalog/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
-{"message":"[200] /catalog/ 5ms","label":null,"level":"info"}
+listen EPERM: operation not permitted 0.0.0.0:4321
+  Location:
+    /Users/ivan/projects/alageum/node_modules/vite/dist/node/chunks/node.js:25609:11
+  Stack trace:
+    at Server.setupListenHandle [as _listen2] (node:net:2302:21)
+    at Server.listen (node:net:2558:7)

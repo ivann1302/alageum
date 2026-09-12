@@ -1,8 +1,22 @@
 ---
 import { withBasePath } from "../lib/paths";
 
-const rows = ["alageum", "atrans"];
-const copies = Array.from({ length: 6 });
+const partnerRows = [
+  [
+    { name: "КАТЭК", src: "images/partners/katek.png" },
+    { name: "Таврида Электрострой", src: "images/partners/tavrida-electrostroy.png" },
+    { name: "РНГ Снабжение", src: "images/partners/rng-snabzhenie.png" },
+    { name: "ЭТМ", src: "images/partners/etm.svg" },
+    { name: "РЖД", src: "images/partners/rzd.png" },
+  ],
+  [
+    { name: "Спецэнерго", src: "images/partners/specenergo.png" },
+    { name: "Электрощит Самара", src: "images/partners/electroshield-samara.png" },
+    { name: "Россети Московский регион", src: "images/partners/rosseti-moscow.png", subtitle: "МОСКОВСКИЙ РЕГИОН" },
+    { name: "Оборонэнерго", src: "images/partners/oboronenergo.png" },
+    { name: "Мартин", src: "images/partners/martin.png" },
+  ],
+];
 ---
 
 <section class="partners" aria-labelledby="partners-title">
@@ -10,32 +24,37 @@ const copies = Array.from({ length: 6 });
     <h2 class="section-title" id="partners-title">Наши партнеры</h2>
   </div>
   <ul class="sr-only">
-    <li>Alageum Electric</li>
-    <li>Торговый Дом А-Транс</li>
+    {partnerRows.flat().map((partner) => <li>{partner.name}</li>)}
   </ul>
-  <svg class="partners-filters" width="0" height="0" aria-hidden="true">
-    <defs>
-      <filter id="partners-logo-dark" color-interpolation-filters="sRGB">
-        <feColorMatrix type="matrix" values="1 -1 0 0 0.03  0 0 0 0 0.03  0 0 0 0 0.03  0 0 0 1 0" />
-      </filter>
-    </defs>
-  </svg>
   <div class="partners-lanes" aria-hidden="true">
-    {rows.map((row) => (
-      <div class={`partners-lane partners-lane-${row}`}>
+    {partnerRows.map((partners, rowIndex) => (
+      <div class={`partners-lane partners-lane-${rowIndex}`}>
         <div class="partners-track">
           {[0, 1].map(() => (
             <div class="partners-group">
-              {copies.map(() => (
+              {partners.map((partner) => (
                 <div class="partners-logo">
-                  {row === "alageum" ? (
-                    <svg class="partners-alageum" viewBox="254 164 1739 396">
-                      <image href={withBasePath("images/alageum-logo.png")} width="2172" height="724" />
-                    </svg>
+                  {partner.subtitle ? (
+                    <span class="partners-logo-rosseti">
+                      <img
+                        src={withBasePath(partner.src)}
+                        alt=""
+                        width="215"
+                        height="62"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span class="partners-logo-caption">{partner.subtitle}</span>
+                    </span>
                   ) : (
-                    <svg class="partners-atrans" viewBox="0 0 360 447">
-                      <image href={withBasePath("images/footer-logo-atrans.png")} width="360" height="447" filter="url(#partners-logo-dark)" />
-                    </svg>
+                    <img
+                      src={withBasePath(partner.src)}
+                      alt=""
+                      width="220"
+                      height="88"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   )}
                 </div>
               ))}
@@ -48,18 +67,19 @@ const copies = Array.from({ length: 6 });
 </section>
 
 <style>
-  .partners { margin-top: var(--space-section); padding-block: 48px; overflow: clip; background: transparent; }
-  .partners-heading { margin-bottom: 32px; }
+  .partners { margin-top: var(--space-section); padding-block: 64px; overflow: clip; background: transparent; }
+  .partners-heading { margin-bottom: 40px; }
   .partners-heading h2 { margin: 0; }
-  .partners-filters { position: absolute; }
-  .partners-lanes { display: grid; gap: 20px; }
+  .partners-lanes { display: grid; gap: 28px; }
   .partners-lane { overflow: hidden; }
   .partners-track { display: flex; width: max-content; animation: partners-scroll 42s linear infinite; }
-  .partners-lane-alageum .partners-track { animation-direction: reverse; }
+  .partners-lane-0 .partners-track { animation-direction: reverse; }
   .partners-group { display: flex; justify-content: space-around; flex-shrink: 0; width: max(100vw, 1440px); }
-  .partners-logo { display: flex; align-items: center; justify-content: center; width: 220px; height: 120px; flex-shrink: 0; }
-  .partners-alageum { display: block; width: 200px; height: auto; }
-  .partners-atrans { display: block; width: 80px; height: auto; }
+  .partners-logo { display: flex; align-items: center; justify-content: center; width: 220px; height: 104px; padding: 8px 10px; flex-shrink: 0; }
+  .partners-logo img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+  .partners-logo-rosseti { display: flex; flex-direction: column; align-items: flex-end; width: 200px; max-width: 100%; }
+  .partners-logo-rosseti img { width: 100%; }
+  .partners-logo-caption { width: 66%; color: #0061a7; font-size: 9px; font-weight: 700; line-height: 1; letter-spacing: 0.08em; white-space: nowrap; }
   .partners-lanes:hover .partners-track { animation-play-state: paused; }
   @keyframes partners-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (max-width: 640px) {
@@ -67,9 +87,7 @@ const copies = Array.from({ length: 6 });
     .partners-heading { margin-bottom: 20px; }
     .partners-lanes { gap: 12px; }
     .partners-group { width: max(100vw, 1080px); }
-    .partners-logo { width: 160px; height: 104px; }
-    .partners-alageum { width: 150px; }
-    .partners-atrans { width: 68px; }
+    .partners-logo { width: 160px; height: 88px; padding-inline: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .partners-track { animation: none; }

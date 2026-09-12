@@ -1,0 +1,23 @@
+---
+import DocumentationCarousel from "./DocumentationCarousel.astro";
+---
+
+<section class="documentation-section" id="documentation" aria-labelledby="documentation-title">
+  <div class="container documentation-head" data-reveal="panel">
+    <h2 class="section-title" id="documentation-title">Документация</h2>
+    <p>Технические материалы и документы по оборудованию скоро появятся в этом разделе.</p>
+  </div>
+
+  <DocumentationCarousel />
+</section>
+
+<style>
+  .documentation-section { margin-top: var(--space-section); scroll-margin-top: 100px; }
+  .documentation-head { margin-bottom: 36px; }
+  .documentation-head h2 { margin: 0; }
+  .documentation-head p { max-width: 620px; margin: 22px 0 0; color: var(--color-muted); line-height: 1.7; }
+  @media (max-width: 640px) {
+    .documentation-head { margin-bottom: 28px; }
+    .documentation-head p { margin-top: 18px; }
+  }
+</style>

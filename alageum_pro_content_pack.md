@@ -97,7 +97,7 @@
 ### Данные с alageum.pro
 
 - Телефон: `+7 (495) 74-99-103`
-- Email: `info@alageum.pro`
+- Email: `info@tdatrans.ru`
 - Компания в футере: `ООО «ТД Алагеум Электрик Рус»`
 - CTA: `Заказать обратный звонок`
 
@@ -615,7 +615,7 @@ CTA:
     "legal_name_from_footer": "ООО \"ТД Алагеум Электрик Рус\"",
     "operator_from_personal_data_page": "ООО \"Торговый Дом А-Транс\"",
     "phone": "+7 (495) 74-99-103",
-    "email": "info@alageum.pro",
+    "email": "info@tdatrans.ru",
     "positioning": "Официальный торговый дом / представитель продукции Alageum Electric в России"
   },
   "navigation": [

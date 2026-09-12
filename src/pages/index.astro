@@ -6,6 +6,7 @@ import WhyAlageum from "../components/WhyAlageum.astro";
 import CatalogTeaser from "../components/CatalogTeaser.astro";
 import Partners from "../components/Partners.astro";
 import SupplyProcess from "../components/SupplyProcess.astro";
+import Documentation from "../components/Documentation.astro";
 import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
 ---
@@ -22,8 +23,10 @@ import Faq from "../components/Faq.astro";
   <Partners />
   <SupplyProcess />
   <Cta />
+  <Documentation />
   <Faq />
   <script>
+    import "../scripts/circular-carousel.mjs";
     import "../scripts/parallax";
   </script>
 </BaseLayout>

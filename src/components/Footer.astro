@@ -1,19 +1,25 @@
 ---
 import { withBasePath } from "../lib/paths";
+import {
+  companyEmail,
+  companyEmailHref,
+  managerMaxUrl,
+  managerPhone,
+  managerPhoneHref,
+} from "../data/contact";
 
 const currentYear = new Date().getFullYear();
 
 const footerNav = [
   { label: "Каталог", href: withBasePath("catalog/") },
   { label: "О компании", href: withBasePath("#about") },
-  { label: "Поставка", href: withBasePath("#delivery") },
-  { label: "Гарантия", href: withBasePath("#warranty") },
+  { label: "Документация", href: withBasePath("#documentation") },
   { label: "Контакты", href: withBasePath("contacts/") },
 ];
 
 const legalLinks = [
   { label: "Юридическая информация", href: withBasePath("legal/") },
-  { label: "Политика конфиденциальности", href: withBasePath("legal/") },
+  { label: "Конфиденциальность", href: withBasePath("legal/#privacy") },
 ];
 ---
 
@@ -33,9 +39,9 @@ const legalLinks = [
     </nav>
 
     <div class="footer-contact">
-      <a class="footer-phone" href="tel:+74957499103">+7 (495) 74-99-103</a>
-      <a href="mailto:info@alageum.pro">info@alageum.pro</a>
-      <a class="footer-cta" href={withBasePath("contacts/")}>Запросить КП</a>
+      <a class="footer-phone" href={managerPhoneHref}>{managerPhone}</a>
+      <a href={companyEmailHref}>{companyEmail}</a>
+      <a class="footer-cta" href={managerMaxUrl} target="_blank" rel="noopener noreferrer">Запросить КП</a>
     </div>
   </div>
 
