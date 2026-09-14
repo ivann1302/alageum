@@ -1,0 +1,87 @@
+<dialog class="document-dialog" aria-labelledby="document-dialog-title" data-document-dialog>
+  <div class="document-dialog-panel">
+    <header class="document-dialog-header">
+      <h2 id="document-dialog-title" data-document-dialog-title>Просмотр документа</h2>
+      <div class="document-dialog-actions">
+        <a class="document-dialog-link" href="#" target="_blank" rel="noopener" data-document-open>Открыть отдельно</a>
+        <a class="document-dialog-link" href="#" download data-document-download>Скачать</a>
+        <button class="document-dialog-close" type="button" aria-label="Закрыть документ" data-document-close autofocus>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+    <iframe class="document-dialog-frame" title="Просмотр документа" data-document-frame></iframe>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-document-dialog]");
+  const triggers = document.querySelectorAll<HTMLAnchorElement>("[data-document-trigger]");
+  const frame = dialog?.querySelector<HTMLIFrameElement>("[data-document-frame]");
+  const title = dialog?.querySelector<HTMLElement>("[data-document-dialog-title]");
+  const openLink = dialog?.querySelector<HTMLAnchorElement>("[data-document-open]");
+  const downloadLink = dialog?.querySelector<HTMLAnchorElement>("[data-document-download]");
+  const closeButton = dialog?.querySelector<HTMLButtonElement>("[data-document-close]");
+  const nativePdfViewer = window.matchMedia(
+    "(max-width: 640px), (hover: none) and (pointer: coarse)",
+  );
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      if (
+        nativePdfViewer.matches ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey ||
+        !dialog ||
+        typeof dialog.showModal !== "function"
+      ) return;
+
+      event.preventDefault();
+      const documentTitle = trigger.dataset.documentTitle ?? "Просмотр документа";
+      if (title) title.textContent = documentTitle;
+      if (frame) {
+        frame.src = trigger.href;
+        frame.title = documentTitle;
+      }
+      if (openLink) openLink.href = trigger.href;
+      if (downloadLink) downloadLink.href = trigger.href;
+      dialog.showModal();
+    });
+  });
+
+  closeButton?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener("close", () => {
+    frame?.removeAttribute("src");
+  });
+</script>
+
+<style>
+  .document-dialog { width: min(96vw, 1180px); max-width: none; height: min(94dvh, 980px); max-height: none; padding: 0; border: 0; background: #ffffff; overflow: hidden; }
+  .document-dialog::backdrop { background: rgb(0 0 0 / 78%); }
+  .document-dialog-panel { display: grid; grid-template-rows: auto minmax(0, 1fr); width: 100%; height: 100%; }
+  .document-dialog-header { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 24px; padding-left: 22px; background: #000000; color: #ffffff; }
+  .document-dialog-header h2 { min-width: 0; margin: 0; overflow: hidden; font-size: clamp(0.88rem, 1.4vw, 1.05rem); line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+  .document-dialog-actions { display: flex; flex: none; align-self: stretch; align-items: center; }
+  .document-dialog-link { display: inline-flex; min-height: 44px; align-items: center; padding: 0 14px; color: rgb(255 255 255 / 86%); font-size: 0.78rem; font-weight: 700; transition: color 180ms ease; }
+  .document-dialog-link:hover { color: #ffffff; }
+  .document-dialog-close { position: relative; width: 64px; height: 64px; margin-left: 4px; padding: 0; border: 0; background: var(--color-industrial-red); cursor: pointer; }
+  .document-dialog-close span::before, .document-dialog-close span::after { content: ""; position: absolute; top: 31px; left: 20px; width: 24px; height: 2px; background: #ffffff; }
+  .document-dialog-close span::before { transform: rotate(45deg); }
+  .document-dialog-close span::after { transform: rotate(-45deg); }
+  .document-dialog-frame { width: 100%; height: 100%; border: 0; background: #ededed; }
+  @media (max-width: 720px) {
+    .document-dialog { width: 100vw; height: 100dvh; }
+    .document-dialog-header { padding-left: 14px; }
+    .document-dialog-link { display: none; }
+    .document-dialog-close { width: 56px; height: 56px; }
+    .document-dialog-close span::before, .document-dialog-close span::after { top: 27px; left: 17px; width: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .document-dialog-link { transition: none; }
+  }
+</style>

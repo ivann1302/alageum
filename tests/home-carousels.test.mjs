@@ -22,7 +22,7 @@ test("carousel navigation wraps in both directions", async () => {
   assert.equal(wrapCarouselIndex(1, 1, 4), 2);
 });
 
-test("catalog and documentation use the circular carousel", async () => {
+test("catalog and published documents use the circular carousel", async () => {
   const carouselUrl = projectFile("src/components/Carousel.astro");
   const documentationCarouselUrl = projectFile("src/components/DocumentationCarousel.astro");
   let componentsExist = true;
@@ -49,13 +49,15 @@ test("catalog and documentation use the circular carousel", async () => {
   assert.match(documentation, /import DocumentationCarousel from/);
   assert.match(documentation, /<DocumentationCarousel\s*\/>/);
   assert.match(documentationCarousel, /import Carousel from/);
+  assert.match(documentationCarousel, /import DocumentCard from/);
+  assert.match(documentationCarousel, /import DocumentViewer from/);
+  assert.match(documentationCarousel, /documents\.map/);
   assert.match(documentationCarousel, /<Carousel/);
-  assert.match(documentationCarousel, /data-carousel-item/);
-  assert.doesNotMatch(documentationCarousel, /Материалы готовятся|documentation-file|documentation-card-copy/);
+  assert.match(documentationCarousel, /carousel/);
 });
 
-test("empty document blocks open a closable native dialog", async () => {
-  const componentUrl = projectFile("src/components/DocumentationCarousel.astro");
+test("documents use a closable native dialog on larger screens", async () => {
+  const componentUrl = projectFile("src/components/DocumentViewer.astro");
   let componentExists = true;
 
   try {
@@ -64,13 +66,17 @@ test("empty document blocks open a closable native dialog", async () => {
     componentExists = false;
   }
 
-  assert.equal(componentExists, true, "documentation carousel component is missing");
+  assert.equal(componentExists, true, "document viewer component is missing");
   const source = await readFile(componentUrl, "utf8");
 
   assert.match(source, /<dialog/);
   assert.match(source, /data-document-trigger/);
   assert.match(source, /data-document-close/);
+  assert.match(source, /max-width: 640px/);
+  assert.match(source, /hover: none/);
+  assert.match(source, /pointer: coarse/);
   assert.match(source, /showModal\(\)/);
+  assert.match(source, /preventDefault\(\)/);
   assert.match(source, /event\.target === dialog/);
   assert.match(source, /dialog\.close\(\)/);
 });

@@ -1,0 +1,56 @@
+---
+import type { DocumentItem } from "../data/documents";
+import { withBasePath } from "../lib/paths";
+
+interface Props {
+  document: DocumentItem;
+  carousel?: boolean;
+  priority?: boolean;
+  headingLevel?: 2 | 3;
+}
+
+const { document, carousel = false, priority = false, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? "h2" : "h3";
+---
+
+<article
+  class:list={["document-card", { "is-carousel": carousel }]}
+  data-document-card
+  data-carousel-item={carousel ? "" : undefined}
+>
+  <a
+    class="document-card-link"
+    href={withBasePath(document.file)}
+    target="_blank"
+    rel="noopener"
+    data-document-trigger
+    data-document-title={document.title}
+    aria-label={`Открыть PDF: ${document.title}`}
+  >
+    <span class="document-card-preview">
+      <img
+        src={withBasePath(document.preview)}
+        alt={`Первая страница документа «${document.title}»`}
+        width="595"
+        height="842"
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+      />
+    </span>
+    <span class="document-card-copy">
+      <Heading class="document-card-title">{document.title}</Heading>
+    </span>
+  </a>
+</article>
+
+<style>
+  .document-card { min-width: 0; }
+  .document-card-link { display: flex; height: 100%; flex-direction: column; }
+  .document-card-preview { display: block; width: 100%; aspect-ratio: 210 / 297; overflow: hidden; }
+  .document-card-preview img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .document-card-copy { display: block; padding-top: 14px; }
+  .document-card-title { margin: 0; color: var(--color-heading); font-size: 0.98rem; font-weight: 750; line-height: 1.4; text-wrap: balance; }
+  .document-card.is-carousel .document-card-link { align-items: center; }
+  .document-card.is-carousel .document-card-preview { width: auto; max-width: 100%; height: var(--carousel-media-height); flex: none; }
+  .document-card.is-carousel .document-card-copy { width: 100%; text-align: center; }
+</style>

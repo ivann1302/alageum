@@ -1,23 +1,28 @@
 ---
 import DocumentationCarousel from "./DocumentationCarousel.astro";
+import { withBasePath } from "../lib/paths";
 ---
 
 <section class="documentation-section" id="documentation" aria-labelledby="documentation-title">
   <div class="container documentation-head" data-reveal="panel">
     <h2 class="section-title" id="documentation-title">Документация</h2>
-    <p>Технические материалы и документы по оборудованию скоро появятся в этом разделе.</p>
+    <p>Декларации соответствия и выписки из реестра ЕАЭС на поставляемое оборудование.</p>
   </div>
 
   <DocumentationCarousel />
+  <div class="container documentation-action">
+    <a class="button button-outline" href={withBasePath("documents/")}>Все документы</a>
+  </div>
 </section>
 
 <style>
   .documentation-section { margin-top: var(--space-section); scroll-margin-top: 100px; }
-  .documentation-head { margin-bottom: 36px; }
+  .documentation-head { margin-bottom: 56px; }
   .documentation-head h2 { margin: 0; }
   .documentation-head p { max-width: 620px; margin: 22px 0 0; color: var(--color-muted); line-height: 1.7; }
+  .documentation-action { display: flex; justify-content: center; margin-top: 34px; }
   @media (max-width: 640px) {
-    .documentation-head { margin-bottom: 28px; }
+    .documentation-head { margin-bottom: 40px; }
     .documentation-head p { margin-top: 18px; }
   }
 </style>
