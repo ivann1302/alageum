@@ -31,6 +31,12 @@ test("documentation page groups downloads in the requested order", async () => {
 
   assert.match(documentationPage, /<title>Документация на оборудование \| Торговый Дом А-Транс<\/title>/);
   assert.match(documentationPage, /<h1[^>]*>Документация<\/h1>/);
+  const pageHeading = documentationPage.match(/<header class="documents-heading"[^>]*>[\s\S]*?<\/header>/)?.[0] ?? "";
+  assert.doesNotMatch(pageHeading, /<p[^>]*>/);
+  assert.match(
+    documentationPage,
+    /id="documents-questionnaires"[^>]*>Опросные листы<\/h2><p[^>]*>Опросные листы в форматах PDF, DOC и DOCX\.<\/p>/,
+  );
 
   const sectionTitles = [...documentationPage.matchAll(/<h2[^>]*class="documents-group-title"[^>]*>([^<]+)<\/h2>/g)]
     .map(([, title]) => title);
