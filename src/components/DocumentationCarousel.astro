@@ -2,7 +2,7 @@
 import Carousel from "./Carousel.astro";
 import DocumentCard from "./DocumentCard.astro";
 import DocumentViewer from "./DocumentViewer.astro";
-import { documents } from "../data/documents";
+import { featuredDocuments } from "../data/documents";
 ---
 
 <div class="documentation-carousel">
@@ -14,7 +14,7 @@ import { documents } from "../data/documents";
     showSwipeHint
   >
     {
-      documents.map((document) => (
+      featuredDocuments.map((document) => (
         <DocumentCard document={document} carousel />
       ))
     }

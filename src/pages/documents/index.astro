@@ -3,12 +3,51 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import DocumentCard from "../../components/DocumentCard.astro";
 import DocumentViewer from "../../components/DocumentViewer.astro";
 import { documents } from "../../data/documents";
+import { withBasePath } from "../../lib/paths";
+
+const extracts = documents.filter((document) => document.kind === "Выписка из реестра ЕАЭС");
+const declarations = documents.filter((document) => document.kind === "Декларация соответствия");
+
+const documentGroups = [
+  {
+    id: "questionnaires",
+    title: "Опросные листы",
+    description: "Очищенный архив с опросными листами в форматах PDF, DOC и DOCX.",
+    archive: {
+      href: "downloads/questionnaires.zip",
+      label: "Скачать все опросные листы",
+      details: "40 МБ",
+    },
+  },
+  {
+    id: "dimensional-drawings",
+    title: "Габаритные чертежи",
+    description: "Габаритные чертежи и исходные материалы для подбора и проектирования.",
+    archive: {
+      href: "downloads/dimensional-drawings.zip",
+      label: "Скачать все габаритные чертежи",
+      details: "24 МБ",
+    },
+  },
+  {
+    id: "register-extracts",
+    title: "Выписки из реестров",
+    description: "Выписки из реестра ЕАЭС на серийно выпускаемое оборудование.",
+    items: extracts,
+  },
+  {
+    id: "declarations",
+    title: "Декларации",
+    description: "Декларации соответствия на трансформаторы, подстанции и распределительное оборудование.",
+    items: declarations,
+  },
+];
 
 const documentationSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "Документация на оборудование — Торговый Дом А-Транс",
-  description: "Декларации соответствия и выписки из реестра ЕАЭС на трансформаторное и подстанционное оборудование.",
+  description: "Опросные листы, габаритные чертежи, выписки из реестров и декларации на трансформаторное и подстанционное оборудование.",
   url: new URL("/documents/", Astro.site),
   mainEntity: {
     "@type": "ItemList",
@@ -24,18 +63,41 @@ const documentationSchema = {
 
 <BaseLayout
   title="Документация на оборудование | Торговый Дом А-Транс"
-  description="Декларации соответствия и выписки из реестра ЕАЭС на трансформаторы, подстанции и распределительное оборудование Торгового Дома А-Транс."
+  description="Опросные листы, габаритные чертежи, выписки из реестров и декларации на оборудование Торгового Дома А-Транс."
 >
   <main class="documents-page">
     <section class="container documents-section" aria-labelledby="documents-title">
       <header class="documents-heading">
         <h1 class="page-title" id="documents-title">Документация</h1>
-        <p>Откройте документ для просмотра или скачайте оригинал в формате PDF.</p>
+        <p>Скачайте архивы с опросными листами и чертежами или откройте отдельные документы в формате PDF.</p>
       </header>
 
-      <div class="document-grid">
-        {documents.map((document, index) => (
-          <DocumentCard document={document} priority={index < 3} headingLevel={2} />
+      <div class="documents-groups">
+        {documentGroups.map((group) => (
+          <section class="documents-group" aria-labelledby={`documents-${group.id}`}>
+            <header class="documents-group-head">
+              <h2 class="documents-group-title" id={`documents-${group.id}`}>{group.title}</h2>
+              <p>{group.description}</p>
+            </header>
+
+            {group.archive ? (
+              <article class="archive-download">
+                <div>
+                  <h3>{group.archive.label}</h3>
+                  <p>{group.archive.details}</p>
+                </div>
+                <a class="button" href={withBasePath(group.archive.href)} download>
+                  Скачать архив
+                </a>
+              </article>
+            ) : (
+              <div class="document-grid">
+                {group.items?.map((document, index) => (
+                  <DocumentCard document={document} priority={index < 3} headingLevel={3} />
+                ))}
+              </div>
+            )}
+          </section>
         ))}
       </div>
     </section>
@@ -50,12 +112,25 @@ const documentationSchema = {
   .documents-heading { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr); gap: clamp(32px, 7vw, 96px); align-items: end; }
   .documents-heading h1 { margin: 0; }
   .documents-heading p { max-width: 520px; margin: 0; color: var(--color-muted); line-height: 1.7; }
-  .document-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(44px, 5vw, 64px) 36px; margin-top: clamp(44px, 6vw, 72px); }
+  .documents-groups { display: grid; gap: var(--space-section); margin-top: clamp(56px, 8vw, 96px); }
+  .documents-group { scroll-margin-top: 100px; }
+  .documents-group-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr); gap: clamp(28px, 6vw, 80px); align-items: end; }
+  .documents-group-title { margin: 0; color: var(--color-heading); font-size: clamp(1.8rem, 4vw, 3.5rem); line-height: 1.05; letter-spacing: -0.04em; }
+  .documents-group-head p { max-width: 520px; margin: 0; color: var(--color-muted); line-height: 1.7; }
+  .archive-download { display: flex; justify-content: space-between; gap: 32px; align-items: center; margin-top: 32px; padding: 32px; background: var(--color-surface); }
+  .archive-download h3 { margin: 0; color: var(--color-heading); font-size: clamp(1.15rem, 2vw, 1.45rem); }
+  .archive-download p { margin: 10px 0 0; color: var(--color-muted); }
+  .archive-download .button { flex: none; }
+  .document-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(44px, 5vw, 64px) 36px; margin-top: 40px; }
   @media (max-width: 900px) {
     .document-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 640px) {
     .documents-heading { grid-template-columns: 1fr; gap: 20px; }
+    .documents-groups { margin-top: 48px; }
+    .documents-group-head { grid-template-columns: 1fr; gap: 16px; }
+    .archive-download { align-items: stretch; flex-direction: column; padding: 24px; }
+    .archive-download .button { width: 100%; }
     .document-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 36px; }
   }
 </style>

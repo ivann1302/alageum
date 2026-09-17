@@ -51,7 +51,7 @@ test("catalog and published documents use the circular carousel", async () => {
   assert.match(documentationCarousel, /import Carousel from/);
   assert.match(documentationCarousel, /import DocumentCard from/);
   assert.match(documentationCarousel, /import DocumentViewer from/);
-  assert.match(documentationCarousel, /documents\.map/);
+  assert.match(documentationCarousel, /featuredDocuments\.map/);
   assert.match(documentationCarousel, /<Carousel/);
   assert.match(documentationCarousel, /carousel/);
 });

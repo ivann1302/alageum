@@ -16,6 +16,7 @@ const Heading = headingLevel === 2 ? "h2" : "h3";
 <article
   class:list={["document-card", { "is-carousel": carousel }]}
   data-document-card
+  data-document-kind={document.kind}
   data-carousel-item={carousel ? "" : undefined}
 >
   <a

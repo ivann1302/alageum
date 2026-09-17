@@ -1,6 +1,10 @@
 export interface DocumentItem {
   title: string;
-  kind: "Декларация соответствия" | "Выписка из реестра ЕАЭС";
+  kind:
+    | "Опросный лист"
+    | "Габаритный чертеж"
+    | "Выписка из реестра ЕАЭС"
+    | "Декларация соответствия";
   file: string;
   preview: string;
   pages: number;
@@ -191,3 +195,43 @@ export const documents: DocumentItem[] = [
   },
 ];
 
+const questionnaireDocuments: DocumentItem[] = [
+  {
+    title: "Опросный лист ТМГ-400, 6(10)/0,4 кВ",
+    kind: "Опросный лист",
+    file: "docs/questionnaire-tmg-400.pdf",
+    preview: "images/documents/questionnaire-tmg-400.webp",
+    pages: 1,
+  },
+  {
+    title: "Опросный лист ТМ-1000, 6(10)/0,4 кВ",
+    kind: "Опросный лист",
+    file: "docs/questionnaire-tm-1000.pdf",
+    preview: "images/documents/questionnaire-tm-1000.webp",
+    pages: 1,
+  },
+];
+
+const dimensionalDrawingDocuments: DocumentItem[] = [
+  {
+    title: "Габаритный чертёж ТМГэ-2500",
+    kind: "Габаритный чертеж",
+    file: "docs/dimensional-drawing-tmge-2500.pdf",
+    preview: "images/documents/dimensional-drawing-tmge-2500.webp",
+    pages: 1,
+  },
+  {
+    title: "Габаритный чертёж ТСЛЗ-1000, 6(10)/0,4 кВ",
+    kind: "Габаритный чертеж",
+    file: "docs/dimensional-drawing-tslz-1000.pdf",
+    preview: "images/documents/dimensional-drawing-tslz-1000.webp",
+    pages: 1,
+  },
+];
+
+export const featuredDocuments: DocumentItem[] = [
+  ...questionnaireDocuments,
+  ...dimensionalDrawingDocuments,
+  ...documents.filter((document) => document.kind === "Выписка из реестра ЕАЭС").slice(0, 2),
+  ...documents.filter((document) => document.kind === "Декларация соответствия").slice(0, 2),
+];
