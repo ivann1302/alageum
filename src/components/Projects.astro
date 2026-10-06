@@ -1,0 +1,286 @@
+---
+import { withBasePath } from "../lib/paths";
+
+interface ProjectImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+interface Project {
+  title: string;
+  type: string;
+  specs: Array<{ label: string; value: string }>;
+  images: ProjectImage[];
+}
+
+const projects: Project[] = [
+  {
+    title: "ТМН-4000/35",
+    type: "Силовой масляный трансформатор",
+    specs: [
+      { label: "Мощность", value: "4 000 кВА" },
+      { label: "Напряжение", value: "35 / 11 кВ" },
+    ],
+    images: [
+      {
+        src: "images/projects/tmn-4000-35-01.webp",
+        alt: "Трансформатор ТМН-4000/35 после монтажа на объекте, вид сбоку",
+        width: 1600,
+        height: 1205,
+      },
+      {
+        src: "images/projects/tmn-4000-35-02.webp",
+        alt: "Трансформатор ТМН-4000/35 после монтажа, фронтальный вид",
+        width: 1440,
+        height: 1920,
+      },
+      {
+        src: "images/projects/tmn-4000-35-03.webp",
+        alt: "Силовой трансформатор ТМН-4000/35 на площадке подстанции",
+        width: 1920,
+        height: 1440,
+      },
+      {
+        src: "images/projects/tmn-4000-35-04.webp",
+        alt: "Установленный трансформатор ТМН-4000/35 с расширительным баком",
+        width: 1920,
+        height: 1440,
+      },
+    ],
+  },
+  {
+    title: "ТМН-6300/35",
+    type: "Силовой масляный трансформатор",
+    specs: [
+      { label: "Мощность", value: "6 300 кВА" },
+      { label: "Напряжение", value: "35 / 10 кВ" },
+    ],
+    images: [
+      {
+        src: "images/projects/tmn-6300-35-01.webp",
+        alt: "Трансформатор ТМН-6300/35 в производственном цехе, вид спереди",
+        width: 1440,
+        height: 1920,
+      },
+      {
+        src: "images/projects/tmn-6300-35-02.webp",
+        alt: "Трансформатор ТМН-6300/35 в цехе, вид со стороны расширительного бака",
+        width: 1440,
+        height: 1920,
+      },
+      {
+        src: "images/projects/tmn-6300-35-03.webp",
+        alt: "Готовый трансформатор ТМН-6300/35 перед отгрузкой",
+        width: 1440,
+        height: 1920,
+      },
+      {
+        src: "images/projects/tmn-6300-35-04.webp",
+        alt: "Силовой трансформатор ТМН-6300/35 на заводской площадке",
+        width: 1440,
+        height: 1920,
+      },
+      {
+        src: "images/projects/tmn-6300-35-05.webp",
+        alt: "Трансформатор ТМН-6300/35 в сборочном цехе, боковой вид",
+        width: 1920,
+        height: 1440,
+      },
+    ],
+  },
+];
+---
+
+<section class="projects-section" id="projects" aria-labelledby="projects-title">
+  <div class="container projects-inner" data-projects-gallery>
+    <header class="projects-heading" data-reveal="panel">
+      <h2 class="section-title" id="projects-title">Наши проекты</h2>
+    </header>
+
+    <div class="project-tabs" role="tablist" aria-label="Реализованные проекты" data-project-tabs hidden>
+      {
+        projects.map((project, index) => (
+          <button
+            class="project-tab"
+            id={`project-tab-${index}`}
+            type="button"
+            role="tab"
+            aria-controls={`project-case-${index}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            tabindex={index === 0 ? "0" : "-1"}
+            data-project-tab
+          >
+            {project.title}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="project-cases">
+      {
+        projects.map((project, projectIndex) => (
+          <article
+            class="project-case"
+            id={`project-case-${projectIndex}`}
+            role="tabpanel"
+            aria-labelledby={`project-tab-${projectIndex}`}
+            data-project-case
+            data-active-photo="0"
+          >
+            <div class="project-media" data-reveal="panel" data-reveal-from="left">
+              <div class="project-stage" aria-live="polite">
+                {project.images.map((image) => (
+                  <figure class="project-photo" data-project-photo>
+                    <img
+                      src={withBasePath(image.src)}
+                      alt={image.alt}
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                ))}
+
+                <div class="project-photo-controls">
+                  <button
+                    class="project-photo-arrow project-photo-arrow-prev"
+                    type="button"
+                    aria-label={`Предыдущее фото проекта ${project.title}`}
+                    data-project-photo-prev
+                  />
+                  <button
+                    class="project-photo-arrow project-photo-arrow-next"
+                    type="button"
+                    aria-label={`Следующее фото проекта ${project.title}`}
+                    data-project-photo-next
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="project-copy-track">
+              <div class="project-copy" data-reveal="panel" data-reveal-from="right">
+                <h3 class="project-title">{project.title}</h3>
+                <p class="project-type">{project.type}</p>
+
+                <dl class="project-specs">
+                  {project.specs.map((spec) => (
+                    <div>
+                      <dt>{spec.label}</dt>
+                      <dd>{spec.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+              </div>
+            </div>
+
+            <div class="project-thumbnails" aria-label={`Фотографии проекта ${project.title}`}>
+              {project.images.map((image, imageIndex) => (
+                <button
+                  class="project-thumbnail"
+                  type="button"
+                  aria-label={`Показать фотографию ${imageIndex + 1} из ${project.images.length}`}
+                  aria-pressed={imageIndex === 0 ? "true" : "false"}
+                  data-project-thumbnail
+                >
+                  <img
+                    src={withBasePath(image.src)}
+                    alt=""
+                    width={image.width}
+                    height={image.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </button>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section { overflow: clip; padding-top: var(--space-section); }
+  .projects-heading { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr); gap: clamp(32px, 7vw, 96px); align-items: end; }
+  .projects-heading h2 { max-width: 780px; margin: 0; }
+
+  .project-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 32px; }
+  .project-tabs:not([hidden]) { display: grid; }
+  .project-tab { display: block; padding: 16px 18px; border: 0; background: var(--color-bg); color: var(--color-industrial-red); font-size: clamp(1rem, 1.6vw, 1.2rem); font-weight: 900; line-height: 1.2; text-align: left; text-transform: uppercase; cursor: pointer; transition: background-color 180ms ease, color 180ms ease; }
+  .project-tab:hover { color: var(--color-primary-dark); }
+  .project-tab[aria-selected="true"] { background: var(--color-industrial-red); color: #ffffff; }
+
+  .project-cases { margin-top: 20px; }
+  .project-case { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.75fr); gap: clamp(32px, 4vw, 56px); align-items: start; }
+  .project-case[hidden], .project-photo[hidden] { display: none; }
+  [data-projects-gallery]:not([data-enhanced]) .project-case + .project-case { margin-top: var(--space-section); }
+  .project-media, .project-copy-track, .project-copy { min-width: 0; }
+  .project-stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; position: relative; overflow: hidden; background: var(--color-border); }
+  .project-photo { display: grid; place-items: center; min-width: 0; aspect-ratio: 3 / 2; margin: 0; overflow: hidden; background: #ffffff; }
+  .project-photo img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: cover; object-position: center; }
+  .project-photo-controls { display: none; }
+
+  [data-projects-gallery][data-enhanced] .project-stage { display: block; aspect-ratio: 3 / 2; background: #ffffff; }
+  [data-projects-gallery][data-enhanced] .project-photo { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; }
+  [data-projects-gallery][data-enhanced] .project-photo-controls { position: absolute; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(2, 48px); align-items: center; background: #ffffff; }
+  .project-photo-arrow { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 0; background: var(--color-industrial-red); color: #ffffff; cursor: pointer; transition: background-color 180ms ease; }
+  .project-photo-arrow::before { content: ""; width: 10px; height: 10px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; }
+  .project-photo-arrow-prev::before { margin-left: 4px; transform: rotate(-135deg); }
+  .project-photo-arrow-next::before { margin-right: 4px; transform: rotate(45deg); }
+  .project-photo-arrow:hover { background: #000000; }
+
+  .project-thumbnails { display: none; }
+  [data-projects-gallery][data-enhanced] .project-thumbnails { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(96px, 1fr); gap: 8px; margin-top: 8px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+  .project-thumbnail { min-width: 0; aspect-ratio: 3 / 2; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 0; background: var(--color-surface); cursor: pointer; opacity: 0.58; transition: border-color 180ms ease, opacity 180ms ease; }
+  .project-thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .project-thumbnail:hover, .project-thumbnail[aria-pressed="true"] { border-color: var(--color-industrial-red); opacity: 1; }
+
+  .project-title { margin: 0; color: var(--color-heading); font-size: clamp(2rem, 3.3vw, 3.4rem); font-weight: 950; line-height: 1; letter-spacing: -0.035em; text-transform: uppercase; }
+  [data-projects-gallery][data-enhanced] .project-title { display: none; }
+  .project-type { margin: 14px 0 0; color: var(--color-heading); font-size: 1.05rem; font-weight: 850; line-height: 1.45; text-transform: uppercase; }
+  [data-projects-gallery][data-enhanced] .project-type { margin-top: 0; }
+  .project-specs { display: grid; margin: 24px 0 0; border-top: 1px solid var(--color-border); }
+  .project-specs div { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--color-border); }
+  .project-specs dt { color: var(--color-muted); font-size: 0.78rem; line-height: 1.4; }
+  .project-specs dd { margin: 0; color: var(--color-heading); font-size: 1.08rem; font-weight: 900; line-height: 1.25; text-align: right; }
+
+  @media (min-width: 901px) {
+    .project-case { row-gap: 0; }
+    .project-copy-track { grid-column: 2; grid-row: 1; align-self: stretch; }
+    .project-copy { position: sticky; top: 108px; }
+    .project-thumbnails { grid-column: 1; grid-row: 2; }
+  }
+
+  @media (max-width: 900px) {
+    .projects-heading { grid-template-columns: 1fr; gap: 20px; }
+    .project-case { grid-template-columns: 1fr; gap: 8px; }
+    .project-copy-track { grid-row: 1; margin-bottom: 24px; }
+    [data-projects-gallery][data-enhanced] .project-thumbnails { grid-row: 3; margin-top: 0; }
+    .project-media { grid-row: 2; }
+    .project-title { font-size: clamp(2rem, 7vw, 3.2rem); }
+    .project-specs { max-width: 620px; }
+  }
+
+  @media (max-width: 640px) {
+    .projects-section { padding-bottom: 16px; }
+    .project-tabs { grid-template-columns: 1fr; gap: 8px; margin-top: 28px; }
+    .project-tab { padding-block: 14px; }
+    .project-cases { margin-top: 20px; }
+    .project-copy-track { margin-bottom: 16px; }
+    .project-stage, [data-projects-gallery][data-enhanced] .project-stage { aspect-ratio: 3 / 2; }
+    [data-projects-gallery][data-enhanced] .project-photo-controls { grid-template-columns: repeat(2, 44px); }
+    .project-photo-arrow { width: 44px; height: 44px; }
+    [data-projects-gallery][data-enhanced] .project-thumbnails { grid-auto-columns: 92px; }
+    .project-specs { margin-top: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-tab, .project-photo-arrow, .project-thumbnail { transition: none; }
+  }
+</style>

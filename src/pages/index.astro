@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import Projects from "../components/Projects.astro";
 import AboutUs from "../components/AboutUs.astro";
 import WhyAlageum from "../components/WhyAlageum.astro";
 import CatalogTeaser from "../components/CatalogTeaser.astro";
@@ -17,6 +18,7 @@ import Faq from "../components/Faq.astro";
   description="Поставка трансформаторов и подстанционного оборудования Alageum Electric для промышленных объектов. Подбор под проект, коммерческое предложение и доставка по России."
 >
   <Hero />
+  <Projects />
   <AboutUs />
   <WhyAlageum />
   <CatalogTeaser />
@@ -28,5 +30,6 @@ import Faq from "../components/Faq.astro";
   <script>
     import "../scripts/circular-carousel.mjs";
     import "../scripts/parallax";
+    import "../scripts/projects-gallery.mjs";
   </script>
 </BaseLayout>

@@ -3,8 +3,6 @@
 {"message":"connected.","label":"vite","level":"info"}
 {"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
 listen EPERM: operation not permitted 0.0.0.0:4321
-  Location:
-    /Users/ivan/projects/alageum/node_modules/vite/dist/node/chunks/node.js:25609:11
   Stack trace:
     at Server.setupListenHandle [as _listen2] (node:net:2302:21)
-    at Server.listen (node:net:2558:7)
+    at node:net:2662:7
