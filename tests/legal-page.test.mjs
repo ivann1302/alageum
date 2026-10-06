@@ -21,7 +21,7 @@ test("the built site exposes company and privacy information from every page", a
   assert.match(legalPage, /<h1[^>]*>Юридическая информация<\/h1>/);
   assert.match(legalPage, /ООО «Торговый Дом А-Транс»/);
   assert.match(legalPage, /г\. Москва, ул\. Ленинская Слобода, д\. 26, офис 537\.3/);
-  assert.match(legalPage, /href="tel:\+79776920194"/);
+  assert.match(legalPage, /href="tel:\+74957499103"/);
   assert.match(legalPage, /href="mailto:info@tdatrans\.ru"/);
   assert.match(legalPage, /id="privacy"/);
   assert.match(legalPage, /техническ(?:ие|их) данн(?:ые|ых)/i);
