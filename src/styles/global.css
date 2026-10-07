@@ -136,6 +136,13 @@ html.reveal-motion [data-reveal].is-revealed {
 .button-dark:hover { background: var(--color-industrial-red); border-color: var(--color-industrial-red); }
 
 @media (max-width: 640px) {
+  body { text-align: center; }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
   .section-title { font-size: clamp(1.75rem, 7.8vw, 2.6rem); }
   .page-title { font-size: clamp(2rem, 9vw, 3rem); }
 }

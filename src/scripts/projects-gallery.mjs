@@ -37,6 +37,8 @@ const initializeProjectsGallery = (gallery) => {
 
   gallery.dataset.enhanced = "";
   tabsContainer.hidden = false;
+  const mobileLayout = window.matchMedia("(max-width: 640px)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const selectProject = (nextIndex, moveFocus = false) => {
     const activeIndex = wrapGalleryIndex(nextIndex, 0, projectCases.length);
@@ -55,7 +57,19 @@ const initializeProjectsGallery = (gallery) => {
     const activeCase = projectCases[activeIndex];
     const currentPhoto = Number(activeCase?.dataset.activePhoto ?? 0);
     if (activeCase instanceof HTMLElement) setActivePhoto(activeCase, currentPhoto);
+
+    const activeTab = tabs[activeIndex];
+    if (mobileLayout.matches && activeTab instanceof HTMLElement) {
+      tabsContainer.scrollTo({
+        left: activeTab.offsetLeft - (tabsContainer.clientWidth - activeTab.offsetWidth) / 2,
+        behavior: reducedMotion.matches ? "auto" : "smooth",
+      });
+    }
   };
+
+  mobileLayout.addEventListener("change", () => {
+    selectProject(tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"));
+  });
 
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => selectProject(index));

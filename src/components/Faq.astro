@@ -181,6 +181,10 @@ const faqSchema = {
   .faq-answer-content { padding: 0 44px 24px 0; }
   .faq-answer p { margin: 0; color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; }
   @media (max-width: 900px) { .faq-inner { grid-template-columns: 1fr; gap: 32px; } }
-  @media (max-width: 640px) { .faq-answer-content { padding-right: 0; } }
+  @media (max-width: 640px) {
+    .faq-item summary { grid-template-columns: 24px minmax(0, 1fr) 24px; gap: 12px; }
+    .faq-item summary::before { content: ""; }
+    .faq-answer-content { padding-right: 0; }
+  }
   @media (prefers-reduced-motion: reduce) { .faq-question, .faq-toggle::after { transition: none; } }
 </style>

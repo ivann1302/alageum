@@ -1,96 +1,13 @@
 ---
 import { withBasePath } from "../lib/paths";
+import { projects } from "../data/projects";
 
-interface ProjectImage {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}
-
-interface Project {
-  title: string;
-  type: string;
-  specs: Array<{ label: string; value: string }>;
-  images: ProjectImage[];
-}
-
-const projects: Project[] = [
-  {
-    title: "ТМН-4000/35",
-    type: "Силовой масляный трансформатор",
-    specs: [
-      { label: "Мощность", value: "4 000 кВА" },
-      { label: "Напряжение", value: "35 / 11 кВ" },
-    ],
-    images: [
-      {
-        src: "images/projects/tmn-4000-35-01.webp",
-        alt: "Трансформатор ТМН-4000/35 после монтажа на объекте, вид сбоку",
-        width: 1600,
-        height: 1205,
-      },
-      {
-        src: "images/projects/tmn-4000-35-02.webp",
-        alt: "Трансформатор ТМН-4000/35 после монтажа, фронтальный вид",
-        width: 1440,
-        height: 1920,
-      },
-      {
-        src: "images/projects/tmn-4000-35-03.webp",
-        alt: "Силовой трансформатор ТМН-4000/35 на площадке подстанции",
-        width: 1920,
-        height: 1440,
-      },
-      {
-        src: "images/projects/tmn-4000-35-04.webp",
-        alt: "Установленный трансформатор ТМН-4000/35 с расширительным баком",
-        width: 1920,
-        height: 1440,
-      },
-    ],
-  },
-  {
-    title: "ТМН-6300/35",
-    type: "Силовой масляный трансформатор",
-    specs: [
-      { label: "Мощность", value: "6 300 кВА" },
-      { label: "Напряжение", value: "35 / 10 кВ" },
-    ],
-    images: [
-      {
-        src: "images/projects/tmn-6300-35-01.webp",
-        alt: "Трансформатор ТМН-6300/35 в производственном цехе, вид спереди",
-        width: 1440,
-        height: 1920,
-      },
-      {
-        src: "images/projects/tmn-6300-35-02.webp",
-        alt: "Трансформатор ТМН-6300/35 в цехе, вид со стороны расширительного бака",
-        width: 1440,
-        height: 1920,
-      },
-      {
-        src: "images/projects/tmn-6300-35-03.webp",
-        alt: "Готовый трансформатор ТМН-6300/35 перед отгрузкой",
-        width: 1440,
-        height: 1920,
-      },
-      {
-        src: "images/projects/tmn-6300-35-04.webp",
-        alt: "Силовой трансформатор ТМН-6300/35 на заводской площадке",
-        width: 1440,
-        height: 1920,
-      },
-      {
-        src: "images/projects/tmn-6300-35-05.webp",
-        alt: "Трансформатор ТМН-6300/35 в сборочном цехе, боковой вид",
-        width: 1920,
-        height: 1440,
-      },
-    ],
-  },
-];
+const projectCases = projects.map((project) => ({
+  ...project,
+  uniqueSupplies: project.supplies.filter((supply, index, supplies) =>
+    supplies.findIndex((item) => item.model === supply.model && item.details === supply.details) === index,
+  ),
+}));
 ---
 
 <section class="projects-section" id="projects" aria-labelledby="projects-title">
@@ -99,7 +16,7 @@ const projects: Project[] = [
       <h2 class="section-title" id="projects-title">Наши проекты</h2>
     </header>
 
-    <div class="project-tabs" role="tablist" aria-label="Реализованные проекты" data-project-tabs hidden>
+    <div class="project-tabs" role="tablist" aria-label="Заказчики реализованных проектов" data-project-tabs hidden>
       {
         projects.map((project, index) => (
           <button
@@ -112,7 +29,7 @@ const projects: Project[] = [
             tabindex={index === 0 ? "0" : "-1"}
             data-project-tab
           >
-            {project.title}
+            {project.customer}
           </button>
         ))
       }
@@ -120,7 +37,7 @@ const projects: Project[] = [
 
     <div class="project-cases">
       {
-        projects.map((project, projectIndex) => (
+        projectCases.map((project, projectIndex) => (
           <article
             class="project-case"
             id={`project-case-${projectIndex}`}
@@ -144,60 +61,72 @@ const projects: Project[] = [
                   </figure>
                 ))}
 
-                <div class="project-photo-controls">
-                  <button
-                    class="project-photo-arrow project-photo-arrow-prev"
-                    type="button"
-                    aria-label={`Предыдущее фото проекта ${project.title}`}
-                    data-project-photo-prev
-                  />
-                  <button
-                    class="project-photo-arrow project-photo-arrow-next"
-                    type="button"
-                    aria-label={`Следующее фото проекта ${project.title}`}
-                    data-project-photo-next
-                  />
-                </div>
+                {project.images.length > 1 && (
+                  <div class="project-photo-controls">
+                    <button
+                      class="project-photo-arrow project-photo-arrow-prev"
+                      type="button"
+                      aria-label={`Предыдущее фото проекта ${project.customer}`}
+                      data-project-photo-prev
+                    />
+                    <button
+                      class="project-photo-arrow project-photo-arrow-next"
+                      type="button"
+                      aria-label={`Следующее фото проекта ${project.customer}`}
+                      data-project-photo-next
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
             <div class="project-copy-track">
               <div class="project-copy" data-reveal="panel" data-reveal-from="right">
-                <h3 class="project-title">{project.title}</h3>
-                <p class="project-type">{project.type}</p>
-
-                <dl class="project-specs">
-                  {project.specs.map((spec) => (
-                    <div>
-                      <dt>{spec.label}</dt>
-                      <dd>{spec.value}</dd>
-                    </div>
+                <h3 class="project-title">{project.customer}</h3>
+                <p class="project-type">Поставленное оборудование</p>
+                <ul class="project-supplies" aria-label="Состав поставки">
+                  {project.supplies.map((supply) => (
+                    <li class="project-supply" data-repeat={project.uniqueSupplies.includes(supply) ? undefined : ""}>
+                      <div class="project-supply-heading">
+                        <h4>{supply.model}</h4>
+                      </div>
+                      <p class="project-supply-details">{supply.details}</p>
+                    </li>
                   ))}
-                </dl>
-
+                </ul>
+                <details class="project-characteristics">
+                  <summary>Характеристики</summary>
+                  <div class="project-characteristics-content">
+                    {project.uniqueSupplies.map((supply) => (
+                      <p><strong>{supply.model}</strong><br />{supply.details}</p>
+                    ))}
+                  </div>
+                </details>
               </div>
             </div>
 
-            <div class="project-thumbnails" aria-label={`Фотографии проекта ${project.title}`}>
-              {project.images.map((image, imageIndex) => (
-                <button
-                  class="project-thumbnail"
-                  type="button"
-                  aria-label={`Показать фотографию ${imageIndex + 1} из ${project.images.length}`}
-                  aria-pressed={imageIndex === 0 ? "true" : "false"}
-                  data-project-thumbnail
-                >
-                  <img
-                    src={withBasePath(image.src)}
-                    alt=""
-                    width={image.width}
-                    height={image.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-              ))}
-            </div>
+            {project.images.length > 1 && (
+              <div class="project-thumbnails" aria-label={`Фотографии проекта ${project.customer}`}>
+                {project.images.map((image, imageIndex) => (
+                  <button
+                    class="project-thumbnail"
+                    type="button"
+                    aria-label={`Показать фотографию ${imageIndex + 1} из ${project.images.length}`}
+                    aria-pressed={imageIndex === 0 ? "true" : "false"}
+                    data-project-thumbnail
+                  >
+                    <img
+                      src={withBasePath(image.src)}
+                      alt=""
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </article>
         ))
       }
@@ -210,9 +139,9 @@ const projects: Project[] = [
   .projects-heading { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr); gap: clamp(32px, 7vw, 96px); align-items: end; }
   .projects-heading h2 { max-width: 780px; margin: 0; }
 
-  .project-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 32px; }
+  .project-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 32px; }
   .project-tabs:not([hidden]) { display: grid; }
-  .project-tab { display: block; padding: 16px 18px; border: 0; background: var(--color-bg); color: var(--color-industrial-red); font-size: clamp(1rem, 1.6vw, 1.2rem); font-weight: 900; line-height: 1.2; text-align: left; text-transform: uppercase; cursor: pointer; transition: background-color 180ms ease, color 180ms ease; }
+  .project-tab { display: block; padding: 16px 18px; border: 0; background: var(--color-bg); color: var(--color-industrial-red); font-size: clamp(0.85rem, 1.1vw, 1rem); font-weight: 900; overflow-wrap: anywhere; line-height: 1.2; text-align: left; text-transform: uppercase; cursor: pointer; transition: background-color 180ms ease, color 180ms ease; }
   .project-tab:hover { color: var(--color-primary-dark); }
   .project-tab[aria-selected="true"] { background: var(--color-industrial-red); color: #ffffff; }
 
@@ -223,6 +152,7 @@ const projects: Project[] = [
   .project-media, .project-copy-track, .project-copy { min-width: 0; }
   .project-stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; position: relative; overflow: hidden; background: var(--color-border); }
   .project-photo { display: grid; place-items: center; min-width: 0; aspect-ratio: 3 / 2; margin: 0; overflow: hidden; background: #ffffff; }
+  .project-photo:only-child { grid-column: 1 / -1; }
   .project-photo img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: cover; object-position: center; }
   .project-photo-controls { display: none; }
 
@@ -241,14 +171,16 @@ const projects: Project[] = [
   .project-thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .project-thumbnail:hover, .project-thumbnail[aria-pressed="true"] { border-color: var(--color-industrial-red); opacity: 1; }
 
-  .project-title { margin: 0; color: var(--color-heading); font-size: clamp(2rem, 3.3vw, 3.4rem); font-weight: 950; line-height: 1; letter-spacing: -0.035em; text-transform: uppercase; }
+  .project-title { margin: 0; color: var(--color-heading); font-size: clamp(2rem, 3.3vw, 3.4rem); font-weight: 950; line-height: 1; letter-spacing: -0.035em; text-transform: uppercase; overflow-wrap: anywhere; }
   [data-projects-gallery][data-enhanced] .project-title { display: none; }
   .project-type { margin: 14px 0 0; color: var(--color-heading); font-size: 1.05rem; font-weight: 850; line-height: 1.45; text-transform: uppercase; }
   [data-projects-gallery][data-enhanced] .project-type { margin-top: 0; }
-  .project-specs { display: grid; margin: 24px 0 0; border-top: 1px solid var(--color-border); }
-  .project-specs div { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--color-border); }
-  .project-specs dt { color: var(--color-muted); font-size: 0.78rem; line-height: 1.4; }
-  .project-specs dd { margin: 0; color: var(--color-heading); font-size: 1.08rem; font-weight: 900; line-height: 1.25; text-align: right; }
+  .project-supplies { margin: 20px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); }
+  .project-supply { padding: 14px 0; border-bottom: 1px solid var(--color-border); }
+  .project-supply-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .project-supply h4 { min-width: 0; margin: 0; color: var(--color-heading); font-size: 1rem; font-weight: 850; line-height: 1.4; overflow-wrap: anywhere; }
+  .project-supply p { margin: 8px 0 0; color: var(--color-muted); font-size: 0.85rem; line-height: 1.55; overflow-wrap: anywhere; }
+  .project-characteristics { display: none; }
 
   @media (min-width: 901px) {
     .project-case { row-gap: 0; }
@@ -259,25 +191,42 @@ const projects: Project[] = [
 
   @media (max-width: 900px) {
     .projects-heading { grid-template-columns: 1fr; gap: 20px; }
+    .project-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .project-case { grid-template-columns: 1fr; gap: 8px; }
     .project-copy-track { grid-row: 1; margin-bottom: 24px; }
     [data-projects-gallery][data-enhanced] .project-thumbnails { grid-row: 3; margin-top: 0; }
     .project-media { grid-row: 2; }
     .project-title { font-size: clamp(2rem, 7vw, 3.2rem); }
-    .project-specs { max-width: 620px; }
+    .project-supplies { max-width: 620px; }
   }
 
   @media (max-width: 640px) {
     .projects-section { padding-bottom: 16px; }
-    .project-tabs { grid-template-columns: 1fr; gap: 8px; margin-top: 28px; }
-    .project-tab { padding-block: 14px; }
+    .project-tabs { position: relative; gap: 8px; margin-top: 22px; padding-bottom: 3px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; scroll-snap-type: x proximity; }
+    .project-tabs:not([hidden]) { display: flex; flex-wrap: nowrap; }
+    .project-tabs::-webkit-scrollbar { display: none; }
+    .project-tab { flex: 0 0 auto; max-width: min(320px, calc(100vw - 48px)); min-height: 50px; padding: 14px 16px; font-size: 12px; white-space: normal; text-align: center; scroll-snap-align: center; }
     .project-cases { margin-top: 20px; }
-    .project-copy-track { margin-bottom: 16px; }
+    .project-case { gap: 0; }
+    .project-media { grid-row: 1; }
+    .project-copy-track { grid-row: 3; margin: 22px 0 0; }
+    [data-projects-gallery][data-enhanced] .project-thumbnails { grid-row: 2; margin-top: 8px; grid-auto-columns: 76px; gap: 7px; }
     .project-stage, [data-projects-gallery][data-enhanced] .project-stage { aspect-ratio: 3 / 2; }
     [data-projects-gallery][data-enhanced] .project-photo-controls { grid-template-columns: repeat(2, 44px); }
     .project-photo-arrow { width: 44px; height: 44px; }
-    [data-projects-gallery][data-enhanced] .project-thumbnails { grid-auto-columns: 92px; }
-    .project-specs { margin-top: 24px; }
+    .project-type { font-size: 15px; line-height: 1.4; text-align: center; }
+    .project-supplies { margin-top: 14px; }
+    .project-supply { padding: 13px 0; }
+    .project-supply-heading { justify-content: center; }
+    .project-supply h4 { font-size: 15px; }
+    .project-supply[data-repeat], .project-supply-details { display: none; }
+    .project-characteristics { display: block; margin-top: 18px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+    .project-characteristics summary { position: relative; display: block; padding: 14px 30px; font-size: 14px; font-weight: 700; list-style: none; cursor: pointer; }
+    .project-characteristics summary::-webkit-details-marker { display: none; }
+    .project-characteristics summary::after { content: "+"; position: absolute; top: 50%; right: 0; transform: translateY(-50%); color: var(--color-industrial-red); font-size: 24px; font-weight: 400; line-height: 1; }
+    .project-characteristics[open] summary::after { content: "−"; }
+    .project-characteristics-content { padding-bottom: 14px; color: var(--color-muted); font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+    .project-characteristics-content p { margin: 8px 0 12px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

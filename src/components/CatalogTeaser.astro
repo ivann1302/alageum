@@ -85,6 +85,9 @@ const catalogItems = catalogSeries.map((series) => ({
   @media (max-width: 900px) {
     .catalog-teaser-head { align-items: start; flex-direction: column; }
   }
+  @media (max-width: 640px) {
+    .catalog-teaser p { margin-inline: auto; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .catalog-card-title { transition: none; }
   }

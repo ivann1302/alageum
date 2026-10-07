@@ -50,4 +50,7 @@ const steps = [
     .supply-process-step:not(:last-child)::after { top: 18px; right: auto; bottom: calc(-1 * var(--process-gap) - 6px); left: 13px; width: 2px; height: auto; border: 0; transform: none; background: var(--color-primary); }
     .supply-process-step p { max-width: 560px; margin-top: 8px; }
   }
+  @media (max-width: 640px) {
+    .supply-process-step p { margin-inline: auto; }
+  }
 </style>
