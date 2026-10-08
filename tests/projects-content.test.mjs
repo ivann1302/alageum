@@ -7,6 +7,7 @@ import test from "node:test";
 const projectRoot = new URL("../", import.meta.url);
 
 // Hand-checked against the customer cells (including A5:A8) in the supplied workbook.
+// Photo assignments include the user's correction swapping ООО «ТЭС» and Борисоглебск.
 const expectedProjects = [
   { customer: "ООО «Грачевка»", models: ["ТМН-4000/35-11 кВ"], photos: [7, 8, 9] },
   { customer: "ОАО «СЗЛ»", models: ["ТМН-4000/35-6,3 кВ"], photos: [7, 8, 9] },
@@ -16,12 +17,12 @@ const expectedProjects = [
     photos: [7, 8, 9, 10],
   },
   { customer: "ООО «ТЭС Инжиниринг»", models: ["ТМН-6300/35-10 кВ"], photos: [2, 3, 4, 5, 6] },
-  { customer: "ООО «ТЭС»", models: ["ТМ-6300/35-6,3 кВ"], photos: [2, 3, 4, 5, 6] },
+  { customer: "ООО «ТЭС»", models: ["ТМ-6300/35-6,3 кВ"], photos: [1] },
   { customer: "ООО «ФК Групп»", models: ["ТРДН-80000/110-ХЛ1"], photos: [11] },
-  { customer: "МУП «Борисоглебская горэлектросеть»", models: ["ТДНС-16000/36,75-6,3 кВ"], photos: [1] },
+  { customer: "МУП «Борисоглебская горэлектросеть»", models: ["ТДНС-16000/36,75-6,3 кВ"], photos: [2, 3, 4, 5, 6] },
 ];
 
-test("homepage associates every customer's supplies and photos with the new workbook", async () => {
+test("homepage associates every customer's supplies and photos with the agreed project data", async () => {
   execFileSync("npm", ["run", "build"], { cwd: projectRoot, stdio: "pipe" });
   const home = await readFile(new URL("dist/index.html", projectRoot), "utf8");
   const cases = [...home.matchAll(/<article\b[^>]*data-project-case[^>]*>([\s\S]*?)<\/article>/g)]
@@ -53,7 +54,7 @@ test("homepage associates every customer's supplies and photos with the new work
     assert.deepEqual(
       photoPaths.map((src) => Number(src.match(/photo-(\d+)\.webp$/)?.[1])),
       expected.photos,
-      `${expected.customer}: photos must follow the workbook's assignments`,
+      `${expected.customer}: photos must follow the agreed assignments`,
     );
     for (const src of photoPaths) {
       assert.ok(existsSync(new URL(src.replace("/alageum/", "dist/"), projectRoot)), `${src} must be published`);

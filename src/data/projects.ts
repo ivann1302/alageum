@@ -19,6 +19,7 @@ interface Project {
 
 // Source: «Для Сайта/Таблица реализованных проектов.xlsx», rows 3–12.
 // The merged customer cell A5:A8 assigns all four supply rows to Электротехмонтаж.
+// Photos for ООО «ТЭС» and Борисоглебская горэлектросеть are swapped per the user's correction.
 const photos: Record<number, ProjectImage> = {
   1: { src: "images/projects/photo-01.webp", alt: "Трансформатор ТДНС-16000 на площадке подстанции", width: 1600, height: 1205 },
   2: { src: "images/projects/photo-02.webp", alt: "Трансформатор серии ТМН / ТМ-6300 на подстанции, вид спереди", width: 1440, height: 1920 },
@@ -97,7 +98,7 @@ export const projects: Project[] = [
       details: "У1, У/Д-11, алюминиевые обмотки.",
       quantity: 1,
     }],
-    images: tm6300Photos,
+    images: [photos[1]],
   },
   {
     customer: "ООО «ФК Групп»",
@@ -115,6 +116,6 @@ export const projects: Project[] = [
       details: "У1, Ун/Д-11, алюминиевые обмотки, РПН производства Хуаминг, ШМР.",
       quantity: 1,
     }],
-    images: [photos[1]],
+    images: tm6300Photos,
   },
 ];
